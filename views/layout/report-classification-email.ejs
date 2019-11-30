@@ -1,0 +1,208 @@
+<div class="card">
+    <div class="portlet-title">
+        <div class="lv-header-alt clearfix">
+            <h2 class="lvh-label hidden-xs">Báo cáo phân loại email</h2>
+            <ul class="lv-actions actions">
+                <li><a href="/#report-classification-email" data-toggle="tooltip" data-placement="top"
+                       data-original-title="Refresh"><i class="zmdi zmdi-refresh"></i></a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <form class="form-horizontal" role="form">
+            <div class="form-body">
+                <div class="row m-0 m-t-20">
+                    <div class="col-md-2 m-b-20">
+                        <label for="startDate"
+                               class="control-label f-13"><span>Ngày bắt đầu</span></label>
+
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control pull-right search-field date-picker filter-campain input"
+                                   id="startDate" name="startDate"
+                                   placeholder="VD: 01/01/2016">
+                            <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button"
+                                                                                       class="zmdi zmdi-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-2 m-b-20">
+                        <label for="endDate" class="control-label f-13"><span>Ngày kết thúc</span></label>
+
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control pull-right search-field date-picker filter-campain input"
+                                   id="endDate" name="endDate"
+                                   placeholder="VD: 31/12/2016">
+                            <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button"
+                                                                                       class="zmdi zmdi-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-2 m-b-20">
+                        <label for="idCompany" class="control-label f-13"><span>Công ty</span></label>
+                        <select name="idCompany" class="selectpicker input" title="Chọn công ty">
+                            <% company.forEach(function (loop, i) { %>
+                            <option value="<%- loop._id %>"><%- loop.name %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <label for="ticketReasonCategory"
+                               class="control-label f-13"><span>Nhóm tình trạng</span></label>
+                        <select name="ticketReasonCategory" class="selectpicker input" title="Chọn nhóm tình trạng"
+                                multiple>
+                            <% ticketReasonCategory.forEach(function (loop, i) { %>
+                            <option value="<%- loop._id %>"><%- loop.name %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <label for="ticketReason" class="control-label f-13"><span>Chọn tình trạng</span></label>
+                        <select name="ticketReason" class="selectpicker input" title="Chọn tình trạng" multiple>
+
+                        </select>
+                    </div>
+                    <div class="row m-0">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6 m-b-20">
+                            <div class="btn-group btn-group btn-group-justified">
+                                <a type="submit" class="btn bgm-blue uppercase c-white" style="width:auto"><i
+                                            class="fa fa-search m-r-10"></i><strong>Tìm kiếm</strong></a>
+
+                                <div class="col-md-2"></div>
+                                <a id="exportexcel" class="btn bgm-blue default c-white" style="width:auto"><i
+                                            class="fa fa-file-excel-o m-r-10"></i>Xuất Excel</a>
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-body table-responsive" style=" min-height:200px">
+        <table class="table table-hover table-condensed table-bordered table-fix" style="table-layout: fixed;"
+               id="exceldata">
+            <thead>
+            <tr>
+                <th class="bgm-orange c-white text-center">Tên nhóm tình trạng</th>
+                <th class="bgm-orange c-white text-center">SL</th>
+                <th class="bgm-orange c-white text-center">TL</th>
+                <% if(check == true){ %>
+                <th class="bgm-orange c-white text-center">Tên tình trạng</th>
+                <th class="bgm-orange c-white text-center">SL</th>
+                <th class="bgm-orange c-white text-center">TL</th>
+                <% if(endResultSubReason.length > 0){ %>
+                <th class="bgm-orange c-white text-center">Tên tình trạng</th>
+                <th class="bgm-orange c-white text-center">SL</th>
+                <th class="bgm-orange c-white text-center">TL</th>
+                <% } %>
+                <% } %>
+            </tr>
+            </thead>
+            <tbody>
+            <% if(endResultReasonCategory.length > 0){ %>
+            <script> var isAlertSearch = false;</script>
+            <% var totalReasonCategory = 0, totalReason = 0, totalSubReason = 0;
+                endResultReasonCategory.forEach(function (loop, i) {
+                    totalReasonCategory += loop.total;
+                }) %>
+            <% endResultReasonCategory.forEach(function (resultReasonCategory, i) { %>
+            <tr>
+                <td class=""><%- resultReasonCategory.name %></td>
+                <td class="text-right"><%- resultReasonCategory.total %></td>
+                <% if(totalReasonCategory == 0){ %>
+                <td class="text-right"> 0.00%</td>
+                <% }else{ %>
+                <td class="text-right"><%- ((resultReasonCategory.total / totalReasonCategory) * 100).toFixed(2) + "%" %></td>
+                <% } %>
+                <% if(check == true){ %>
+                <td></td>
+                <td></td>
+                <td></td>
+                <% } %>
+            </tr>
+            <% if(check == true){ %>
+            <% var percentReason = 0;
+                endResultReason.forEach(function (loop, i) {
+                    percentReason += loop.total;
+                    totalReason += loop.total;
+                }) %>
+            <% endResultReason.forEach(function (resultReason, i) { %>
+            <% if(_.isEqual(resultReasonCategory._id, resultReason.idCategory)){ %>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class=""><%- resultReason.name %></td>
+                <td class="text-right"><%- resultReason.total %></td>
+                <% if(percentReason == 0){ %>
+                <td class="text-right"> 0.00%</td>
+                <% }else{ %>
+                <td class="text-right"><%- ((resultReason.total / percentReason) * 100).toFixed(2) + "%" %></td>
+                <% } %>
+                <% if(endResultSubReason.length > 0){ %>
+                <td></td>
+                <td></td>
+                <td></td>
+                <% } %>
+            </tr>
+            <% if(endResultSubReason.length > 0){ %>
+            <% var percentSubReason = 0;
+                endResultSubReason.forEach(function (loop, i) {
+                    percentSubReason += loop.total;
+                    totalSubReason += loop.total;
+                }) %>
+            <% endResultSubReason.forEach(function (endResultSubReason, i) { %>
+            <% if(_.isEqual(resultReason._id, endResultSubReason.idReason)){ %>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class=""><%- endResultSubReason.name %></td>
+                <td class="text-right"><%- endResultSubReason.total %></td>
+                <% if(percentSubReason == 0){ %>
+                <td class="text-right"> 0.00%</td>
+                <% }else{ %>
+                <td class="text-right"><%- ((endResultSubReason.total / percentSubReason) * 100).toFixed(2) + "%" %></td>
+                <% } %>
+            </tr>
+            <% } %>
+            <% }) %>
+            <% } %>
+            <% } %>
+            <% }) %>
+            <% } %>
+            <% }) %>
+            <tr>
+                <th class="">Tổng</th>
+                <% if(check == false){ %>
+                <th class="text-right"><%- totalReasonCategory %></th>
+                <th></th>
+                <% } %>
+                <% if(check == true && endResultSubReason.length == 0){ %>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th class="text-right"><%- totalReason / endResultReasonCategory.length %></th>
+                <th></th>
+                <% } %>
+                <% if(check == true && endResultSubReason.length > 0){ %>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th class="text-right"><%- totalSubReason / endResultReason.length %></th>
+                <th></th>
+                <% } %>
+            </tr>
+            <% }else{ %>
+            <script> var isAlertSearch = true;</script>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>

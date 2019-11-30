@@ -1,0 +1,58 @@
+table.table-fix > thead tr > th::-moz-selection {
+    background: transparent;
+}
+
+table.table-fix > thead tr > th::selection {
+    background: transparent;
+}
+
+table.table-fix > thead tr > th i.zmdi {
+    display: none;
+    font-size: 22px;
+    position: relative;
+    margin-right: 10px;
+    top: 3px;
+    line-height: 10px;
+}
+
+table.table-fix > thead tr > th[data-sort="asc"] i.zmdi-sort-amount-asc, table.table-fix > thead tr > th[data-sort="asc"] i.zmdi-sort-asc {
+    display: initial;
+}
+
+table.table-fix > thead tr > th[data-sort="desc"] i.zmdi-sort-amount-desc, table.table-fix > thead tr > th[data-sort="desc"] i.zmdi-sort-desc {
+    display: initial;
+}
+
+.table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
+    border: 1px solid #ddd;
+}
+
+.group-task {
+    display: none;
+}
+
+td:hover .group-task {
+    display: block;
+}
+
+
+.even {
+    background-color: rgba(35, 113, 242, 0.09)
+}
+
+table.table-fix thead tr th:first-child, table.table-fix tbody tr td:first-child {
+    border-left: none !important;
+}
+
+table.table-fix tr th:last-child, table.table-fix tr td:last-child {
+    border-right: none;
+}
+
+.even {
+    background-color: rgba(35, 113, 242, 0.09)
+}
+.formError.idCategoryformError{
+    top: -49.4545px !important;
+    left: inherit !important;
+    right: 0 !important;
+}

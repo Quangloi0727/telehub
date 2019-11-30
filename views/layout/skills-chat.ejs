@@ -1,0 +1,91 @@
+<%-breadcrumb%>
+<div class="card">
+    <div class="lv-header-alt clearfix">
+        <h2 class="lvh-label hidden-xs"><%- title %></h2>
+        <ul class="lv-actions actions">
+            <li>
+                <a href="/#skills-chat/new" data-toggle="tooltip" data-placement="top" data-original-title="Tạo mới">
+                    <i class="zmdi zmdi-plus"></i>
+                </a>
+            </li>
+            <li>
+                <a data-toggle="tooltip" data-placement="top" data-original-title="Làm mới">
+                    <i class="zmdi zmdi-refresh"></i>
+                </a>
+            </li>
+            <li class="hidden" id="li-hidden">
+                <a role="button" data-toggle="tooltip" data-placement="top" data-original-title="Xóa các mục đánh dấu" id="btn-delSelection">
+                    <i class="zmdi zmdi-delete"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body table-responsive">
+        <table class="table table-hover table-condensed table-bordered">
+            <thead>
+            <tr>
+                <th class="w-30 select-cell bgm-orange c-white text-center">
+                </th>
+                <th class="bgm-orange c-white text-center w-200"><% if (!_.isEqual(sort.skillName, undefined)){%> <i data-toggle="tooltip" class="zmdi zmdi-sort-<%- sort.skillName %> zmdi-hc-fw p-r-10 c-white" data-placement="top" <% if (_.isEqual(sort.skillName, 'asc')){%>data-original-title="Sắp xếp tăng dần"<%}else{%> data-original-title="Sắp xếp giảm dần"<%}%>></i><%}%>
+                    Tên kỹ năng</th>
+                <th class="bgm-orange c-white text-center w-200">Công ty</th>
+                <th class="bgm-orange c-white text-center w-100">Trạng thái</th>
+                <th class="w-100 bgm-orange c-white text-center">Tác vụ</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="filter">
+                <td class="w-30 select-cell c-white text-center">
+                    <div class="checkbox m-0">
+                        <label>
+                            <input name="select" type="checkbox" class="select-box select-box-all" value="all">
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+                <td><input class="form-control" type="text" id="search_field_skillName" name="search_field_skillName"></td>
+                <td><input class="form-control" type="text" id="search_field_company" name="search_field_company"></td>
+                <td>
+                    <select class="form-control selectpicker" id="search_field_status" name="search_field_status">
+                        <option selected value="-1">-- Tất cả --</option>
+                        <option value="1">Kích hoạt</option>
+                        <option value="0">Không kích hoạt</option>
+                    </select>
+                </td>
+                <td><button class="btn btn-primary btn-block waves-effect" id="btn-search" name="btn-search"><i class="zmdi zmdi-filter-list m-r-5"></i> Lọc</button></td>
+            </tr>
+            <script> var isZeroList = false; </script>
+            <% if (skillLists.length == 0){ %>
+            <script> isZeroList   = true; </script>
+            <%}else{ %>
+            <% skillLists.forEach(function(sl, i) { %>
+            <tr>
+                <td class="select-cell text-center w-60">
+                    <div class="checkbox m-0">
+                        <label>
+                            <input data-id="<%- sl._id %>" name="select" type="checkbox" class="select-box select-box-cell" value="all">
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+                <td class="p-l-10"><%- sl.skillName %></td>
+                <td class="p-l-10"><%- sl.company.name %></td>
+                <td class="text-center">
+                    <div class="checkbox m-0">
+                        <label>
+                            <input disabled name="select" type="checkbox" class="select-box" value="<%- sl._id %>" <%- (sl.status ? 'checked' : ''); %> />
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <a class="p-t-3 btn-flat-bg" href="/#skills-chat/<%- sl._id %>/edit" data-toggle="tooltip" data-placement="top" data-original-title="Sửa"><i class="zmdi zmdi-edit green f-17"></i></a>
+                    <a role="button" class="btn-remove btn-flat-bg" data-toggle="tooltip" data-placement="top" data-original-title="Xoá" data-id="<%- sl._id %>"><i class="zmdi zmdi-close red f-23 "></i></a>
+                </td>
+            </tr>
+            <% }); }%>
+            </tbody>
+        </table>
+        <% include ../paging.ejs %>
+    </div>
+</div>

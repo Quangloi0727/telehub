@@ -1,0 +1,85 @@
+<%-breadcrumb%>
+<script>
+    var companies = JSON.parse('<%- JSON.stringify(companies)%>');
+</script>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted"><i>Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập. </i></small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="add-new-profile">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Tên nhóm kỹ năng<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" class="form-control validate[required,ajax[ProfileCheck]]" id="name" name="name">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Công ty<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line select">
+                        <select class="selectpicker validate[required]" id="idCompany" name="idCompany">
+                            <option value='' disabled selected>---- Chọn ----</option>
+                            <% companies.forEach(function(el, i) {%>
+                            <option value="<%- el._id%>"><%- el.name%></option>
+                            <%})%>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Kỹ năng<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <small class="text-muted"><i><span class="c-red">*</span> Chỉ hiển thị những kỹ năng đã được chiến dịch gọi vào sử dụng. </i></small>
+                    <div class="table-responsive skills-table">
+                        <table class="table table-hover table-condensed table-bordered">
+                            <thead>
+                            <tr class="f-11">
+                                <th class="bgm-orange c-white text-center w-40">#</th>
+                                <th class="bgm-orange c-white text-center"></th>
+                                <th class="bgm-orange c-white text-center">Tên kỹ năng</th>
+                                <th class="bgm-orange c-white text-center">Độ ưu tiên</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Ghi âm<span class="required"></span></label>
+                <div class="col-sm-6">
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" value="1" id="recordingState" name="recordingState" >
+                            <i class="input-helper"></i>
+                            <span class="p-l-10" data-text-on="Không kích hoạt" data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Trạng thái</label>
+                <div class="col-sm-6">
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" value="1" id="status" name="status" checked>
+                            <i class="input-helper"></i>
+                            <span class="p-l-10" data-text-on="Không kích hoạt" data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a type="button" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect" href="/#groups-profile"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

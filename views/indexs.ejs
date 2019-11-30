@@ -1,0 +1,5 @@
+<script>window.page = '<%- page %>' || null;</script>
+<% if(plugins){ %><% plugins.forEach(function(s){ %><% if(!_equal(typeof s, 'string')){ %><link href="/assets/plugins/<%- s[0] %>/style.css" rel="stylesheet"><% } %><% }) %><% } %>
+<link href="/assets/pages/<%- page %>/style.css" rel="stylesheet">
+<% if(plugins){ %><% plugins.forEach(function (s){ %><script type="text/javascript" src="/assets/plugins/<%- (_equal(typeof s, 'string') ? s : s[0]) %>/script.js"></script><% }) %><% } %>
+<%- include('layout/'+ page) %>

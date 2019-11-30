@@ -1,0 +1,45 @@
+{
+  "app": {
+    "_id": "57ec72813531cffe519aee33",
+    "ip": "localhost",
+    "port": 2020,
+    "name": "crm"
+  },
+  "database": {
+    "name": "crmdb",
+    "ip": "localhost",
+    "port": 27017,
+    "user": "",
+    "pwd": ""
+  },
+  "database-core": {
+    "ip": "localhost",
+    "port": 27017,
+    "name": "crm-core",
+    "user": "",
+    "pwd": "",
+    "mechanism": "",
+    "digestPassword": false
+  },
+  "core-app": {
+    "ip": "127.0.0.1",
+    "port": 2002,
+    "public-ip": "127.0.0.1",
+    "public-port": 2002
+  },
+  "services": {
+    "voice": 2010,
+    "chat": 2011,
+    "email": 2012
+  },
+  "activemq": {
+    "ip": "localhost",
+    "port": "61613",
+    "user": "admin",
+    "pwd": "admin",
+    "queueName": "crm"
+  },
+  "recordPath": {
+    "path": "http://172.16.1.242:9001/"
+  }
+}

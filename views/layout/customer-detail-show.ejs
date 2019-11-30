@@ -1,0 +1,73 @@
+<%-breadcrumb%>
+<div class="card" id="ticket-edit">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted"><i>Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập.</i></small>
+    </div>
+
+    <div class="card-body card-padding">
+        <section id="main">
+            <div class="form-horizontal bgm-white flex-row">
+                <div class="panel-group m-0" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading p-0">
+                            <h5 class="panel-title">
+                                <a data-id="showCustomer" class="btn-block p-10 bgm-orange c-white text-uppercase TXT_CUSTOMER_INFO">Thông tin khách
+                                    hàng</a>
+                            </h5>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <div class="panel-body c-overflow p-5 p-b-10">
+                                <form role="form" id="frm-update-customer">
+                                    <% for(var i = 0; i < fields.length; i++){ %>
+                                    <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                        <label for="name"
+                                               class="control-label f-13"><%- fields[i].displayName %> <%- _switch(fields[i].isRequired, [0, 1], ['', '<span class="c-red">*</span>']) %></label>
+                                        <div class="">
+                                            <%
+                                                var result = '';
+                                                var c = customer[0];
+                                                var fArr = !!c[fields[i].modalName] ? c[fields[i].modalName] : '';
+                                                var f = fArr.length == 0 ? '' : fArr[0];
+                                                var value = !!f.value ? f.value : '';
+                                            %>
+                                            <input class="form-control"
+                                                   value="<%- value %>"
+                                                   style="background-color: white;"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                </form>
+
+                                <div class=" form-group p-l-5 p-r-5 p-t-20 col-sm-12 text-center">
+                                    <button type="reset" class="btn btn-default waves-effect" id="cancelInput"
+                                            name="cancelInput">
+                                        <i class="zmdi zmdi-arrow-left zmdi-hc-fw"></i>
+                                        Quay lại
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading p-0">
+                            <h5 class="panel-title">
+                                <a class="btn-block p-10 bgm-orange c-white text-uppercase TXT_CUSTOMER_TICKET">112312312</a>
+                            </h5>
+                        </div>
+
+                        <div>
+                            <div class="panel-body p-0 c-overflow list-view view-detail">
+                                <form role="form" id="frm-edit-ticket">
+                                    <%- zoka.showTicketList(null, ticket, true); %>
+                                    <div class="paging-list"><%- zoka.createPaging(ticketPaging); %></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

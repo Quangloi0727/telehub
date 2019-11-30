@@ -1,0 +1,9 @@
+﻿#mail{
+
+}
+
+#mail table tr:not(.row-filter) td{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

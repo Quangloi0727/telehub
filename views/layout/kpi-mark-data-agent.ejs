@@ -1,0 +1,167 @@
+<%-breadcrumb%>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="m-b-5 f-16">CHỌN ĐIỆN THOẠI VIÊN</h2>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="table-responsive group-group">
+                        <table class="table table-hover table-condensed table-bordered" id="tbl-choose-agent">
+                            <thead>
+                            <tr class="f-11">
+                                <th class="bgm-orange c-white text-center w-40">#</th>
+                                <th class="bgm-orange c-white text-center">Công ty</th>
+                                <th class="bgm-orange c-white text-center">Nhóm</th>
+                                <th class="bgm-orange c-white text-center">Tên</th>
+                                <th class="bgm-orange c-white text-center">Lọc</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="row-filter filter">
+                                <td class="text-center p-0">
+                                    <div class="checkbox m-0 m-l-3" data-toggle="tooltip" data-placement="top" data-original-title="Chọn tất cả">
+                                        <label>
+                                            <input name="select" type="checkbox" class="select-box select-box-all" value="all">
+                                            <i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="fg-line select ">
+                                        <select class="selectpicker mark-agent-filter" id="idCompany" name="idCompany">
+                                            <option value='' disabled>---- Chọn ----</option>
+                                            <% data.idCompany.forEach(function(col, i){ %>
+                                            <option value="<%- col._id %>"><%- col.name %></option>
+                                            <% }) %>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="fg-line select ">
+                                        <select class="selectpicker mark-agent-filter" id="idGroup" name="idGroup">
+                                            <option value='' selected>---- Chọn ----</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="fg-line select ">
+                                        <input class="form-control mark-agent-filter" type="text" id="nameAgent" name="nameAgent">
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-primary btn-block" id="btn-filter"><i class="zmdi zmdi-filter-list m-r-5"></i> Lọc</button>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center add-paging"><ul class="pagination"></ul></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-1" style="height: 300px; padding-top:150px">
+        <div class="text-center">
+            <button type="reset" class="btn btn-default waves-effect waves-effect" id="add-btn" name="add-btn" data-toggle="tooltip" data-placement="top" data-original-title="Thêm">
+                <i class="zmdi zmdi-arrow-right zmdi-hc-fw"></i>
+            </button>
+        </div>
+        <div class="text-center">
+            <button type="reset" class="btn btn-default waves-effect waves-effect " id="remove-btn" name="remove-btn" data-toggle="tooltip" data-placement="top" data-original-title="Loại">
+                <i class="zmdi zmdi-arrow-left zmdi-hc-fw"></i>
+            </button>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="m-b-5 f-16">ĐIỆN THOẠI VIÊN ĐÃ CHỌN</h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive added-group">
+                    <label class="p-l-10" id="added-count">Tổng: <%- data.agents.length %></label>
+                    <table class="table table-hover table-condensed table-bordered" id="form-added-agent">
+                        <thead>
+                        <tr class="f-11">
+                            <th class="bgm-orange c-white text-center w-40">#</th>
+                            <th class="bgm-orange c-white text-center p-0">
+                                <div class="checkbox m-0">
+                                    <label>
+                                        <input type="checkbox" value="" id="select_all_added" name="select_all_added">
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </th>
+                            <th class="bgm-orange c-white text-center">Họ tên</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% data.agents.forEach(function(agent, i){%>
+                        <tr class="agent-added-cell">
+                            <td class="text-center"><%- i + 1 %></td>
+                            <td class="select-cell text-center w-60">
+                                <div class="checkbox m-0">
+                                    <label>
+                                        <input class="select-box select-agent-added" type="checkbox" data-id="<%- agent._id %>" name="select">
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="text-center"><%- agent.displayName %></td>
+                        </tr>
+                        <%});%>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center added-paging"><ul class="pagination"></ul></div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="col-sm-5">-->
+        <!--<div class="card">-->
+            <!--<div class="card-header">-->
+                <!--<h2 class="m-b-5 f-16">DỮ LIỆU TICKET</h2>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+                <!--<ul class="tab-nav tn-justified tn-icon" role="tablist">-->
+                    <!--<li role="presentation" class="active">-->
+                        <!--<a class="col-sx-4 group-tab" href="#tab-service" aria-controls="tab-1" role="tab" data-toggle="tab">-->
+                            <!--<label class="f-16">CHIẾN DỊCH GỌI VÀO</label>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li role="presentation">-->
+                        <!--<a class="col-xs-4 agent-tab" href="#tab-campaign" aria-controls="tab-2" role="tab" data-toggle="tab">-->
+                            <!--<label class="f-16">CHIẾN DỊCH GỌI RA</label>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+                <!--<div class="tab-content p-t-20 p-relative ">-->
+                    <!--<div role="tabpanel" class="tab-pane animated fadeIn in active" id="tab-service">-->
+                        <!--<div class="text-center p-b-20">-->
+                            <!--<label class="p-r-20">Công ty</label>-->
+                            <!--<select class="selectpicker validate[required] col-sm-3" id="idCompany" name="idCompany">-->
+                                <!--<option value='' disabled selected>---- Chọn ----</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                        <!--<div class="table-responsive add-group m-0 p-0">-->
+                            <!--<label class="p-l-10" id="add-count">SỐ LƯỢNG: 0</label>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div role="tabpanel" class="tab-pane animated fadeIn" id="tab-campaign">-->
+                        <!--<div class="text-center p-b-20">-->
+                            <!--<label class="p-r-20">Chọn tên</label>-->
+                            <!--<input type="text" id="search-agent-name" name="search-agent-name">-->
+                        <!--</div>-->
+                        <!--<div class="table-responsive add-group m-0 p-0">-->
+                            <!--<label class="p-l-10" id="add-count">SỐ LƯỢNG: 0</label>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>
+<a type="button" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect" href="/#kpi-mark-data"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>

@@ -1,0 +1,101 @@
+<%-breadcrumb%>
+<script>var _users = JSON.parse('<%- JSON.stringify(users) %>')</script>
+<div class="card">
+    <div class="lv-header-alt clearfix">
+        <h2 class="lvh-label hidden-xs"><%- title %></h2>
+        <ul class="lv-actions actions">
+            <li>
+                <a href="/user-chat-settings" data-toggle="tooltip" data-placement="top" data-original-title="Làm mới">
+                    <i class="zmdi zmdi-refresh"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body table-responsive">
+        <table class="table table-hover table-condensed table-bordered">
+            <thead>
+            <tr>
+                <th class="w-30 select-cell bgm-orange c-white text-center">
+
+                </th>
+                <th class="bgm-orange c-white text-center" id="name" name="name">
+                    Tên người dùng</th>
+                <th class="bgm-orange c-white text-center" id="company" name="company">Tên công ty </th>
+                <th class="bgm-orange c-white text-center" id="group" name="group">Tên nhóm</th>
+                <th class="bgm-orange c-white text-center">Giới hạn phiên</th>
+                <th class="bgm-orange c-white text-center">Trạng thái</th>
+                <th class="w-100 bgm-orange c-white text-center">Tác vụ</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="filter">
+                <td class="w-30 select-cell c-white text-center">
+                    <div class="checkbox m-0">
+                        <label>
+                            <input name="select" type="checkbox" class="select-box select-box-all" value="all">
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+                <td><input class="form-control" type="text" id="search_by_name" name="search_by_name"></td>
+                <td><input class="form-control hidden" type="text" id="search_by_company" name="search_by_company"></td>
+                <td><input class="form-control hidden" type="text" id="search_by_group" name="search_by_group"></td>
+                <td><input class="form-control" type="text" id="search_by_max_session" name="search_by_max_session"></td>
+                <td>
+                    <select class="form-control selectpicker" id="search_by_status" name="search_by_status">
+                        <option selected value="-1">-- Tất cả --</option>
+                        <option value="1">Kích hoạt</option>
+                        <option value="0">Không kích hoạt</option>
+                    </select>
+                </td>
+                <td><button type="button" class="btn btn-primary btn-block waves-effect" id="btn-search" name="btn-search"><i class="zmdi zmdi-filter-list m-r-5"></i> Lọc</button></td>
+            </tr>
+            <script> var isZeroList = false; </script>
+            <% if (users.length == 0){ %>
+               <script> isZeroList   = true; </script>
+            <%}else{ %>
+            <% users.forEach(function(user, i) { %>
+            <tr>
+                <td class="select-cell text-center w-60">
+                    <div class="checkbox m-0">
+                        <label>
+                            <input data-id="<%- user._id %>" name="select" type="checkbox" class="select-box select-box-cell" value="all">
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+                <td class="p-l-10"><%- user.name %></td>
+                <td class="p-l-10">
+                    <% for (var i = 0; i < user.agentGroupMembers.length; i++){
+                            if (user.agentGroupMembers[i].group != null){%>
+                                <li><%- user.agentGroupMembers[i].group.idParent.name %></li>
+                            <%}
+                    } %>
+                </td>
+                <td class="p-l-10">
+                    <% for (var i = 0; i < user.agentGroupMembers.length; i++){
+                            if (user.agentGroupMembers[i].group != null){%>
+                    <li><%- user.agentGroupMembers[i].group.name %></li>
+                    <%}
+                    } %>
+                </td>
+                <td class="text-center"><input class="form-control" type="number" id="max_chat_session" name="max_chat_session" value="<%- user.maxChatSession %>"></td>
+                <td class="text-center">
+                    <div class="checkbox m-0">
+                        <label>
+                            <input disabled name="select" type="checkbox" class="select-box" value="<%- user._id %>" <%- (user.status ? 'checked' : ''); %> />
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <a class="p-t-3 btn-flat-bg apply-all hidden" data-toggle="tooltip" data-placement="top" data-original-title="Apply all"><i class="zmdi zmdi-check-all green f-17"></i></a>
+                    <a role="button" class="btn-remove btn-flat-bg apply-single" data-toggle="tooltip" data-placement="top" data-original-title="Apply" data-id="<%- user._id %>"><i class="zmdi zmdi-check green f-17 "></i></a>
+                </td>
+            </tr>
+            <% }); }%>
+            </tbody>
+        </table>
+        <% include ../paging.ejs %>
+    </div>
+</div>

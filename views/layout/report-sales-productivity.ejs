@@ -1,0 +1,189 @@
+<%- breadcrumb %>
+<script>
+	var recordPath = JSON.parse('<%- JSON.stringify(recordPath); %>');
+</script>
+<div class="card">
+    <div class="lv-header-alt clearfix m-b-5">
+        <h2 class="lvh-label hidden-xs"><%- title %></h2>
+    </div>
+
+    <div class="panel panel-default">
+        <div>
+            <div class="panel-body p-0 c-overflow">
+                <div class="tab-content">
+                    <div role="tabpanel" style="height: 100%" class="tab-pane animated active"
+                         id="tab-not-process-ticket">
+                        <!-- Filter panel-->
+                        <div class="panel panel-default" style="margin-bottom: 0px;">
+                            <div class="panel-heading p-0">
+                                <h5 class="panel-title">
+                                    <div class="btn-block p-10 bgm-orange c-white text-uppercase">
+                                        Điều kiện xuất báo cáo
+                                    </div>
+                                </h5>
+                                <div class="panel-body c-overflow p-5 p-b-10">
+                                    <form role="form" id="frm-report-order">
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="idCampain" class="control-label f-13 TXT_CAMPAIGN_NAME"></label>
+                                            <select class="selectpicker searchColumn" multiple data-actions-box="true"
+                                                    name="idCampain" title="Chọn chiến dịch">
+                                                <% if (data) { %>
+                                                <% data.campaign.forEach(function(el){ %>
+                                                <option value="<%- el._id %>"><%- el.name %></option>
+                                                <% })} %>
+                                            </select>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="customersources"
+                                                   class="control-label f-13 TXT_CUSTOMER_SOURCE"></label>
+                                            <select class="selectpicker searchColumn" multiple data-actions-box="true"
+                                                    name="customersources" title="Chọn nguồn khách hàng">
+                                                <% if (data) { %>
+                                                <% data.customer.forEach(function(el){ %>
+                                                <option value="<%- el._id %>"><%- el.name %></option>
+                                                <% })} %>
+                                            </select>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="status" class="control-label f-13 TXT_STATUS"></label>
+                                            <select class="selectpicker searchColumn" multiple data-actions-box="true"
+                                                    name="status" title="Chọn trạng thái">
+                                                <% if (data) { %>
+                                                <option value="0">Chờ xử lý</option>
+                                                <option value="1">Đang xử lý</option>
+                                                <option value="2">Hoàn thành</option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="ticketReasonCategory"
+                                                   class="control-label f-13 TXT_TICKET_REASON_CATEGORY"></label>
+                                            <select class="selectpicker searchColumn" multiple data-actions-box="true"
+                                                    name="ticketReasonCategory" title="Chọn nhóm tình trạng">
+                                                <% if (data) { %>
+                                                <% data.ticketReasonCategory.forEach(function(el){ %>
+                                                <option value="<%- el._id %>"><%- el.name %></option>
+                                                <% })} %>
+                                            </select>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="ticketReason"
+                                                   class="control-label f-13 TXT_TICKET_REASON"></label>
+                                            <select class="selectpicker searchColumn" multiple data-actions-box="true"
+                                                    name="ticketReason" title="Chọn tình trạng">
+                                                <% if (data) { %>
+                                                <% data.ticketReason.forEach(function(el){ %>
+                                                <option value="<%- el._id %>"><%- el.name %></option>
+                                                <% })} %>
+                                            </select>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="ticketSubreason"
+                                                   class="control-label f-13 TXT_TICKET_SUBREASON"></label>
+                                            <select class="selectpicker searchColumn" multiple data-actions-box="true"
+                                                    name="ticketSubreason" title="Chọn lý do">
+                                                <% if (data) { %>
+                                                <% data.ticketSubreason.forEach(function(el){ %>
+                                                <option value="<%- el._id %>"><%- el.name %></option>
+                                                <% })} %>
+                                            </select>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="order_createDate"
+                                                   class="control-label f-13 TXT_ORDER_CREATEDATE"></label>
+                                            <div class="input-group">
+                                                <input type="text"
+                                                       class="form-control pull-right multi-date-picker searchColumn"
+                                                       id="order_createDate" name="order_createDate">
+                                                <span class="input-group-addon p-l-10 bgm-gray c-white">
+                                                <i role="button" class="zmdi zmdi-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="updated" class="control-label f-13 TXT_UPDATED"></label>
+                                            <div class="input-group">
+                                                <input type="text"
+                                                       class="form-control pull-right multi-date-picker searchColumn"
+                                                       id="updated" name="updated">
+                                                <span class="input-group-addon p-l-10 bgm-gray c-white">
+                                                <i role="button" class="zmdi zmdi-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="updateBy" class="control-label f-13 TXT_UPDATED_BY"></label>
+                                            <select class="selectpicker searchColumn" multiple data-actions-box="true"
+                                                    name="updateBy" title="Chọn điện thoại viên">
+                                                <% if (data) { %>
+                                                <% data.user.forEach(function(el){ %>
+                                                <option value="<%- el._id %>"><%- el.displayName + '(' + el.name + ')' %></option>
+                                                <% })} %>
+                                            </select>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="cardType" class="control-label f-13 "> Chọn loại
+                                                thẻ</label>
+                                            <select class="selectpicker searchColumn bs-select-hidden" multiple=""
+                                                    data-actions-box="true" name="cardType">
+                                                <% if (data) { %>
+                                                <option value="0">Thẻ Tiếng Anh</option>
+                                                <option value="1">Thẻ Tiếng Nhật</option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                        <div class=" form-group p-l-5 p-r-5 p-t-30 col-sm-12 text-center">
+                                            <button type="button" class="btn btn-primary waves-effect w-100"
+                                                    id="btn-search"
+                                                    name="btn-search">
+                                                <i class="zmdi zmdi-filter-list m-r-5"></i> Lọc
+                                            </button>
+                                            <a id="exportexcel-sales-productivity" class="btn bgm-blue default c-white"
+                                               style="width:auto"><i
+                                                        class="fa fa-file-excel-o m-r-10"></i>Xuất Excel</a>
+                                        </div>
+
+                                        <!-- Table orders filtered-->
+                                        <table class="table table-bordered table-fix" id="tbl-sales-productivity"
+                                               data-graph-container="#chart-sales-productivity"
+                                               data-graph-type="column">
+                                            <caption>Tỷ lệ chuyển đối phiếu</caption>
+                                            <thead>
+                                            <tr>
+                                                <th class="bgm-orange c-white text-center">
+                                                    <span class="TXT_AGENT"></span>
+                                                </th>
+                                                <th class="bgm-orange c-white text-center">
+                                                    <span class="TXT_TOTAL_NEW_TICKET"></span>
+                                                </th>
+                                                <th class="bgm-orange c-white text-center">
+                                                    <span class="TXT_NEW_CONVERSION_RATE"></span>
+                                                </th>
+                                                <th class="bgm-orange c-white text-center">
+                                                    <span class="TXT_NEW_CONVERSION_RATE_AVG"></span>
+                                                </th>
+                                                <th class="bgm-orange c-white text-center">
+                                                    <span class="TXT_TOTAL_OLD_TICKET"></span>
+                                                </th>
+                                                <th class="bgm-orange c-white text-center">
+                                                    <span class="TXT_OLD_CONVERSION_RATE"></span>
+                                                </th>
+                                                <th class="bgm-orange c-white text-center">
+                                                    <span class="TXT_OLD_CONVERSION_RATE_AVG"></span>
+                                                </th>
+                                            </thead>
+                                            <tbody id="table-body-sales-productivity">
+                                            </tbody>
+                                        </table>
+                                        <!-- /Table orders filtered-->
+                                        <div id="chart-sales-productivity"></div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Filter panel-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

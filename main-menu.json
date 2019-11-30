@@ -1,0 +1,241 @@
+[
+  {
+	"name" : "Trang quản trị",
+	"description" : "",
+	"icon" : "",
+	"link" : "",
+	"role" : [ ],
+	"childs" : [
+	  {
+		"name" : "Kiến thức chung",
+		"description" : "",
+		"icon" : "zmdi zmdi-info-outline",
+		"link" : "",
+		"role" : [ ],
+		"childs" : [
+		  {
+			"name" : "Danh mục bài viết",
+			"description" : "",
+			"icon" : "",
+			"link" : "/articles-category",
+			"role" : [ ]
+		  },
+		  {
+			"name" : "Bài viết",
+			"description" : "",
+			"icon" : "",
+			"link" : "/users",
+			"role" : [ ]
+		  }
+		]
+	  },
+	  {
+		"name" : "Quản lý người dùng",
+		"link" : "",
+		"icon" : "zmdi zmdi-account-box",
+		"role" : [ ],
+		"childs" : [
+		  {
+			"name" : "Quản lý công ty",
+			"description" : "",
+			"icon" : "",
+			"link" : "/company",
+			"role" : [ ]
+		  },
+		  {
+			"name" : "Quản lý nhóm",
+			"description" : "",
+			"icon" : "",
+			"link" : "/agent-groups",
+			"role" : [ ]
+		  },
+		  {
+			"name" : "Quản lý nhóm kỹ năng",
+			"description" : "",
+			"icon" : "",
+			"link" : "/groups-profile",
+			"role" : [ ]
+		  },
+		  {
+			"name" : "Quản lý kỹ năng",
+			"description" : "",
+			"icon" : "",
+			"link" : "/skills",
+			"role" : [ ]
+		  }
+		]
+	  },
+	  {
+		"name" : "Thông tin khách hàng",
+		"link" : "",
+		"icon" : "zmdi zmdi-account-circle",
+		"role" : [ ],
+		"childs" : [ ]
+	  },
+	  {
+		"name" : "Quản lý cuộc gọi",
+		"link" : "",
+		"icon" : "zmdi zmdi-phone-setting",
+		"role" : [ ],
+		"childs" : [
+		  {
+			"name" : "Quản lý gọi ra",
+			"description" : "",
+			"icon" : "",
+			"link" : "/campains",
+			"role" : [ ],
+			"childs" : [ ]
+		  },
+		  {
+			"name" : "Quản lý gọi vào",
+			"description" : "",
+			"icon" : "",
+			"link" : "/services",
+			"role" : [ ]
+		  }
+		]
+	  },
+	  {
+		"name" : "Quản lý mẫu giao tiếp",
+		"link" : "",
+		"icon" : "zmdi zmdi-phone-setting",
+		"role" : [ ],
+		"childs" : [
+		  {
+			"name" : "Câu hỏi khảo sát",
+			"description" : "",
+			"icon" : "",
+			"link" : "/surveys",
+			"role" : [ ]
+		  }
+		]
+	  },
+	  {
+		"name" : "Thiết lập chung",
+		"link" : "",
+		"icon" : "zmdi zmdi-settings",
+		"role" : [ ]
+	  }
+	]
+  },
+  {
+	"name" : "Trang làm việc",
+	"description" : "",
+	"icon" : "",
+	"link" : "/google.com",
+	"role" : [ ],
+	"childs" : [
+	  {
+		"name" : "Thông tin",
+		"description" : "",
+		"icon" : "zmdi zmdi-info-outline",
+		"link" : "",
+		"role" : [ ],
+		"childs" : [
+		  {
+			"name" : "Qui trình",
+			"description" : "",
+			"icon" : "",
+			"link" : "",
+			"role" : [ ],
+			"childs" : [ ]
+		  },
+		  {
+			"name" : "FAQ",
+			"description" : "",
+			"icon" : "",
+			"link" : "",
+			"role" : [ ],
+			"childs" : [ ]
+		  },
+		  {
+			"name" : "Kiến thức",
+			"description" : "",
+			"icon" : "",
+			"link" : "",
+			"role" : [ ],
+			"childs" : [ ]
+		  },
+		  {
+			"name" : "Khuyến mãi",
+			"description" : "",
+			"icon" : "",
+			"link" : "",
+			"role" : [ ],
+			"childs" : [ ]
+		  }
+		]
+	  },
+	  {
+		"name" : "Thông tin khách hàng",
+		"description" : "",
+		"icon" : "zmdi zmdi-account-circle",
+		"link" : "",
+		"role" : [ ],
+		"childs" : [ ]
+	  },
+	  {
+		"name" : "Danh sách phiếu",
+		"description" : "",
+		"icon" : "zmdi zmdi-label",
+		"link" : "",
+		"role" : [ ],
+		"childs" : [ ]
+	  },
+	  {
+		"name" : "Quản lý cuộc gọi",
+		"link" : "",
+		"icon" : "zmdi zmdi-phone-setting",
+		"role" : [ ],
+		"childs" : [
+		  {
+			"name" : "Quản lý gọi ra",
+			"description" : "",
+			"icon" : "",
+			"link" : "/",
+			"role" : [ ],
+			"childs" : [
+			  {
+				"name" : "Danh sách chưa gọi",
+				"description" : "",
+				"icon" : "",
+				"link" : "/",
+				"role" : [ ]
+			  },
+			  {
+				"name" : "Danh sách theo dõi",
+				"description" : "",
+				"icon" : "",
+				"link" : "/",
+				"role" : [ ]
+			  }
+			]
+		  },
+		  {
+			"name" : "Quản lý gọi vào",
+			"description" : "",
+			"icon" : "",
+			"link" : "/imcoming",
+			"role" : [ ]
+		  }
+		]
+	  },
+	  {
+		"name" : "Thiết lập chung",
+		"description" : "",
+		"icon" : "zmdi zmdi-settings",
+		"link" : "",
+		"role" : [ ],
+		"childs" : [ ]
+	  }
+	]
+  },
+  {
+	"name" : "Báo cáo",
+	"description" : "",
+	"icon" : "",
+	"link" : "",
+	"role" : [ ],
+	"childs" : [ ]
+  }
+]

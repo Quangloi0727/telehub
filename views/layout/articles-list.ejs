@@ -1,0 +1,215 @@
+<%- breadcrumb %>
+<form id="form-articles">
+    <!--<div class="row">-->
+    <!--<div class="col-sm-12">-->
+    <!--<table class="table table-bordered">-->
+    <!--<thead>-->
+    <!--<tr>-->
+    <!--<td class="text-center">-->
+    <!--<div>-->
+    <!--<select class="selectpicker filter" id="category-name" name="category-name">-->
+    <!--<option selected disabled>Thông tin</option>-->
+    <!--<option value="quy trình">Quy trình</option>-->
+    <!--<option value="faq">FAQ</option>-->
+    <!--<option value="kiến thức">Kiến thức</option>-->
+    <!--<option value="khuyến mãi">Khuyến mãi</option>-->
+    <!--</select>-->
+    <!--</div>-->
+    <!--</td>-->
+    <!--<td class="text-center" id="customer-info">-->
+    <!--<div>-->
+    <!--<select class="selectpicker">-->
+    <!--<option selected disabled>Thông tin khách hàng</option>-->
+    <!--</select>-->
+    <!--</div>-->
+    <!--</td>-->
+    <!--<td class="text-center" id="ticket-list">-->
+    <!--<div>-->
+    <!--<select class="selectpicker">-->
+    <!--<option selected disabled>Danh sách phiếu</option>-->
+    <!--</select>-->
+    <!--</div>-->
+    <!--</td>-->
+    <!--<td class="text-center">-->
+    <!--<div>-->
+    <!--<select class="selectpicker" id="call-manager">-->
+    <!--<option selected disabled>Quản lý cuộc gọi</option>-->
+    <!--<option value="1">Quản lý gọi vào</option>-->
+    <!--<option value="2">Quản lý gọi ra</option>-->
+    <!--</select>-->
+    <!--</div>-->
+    <!--</td>-->
+    <!--<td class="text-center" id="config-global">-->
+    <!--<div>-->
+    <!--<select class="selectpicker">-->
+    <!--<option selected disabled>Thiết lập chung</option>-->
+    <!--</select>-->
+    <!--</div>-->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--</table>-->
+    <!--</div>-->
+    <!--</div>-->
+    <div class="card">
+        <div class="lv-header-alt clearfix">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr class="listHead">
+                            <th class="text-center bgm-lightblue c-white w-160">
+                                Chức năng
+                            </th>
+                            <th class="bgm-lightblue c-white w-80 text-center">
+                                Tên công ty
+                            </th>
+                            <th class="bgm-lightblue c-white w-80 text-center">
+                                Tên dịch vụ
+                            </th>
+                            <th class="bgm-lightblue c-white w-60 text-center">
+                                Kĩ năng
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="text-center">
+                            <td>Voice</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <% agentInfoVoice.forEach(function(el1, i) { %>
+                        <tr class="text-center">
+                            <td></td>
+                            <td><%- el1._id.companyName%></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <% el1.services.forEach(function(el2, i) { %>
+                        <%if (el2.serviceName) { %>
+                        <tr class="text-center">
+                            <td></td>
+                            <td></td>
+                            <td><%- el2.serviceName%></td>
+                            <td><%- el2.skillName%></td>
+                        </tr>
+                        <% } %>
+                        <% }); %>
+                        <% }); %>
+                        <tr class="text-center">
+                            <td>Chat</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <% agentInfoChat.forEach(function(el1, i) { %>
+                        <tr class="text-center">
+                            <td></td>
+                            <td><%- el1._id.companyName%></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <% el1.services.forEach(function(el2, i) { %>
+                        <%if (el2.serviceName) { %>
+                        <tr class="text-center">
+                            <td></td>
+                            <td></td>
+                            <td><%- el2.serviceName%></td>
+                            <td><%- el2.skillName%></td>
+                        </tr>
+                        <% } %>
+                        <% }); %>
+                        <% }); %>
+                        <tr class="text-center">
+                            <td>Mail</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <% agentInfoMail.forEach(function(el1, i) { %>
+                        <tr class="text-center">
+                            <td></td>
+                            <td><%- el1._id.companyName%></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <% el1.services.forEach(function(el2, i) { %>
+                        <%if (el2.serviceName) { %>
+                        <tr class="text-center">
+                            <td></td>
+                            <td></td>
+                            <td><%- el2.serviceName%></td>
+                            <td><%- el2.skillName%></td>
+                        </tr>
+                        <% } %>
+                        <% }); %>
+                        <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+                <label class="blank"></label>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-bordered" id="search">
+                        <thead>
+                        <!--<tr>-->
+                        <!--<th class="bgm-orange c-white text-center">Tìm kiếm</th>-->
+                        <!--</tr>-->
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="text-center">
+                                <div class="col-sm-5">
+                                    <label for="title" class="text-left col-sm-4 control-label p-t-8"><span class="TXT_ARTICLE_TITLE"></span></label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control filter" type="text" id="title" name="title">
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <label for="raw" class="col-sm-4 control-label p-t-8"><span class="TXT_ARTICLE_CONTENT"></span></label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control filter" type="text" id="raw" name="raw">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a class="btn btn-default btn-icon-text m-r-10 waves-effect waves-effect" id="btn-search" name="btn-search"><i class="fa fa-search"></i></a>
+                                    <a class="btn btn-default btn-icon-text m-r-10 waves-effect waves-effect" id="btn-refresh"><i class="zmdi zmdi-refresh"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-bordered" id="tbl-articles">
+                        <thead>
+                        <tr>
+                            <th class="b-0 p-0 c-white text-left" colspan="2">
+                                <div id="menu-category">
+                                    <!--<li class="category parent" id="label">Kiến thức chung</li>-->
+                                    <li class="bgm-lightblue category parent width20pc active"><span id="category" class="category" value=""><a><i class="fa fa-home"></i></a></span></li>
+                                    <li class="bgm-lightblue category parent width20pc"><span id="category" class="category" value="quy trình"><a><span class="TXT_ARTICLE_PROCESS"></span></a></span></li>
+                                    <li class="bgm-lightblue category parent width20pc"><span id="category" class="category" value="faq"><a><span class="TXT_ARTICLE_FAQ"></span></a></span></li>
+                                    <li class="bgm-lightblue category parent width20pc"><span id="category" class="category" value="kiến thức"><a><span class="TXT_ARTICLE_KNOWLEGDE"></span></a></span></li>
+                                    <li class="bgm-lightblue category width20pc"><span id="category" class="category" value="khuyến mãi"><a><span class="TXT_ARTICLE_PROMOTION"></span></a></span></li>
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <td colspan="2" class="">
+                            <div class="group">
+                            </div>
+                        </td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center" ><div id="paging"></div></div>
+</form>

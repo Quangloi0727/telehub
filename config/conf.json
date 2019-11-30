@@ -1,0 +1,45 @@
+{
+  "app": {
+    "_id": "5813503cce3943153949725b",
+    "ip": "localhost",
+    "port": 5020,
+    "name": "akira"
+  },
+  "database": {
+    "name": "akira",
+    "ip": "localhost",
+    "port": 27017,
+    "user": "",
+    "pwd": ""
+  },
+  "database-core": {
+    "ip": "localhost",
+    "port": 27017,
+    "name": "akira-core",
+    "user": "",
+    "pwd": "",
+    "mechanism": "",
+    "digestPassword": false
+  },
+  "core-app": {
+    "ip": "127.0.0.1",
+    "port": 5002,
+    "public-ip": "127.0.0.1",
+    "public-port": 5002
+  },
+  "services": {
+    "voice": 5010,
+    "chat": 5011,
+    "email": 5012
+  },
+  "activemq": {
+    "ip": "localhost",
+    "port": "61813",
+    "user": "admin",
+    "pwd": "admin",
+    "queueName": "akira"
+  },
+  "recordPath":{
+    "path":"http://172.16.1.242:9001/"
+  }
+}

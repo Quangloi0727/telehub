@@ -1,0 +1,10 @@
+.formError {
+    display: block !important;
+    top: 10px;
+}
+
+.companyProfileIdformError{
+    right: 0px !important;
+    top: 0px !important;
+    left: inherit !important;
+}

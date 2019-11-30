@@ -1,0 +1,83 @@
+<%-breadcrumb%>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted"><i>Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập.</i></small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="update-profile">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Tên nhóm kỹ năng<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="hidden" id="updateId" name="updateId" value="<%- currentProfile._id %>">
+                        <input type="text" class="form-control validate[required,ajax[ProfileCheck]]" id="name" name="name" value="<%- currentProfile.name%>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Kỹ năng<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="table-responsive added-group">
+                        <table class="table table-hover table-condensed table-bordered">
+                            <thead>
+                            <tr class="f-11">
+                                <th class="bgm-orange c-white text-center w-40">#</th>
+                                <th class="bgm-orange c-white text-center"></th>
+                                <th class="bgm-orange c-white text-center">Tên kỹ năng</th>
+                                <th class="bgm-orange c-white text-center">Độ ưu tiên</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <% skills.forEach(function(element, index){ %>
+                            <tr>
+                                <%
+                                    var curSkill = {};
+                                    currentProfile.skills.forEach(function(skill){
+                                        if(_equal(skill.idSkill.toString(), element._id.toString())){
+                                            curSkill = skill;
+                                        }
+                                    });
+                                %>
+                                <td class="text-center"><%- (index+1)%></td>
+                                <td class="text-center">
+                                    <div class="checkbox m-0">
+                                        <label>
+                                            <input type="checkbox" value="<%- element._id%>" class="selectSkill"  <%- (curSkill._id ? 'checked' : ''); %>>
+                                            <i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td><%- element.skillName%></td>
+                                <td class="text-center"><input type="number" class="w-80 orderSkill" value="<%- (curSkill.order ? curSkill.order : 0); %>"></td>
+                            </tr>
+                            <% }) %>
+                            </tbody>
+                        </table>
+                        <div class="text-left p-t-10">
+                            <span class="required c-red">*</span><i class="f-12" style="color: #888888"> Cần đưa kỹ năng vào service trước</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Trạng thái</label>
+                <div class="col-sm-6">
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" id="status" value="1" name="status"  <%- (currentProfile.status ? 'checked' : ''); %>>
+                            <i class="input-helper"></i>
+                            <span class="p-l-10" data-text-on="Không kích hoạt" data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a type="button" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect" href="#groups-profile-chat"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

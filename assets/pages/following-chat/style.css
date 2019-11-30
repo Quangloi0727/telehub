@@ -1,0 +1,53 @@
+table.table-fix > thead tr > th::-moz-selection {
+    background: transparent;
+}
+
+table.table-fix > thead tr > th::selection {
+    background: transparent;
+}
+
+table.table-fix > thead tr > th i.zmdi {
+    display: none;
+    font-size: 22px;
+    position: relative;
+    margin-right: 10px;
+    top: 3px;
+    line-height: 10px;
+}
+
+table.table-fix > thead tr > th[data-sort="asc"] i.zmdi-sort-asc {
+    display: initial;
+}
+
+table.table-fix > thead tr > th[data-sort="desc"] i.zmdi-sort-desc {
+    display: initial;
+}
+
+.inline-edit-button {
+    display: none;
+}
+
+.inlineEditButton:hover .inline-edit-button  {
+    display: block;
+}
+
+@keyframes blink-animation {
+    0%   {background-color:#ff9800;}
+    50%  {background-color:white;}
+    100% {background-color:#ff9800;}
+}
+@-webkit-keyframes blink-animation {
+    0%   {background-color:#ff9800;}
+    50%  {background-color:white;}
+    100% {background-color:#ff9800;}
+}
+
+.over-deadline{
+    background: #ff9800;
+    animation: blink-animation 5s steps(10, start) infinite;
+    -webkit-animation: blink-animation 5s steps(10, start) infinite;
+}
+
+.warning-deadline{
+    background-color: yellow;
+}

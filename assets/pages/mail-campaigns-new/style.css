@@ -1,0 +1,8 @@
+div.formError {
+    left: initial !important;
+    right: 0 !important;
+}
+
+.fuploadformError {
+    display: inline-block !important;
+}

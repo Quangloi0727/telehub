@@ -1,0 +1,40 @@
+.formError.typeformError{
+    left: inherit !important;
+    right: 0 !important;
+}
+.formError.trunkformError{
+    left: inherit !important;
+    right: 0 !important;
+}
+.formError.idCompanyformError{
+    left: inherit !important;
+    right: 0 !important;
+}
+.formError.idCategoryReasonformError{
+    left: inherit !important;
+    right: 0 !important;
+}
+table.table-fix > thead tr > th::-moz-selection {
+    background: transparent;
+}
+
+table.table-fix > thead tr > th::selection {
+    background: transparent;
+}
+
+table.table-fix > thead tr > th i.zmdi {
+    display: none;
+    font-size: 22px;
+    position: relative;
+    margin-right: 10px;
+    top: 3px;
+    line-height: 10px;
+}
+
+table.table-fix > thead tr > th[data-sort="asc"] i.zmdi-sort-amount-asc, table.table-fix > thead tr > th[data-sort="asc"] i.zmdi-sort-asc {
+    display: initial;
+}
+
+table.table-fix > thead tr > th[data-sort="desc"] i.zmdi-sort-amount-desc, table.table-fix > thead tr > th[data-sort="desc"] i.zmdi-sort-desc {
+    display: initial;
+}

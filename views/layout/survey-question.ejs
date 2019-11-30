@@ -1,0 +1,112 @@
+<%-breadcrumb%>
+<script>
+    var searchData = JSON.parse('<%- JSON.stringify(searchData)%>');
+</script>
+<div class="lv-header-alt clearfix">
+    <h2 class="lvh-label hidden-xs">Nhóm câu hỏi <a></a><%- title %></h2>
+    <ul class="lv-actions actions">
+        <li>
+            <a href="/#survey-question/new?idSurvey=<%- survey%>" data-toggle="tooltip" data-placement="left" data-original-title="Tạo mới">
+                <i class="zmdi zmdi-plus"></i>
+            </a>
+        </li>
+        <li>
+            <a href="/#survey-question?idSurvey=<%- survey%>" data-toggle="tooltip" data-placement="left" data-original-title="Làm mới danh sách">
+                <i class="zmdi zmdi-refresh"></i>
+            </a>
+        </li>
+        <li class="hidden" id="li-hidden">
+            <a role="button" data-toggle="tooltip" data-placement="top" data-original-title="Xóa các mục đánh dấu" id="btn-delSelection">
+                <i class="zmdi zmdi-delete"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="card">
+    <div class="card-body table-responsive">
+        <table class="table table-hover table-condensed table-bordered">
+            <thead>
+            <tr class="">
+                <th class="bgm-orange c-white select-cell text-center w-40">#</th>
+                <th class="bgm-orange c-white w-30 text-center">STT</th>
+                <th role="button" class="bgm-orange c-white w-120 text-center sortContent">
+                    <i class="<%- ('zmdi zmdi-sort-'+(_equal(sortData.content ? sortData.content.toString(): '1' , '1')? 'asc' : 'desc')+' c-orange zmdi-hc-fw p-r-10')%>"></i>
+                    Nội dung
+                </th>
+                <th class="bgm-orange c-white w-120 text-center">Câu hỏi kế</th>
+                <th class="bgm-orange c-white w-50 text-center">Loại câu hỏi</th>
+                <th class="bgm-orange c-white w-50 text-center">Loại câu trả lời</th>
+                <th class="bgm-orange c-white w-50 text-center sortIsStart">
+                    <i class="<%- ('zmdi zmdi-sort-'+(_equal(sortData.isStart ? sortData.isStart.toString(): '1' , '1')? 'asc' : 'desc')+' c-orange zmdi-hc-fw p-r-10')%>"></i>
+                    Câu hỏi đầu tiên
+                </th>
+                <th class="bgm-orange c-white w-50 text-center">Tạo bởi</th>
+                <th role="button" class="bgm-orange c-white w-50 text-center sortCreateDate">
+                    <i class="<%- ('zmdi zmdi-sort-'+(_equal(sortData.created ? sortData.created.toString(): '1' , '1')? 'asc' : 'desc')+' c-orange zmdi-hc-fw p-r-10')%>"></i>
+                    Ngày tạo
+                </th>
+                <th class="bgm-orange c-white w-50 text-center">Tác vụ</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="row-filter filter">
+                <td>
+                    <div class="checkbox text-center">
+                        <label>
+                            <input name="select" id="select_all" type="checkbox" class="select-box" value="all">
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+                <td></td>
+                <td><input class="form-control searchColumn" type="text" id="search_content" name="search_content" value="<%- searchData.content%>"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><button class="btn btn-primary btn-block waves-effect" id="btn-filter" name="btn-filter"><i class="zmdi zmdi-filter-list m-r-5"></i> Lọc</button></td>
+            </tr>
+            <%  categories.forEach(function(el, i) { %>
+            <tr>
+                <td class="select-cell text-center">
+                    <div class="checkbox m-0">
+                        <label>
+                            <input name="select" type="checkbox"  class="select-box selection" value="<%- el._id %>">
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+                <td class="text-center"><%- (i+paging.fromResult)%></td>
+                <td class="text-center"><%- el.content %></td>
+                <td class="text-center"><%- (el.idNextQuestion? el.idNextQuestion.content : '')%></td>
+                <td class="text-center"><%- (_equal(el.questionType.toString(),'0')? 'Một câu trả lời': 'Nhiều câu trả lời') %></td>
+                <td class="text-center">
+                    <%- ((el.answerType == 1)? 'Chọn đáp án': '')%>
+                    <%- ((el.answerType == 2)? 'Chấm điểm': '')%>
+                    <%- ((el.answerType == 3)? 'Lấy ý kiến': '')%>
+                </td>
+                <td class="text-center">
+                    <div class="checkbox" style="margin: 0 auto">
+                        <label>
+                            <input disabled name="select" type="checkbox" class="select-box" <%- (el.isStart ? 'checked' : '') %> />
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+                <td class="text-center"><%- (el.createBy ? el.createBy.name : '') %></td>
+                <td class="text-center"><%- (el.created ? _moment(el.created).format("DD/MM/YYYY") : '') %></td>
+                <td class="text-center">
+                    <!-- 03 Mar 2017 hoangdv only clear isStart of questions in this survey -->
+                    <a href="/#survey-question/<%- el._id %>/edit?idSurvey=<%- survey%>" class="p-t-3 btn-flat-bg"><i class="zmdi zmdi-edit m-r-10"></i></a>
+                    <a role="button" type="click" class="btn-remove btn-flat-bg" data-id="<%- el._id %>"><i class="zmdi zmdi-close m-r-10"></i></a>
+                </td>
+            </tr>
+            <% }); %>
+            </tbody>
+        </table>
+        <% include ../paging.ejs %>
+    </div>
+</div>
+<a type="button" id="btn-back" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect" href="/#surveys"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>

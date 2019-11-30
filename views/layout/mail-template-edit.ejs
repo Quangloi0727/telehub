@@ -1,0 +1,156 @@
+<%-breadcrumb%>
+<script>
+    var cCateId= '<%- template.categoryId._id%>';
+</script>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted"><i>Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập.</i></small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="add-new-template">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label" id="txt_template_name">Tên <span class="c-red">*</span></label>
+
+                <div class="col-sm-7">
+                    <div class="fg-line">
+                        <input type="text" class="form-control validate[required]" id="name"
+                               maxlength="60"
+                               name="name" placeholder="" value="<%= template.name%>">
+                        <input type="hidden" id="_id" name="_id" value="<%= template._id%>">
+                        <input type="hidden" id="current_name" value="<%=template.name%>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="companyId" class="col-sm-3 control-label"><span id="txt_template_company"> Công ty</span>
+                    <span class="c-red">*</span></label>
+
+                <div class="col-sm-6">
+                    <div class="p-relative">
+                        <select class="selectpicker validate[required]" id="companyId" name="companyId">
+                            <option value='' disabled selected>---- Chọn ----</option>
+                            <% companies.forEach(function(c, i){ %>
+                            <option <%= (_.isEqual(c._id, template.categoryId.companyId)?'selected':'')%> value="<%= c._id %>"> <%= c.name %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="categoryId" class="col-sm-3 control-label"><span id="txt_template_category"> Nhóm</span>
+                    <span class="c-red">*</span></label>
+
+                <div class="col-sm-6">
+                    <select class="selectpicker validate[required]" id="categoryId" name="categoryId">
+                        <option value='' disabled selected>---- Chọn ----</option>
+                    </select>
+                </div>
+                <a data-toggle="modal" href="#frm-add-category" id="btnAddCategory" style="float:left"
+                   class="btn btn-default"><i class="zmdi zmdi-plus"></i></a>
+                <!--<button id="btnRemoveCategory" style="float:left" class="btn btn-default" type="button"><i class="zmdi zmdi-minus"></i></button>-->
+            </div>
+
+            <div class="form-group">
+                <label for="body" class="col-sm-3 control-label"><span
+                            id="txt_template_body">Nội dung</span><span class="c-red">*</span></label>
+
+                <div class="col-sm-9" >
+                    <div class="fg-line">
+                        <textarea class="form-control validate[required]" id="body" name="body"><%= template.body%></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="body" class="col-sm-3 control-label"><span
+                            id="txt_template_placeholder">Place holder</span></label>
+                <ul id="listHolder" class="list-group">
+                    <% fields.forEach(function(f, i){ %>
+                        <li class="list-group-item mail-holder" id="<%=f.modalName.toUpperCase().substring(6)%>"><%=f.displayName%>: %<%=f.modalName.toUpperCase().substring(6)%>%</li>
+                    <%})%>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label"><span class="TXT_ARTICLE_STATUS"></span></label>
+
+                <div class="col-sm-6">
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" <%= (template.status==1)?'checked':''%> id="status" name="status" value="<%= template.status%>">
+                            <i class="input-helper"></i>
+                            <span class="p-l-10" data-text-on="Không kích hoạt" data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect waves-effect" id="btn-back"
+                       name="btn-back" href="/#mail-template"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button id="btn-submit" type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i
+                                class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận
+                    </button>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+
+
+<div class="modal fade" id="frm-add-category" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+    <form class="form-horizontal m-t-30" id="add-category" role="form">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tạo mới nhóm</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name" class="col-sm-3 control-label" id="dialog_label_name">Tên <span class="c-red">*</span></label>
+
+                        <div class="col-sm-7">
+                            <div class="fg-line">
+                                <input type="text" class="form-control validate[required]" id="dialog_name"
+                                       maxlength="60"
+                                       name="name" placeholder="">
+                                <input type="hidden" id="dialog_status" name="status" value="1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="companyId" class="col-sm-3 control-label"><span
+                                    id="dialog_label_company"> Công ty</span> <span class="c-red">*</span></label>
+
+                        <div class="col-sm-6">
+                            <div class="p-relative">
+                                <select class="selectpicker validate[required]" id="dialog_companyId"
+                                        name="companyId">
+                                    <option disabled selected>---- Chọn ----</option>
+                                    <% companies.forEach(function(c, i){ %>
+                                    <option value="<%= c._id %>"> <%= c.name %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-b-0">
+                        <div class="col-sm-offset-3 col-sm-10">
+                            <button type="button"
+                                    class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect waves-effect"
+                                    id="dialog-btn-back" name="btn-back"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay
+                                lại
+                            </button>
+                            <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"
+                                    id="dialog-btn-submit"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,59 @@
+<%- breadcrumb %>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted"><i>Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập.</i></small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="add-new-ticket">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label"><span class="TXT_CATEGORY_NAME"></span><span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" maxlength="60" class="form-control validate[required,ajax[TicketCheck]]" id="validate-ticket-for-name" name="name" placeholder="VD: Công nghệ thông tin">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="note" class="col-sm-3 control-label"><span class="TXT_NOTE"></span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" class="form-control input-sm" id="note" name="note" placeholder="vd : Công nghệ thông tin">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="category" class="col-sm-3 control-label"><span class="TXT_CATEGORIES"></span><span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <select class="selectpicker form-control" id="category" name="category" data-placeholder="Chọn danh mục">
+                        <option value='0'>Gọi vào và gọi ra</option>
+                        <option value='1'>Gọi vào</option>
+                        <option value='2'>Gọi ra</option>
+                        <option value='3'>Chat</option>
+                        <option value='4'>Email</option>
+                        <option value='5'>Mạng xã hội</option>
+                        <!--<option value='6'>Tất cả</option>-->
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label"><span class="TXT_STATUS"></span></label>
+                <div class="col-sm-6">
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" checked id="status" name="status">
+                            <i class="input-helper"></i>
+                            <span class="p-l-10" data-text-on="Không kích hoạt" data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect waves-effect" id="btn-back" name="btn-back"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

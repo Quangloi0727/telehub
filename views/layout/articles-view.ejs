@@ -1,0 +1,14 @@
+<%- breadcrumb %>
+<div class="card">
+    <div class="lv-header-alt clearfix">
+        <h2 class="lvh-label hidden-xs"><%- title %></h2>
+    </div>
+    <div class="card-body card-padding">
+        <div><%- body %></div>
+        <span>File đính kèm:</span>
+        <% for(var i = 0; i < attachments.length; i++){%>
+        <div><a href="<%- attachments[i]%>" download><%- attachments[i].split('/').pop()%></a></div>
+        <%}%>
+        <div class="clearfix"></div>
+    </div>
+</div>

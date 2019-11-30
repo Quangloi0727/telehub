@@ -1,0 +1,64 @@
+/*td div.indentation {*/
+    /*float: left;*/
+    /*margin: -0.5em -0.1em -0.5em 0.08em;*/
+    /*width: 20px;*/
+    /*height: 36px;*/
+/*}*/
+
+td div.indentation:last-child {
+    margin-right: 5px;
+}
+.table .checkbox .input-helper:before {
+    top: 3px;
+    width: 13px;
+    height: 13px;
+    left: 3px;
+}
+
+.table .checkbox .input-helper:after {
+    opacity: 0;
+    width: 13px;
+    height: 7px;
+    border-bottom: 2px solid green;
+    border-left: 2px solid green;
+    border-bottom-left-radius: 2px;
+    left: 3px;
+    top: 4px;
+}
+
+
+div.indentation {
+    float: left; /* LTR */
+    margin: -0.6em -0.1em -0.6em 0.08em;
+    width: 30px;
+    height: 39px;
+    opacity: 0.5;
+}
+
+div.tree-child {
+    background: url('/assets/plugins/mrblack-table/assets/tree.png') no-repeat 10px center; /* LTR */
+}
+
+div.tree-child-left {
+    background: url('/assets/plugins/mrblack-table/assets/tree-left.png') no-repeat 10px center; /* LTR */
+}
+
+div.tree-child-horizontal {
+    background: url('/assets/plugins/mrblack-table/assets/tree.png') no-repeat -10px center;
+}
+
+div.tree-child-last {
+    background: url('/assets/plugins/mrblack-table/assets/tree-bottom.png') no-repeat 10px center; /* LTR */
+}
+
+tr td:first-child {
+    color: #2371f2;
+}
+
+tr:last-child td:first-child div:first-child {
+    background: none;
+}
+
+.nobg {
+    background: none !important;
+}

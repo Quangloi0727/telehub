@@ -1,0 +1,259 @@
+<%-breadcrumb%>
+<div class="card">
+    <div class="lv-header-alt clearfix m-b-5">
+        <h2 class="lvh-label hidden-xs"><%- title %></h2>
+        <ul class="lv-actions actions">
+            <li><a data-toggle="tooltip" data-placement="top" data-original-title="Tải file báo cáo" id="download-excel"><i
+                            class="zmdi zmdi-cloud-download"></i></a></li>
+            <li><a data-toggle="tooltip" data-placement="top" data-original-title="Refresh"><i
+                            class="zmdi zmdi-refresh"></i></a></li>
+            <li data-toggle="tooltip" data-placement="top" data-original-title="Cột hiển thị" class="dropdown">
+                <a role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                    <i class="zmdi zmdi-view-column"></i>
+                </a>
+                <ul class="dropdown-menu pull-right p-t-0" id="showHideFields"></ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="panel panel-default">
+        <div>
+            <div class="panel-body p-0 c-overflow">
+                <div class="tab-content">
+                    <div role="tabpanel" style="height: 100%" class="tab-pane animated active" id="tab-not-process-ticket">
+                        <form role="form" id="frm-report-inbound-call-serviced">
+                            <table class="table table-bordered table-fix" id="tbl-ticket">
+                                <thead>
+                                <tr>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_COMPANY"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_PHONE_NUMBER"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_AGENT"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_CONNECT_TIME"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_CALL_START_TIME"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_WAIT_TIME"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_CALL_DURATION_TIME"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_CALL_END_TIME"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center w-100">
+                                        <span class="TXT_ACTION"></span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr class="filter" id="search-input">
+                                    <td>
+                                        <div>
+                                            <select class="selectpicker searchColumn" multiple name="company" title="- Chọn -">
+                                                <% _.each(company,function(el){ %>
+                                                <option value="<%- el._id %>"><%- el.name %></option>
+                                                <% }) %>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td><input type="text" class="form-control input-sm" disabled></td>
+                                    <td>
+                                        <div>
+                                            <select class="selectpicker searchColumn" multiple name="agentId" title="- Chọn -">
+                                                <% agent.forEach(function(el){ %>
+                                                <option value="<%- el._id %>"><%- el.displayName + ' (' + el.name + ')' %></option>
+                                                <% }) %>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control input-sm searchColumn daterangepicker" name="updated"
+                                               style="position: inherit;border-radius: 0px;width: 100%;">
+                                    </td>
+                                    <td><input type="text" class="form-control input-sm" disabled></td>
+                                    <td><input type="text" class="form-control input-sm" disabled></td>
+                                    <td><input type="text" class="form-control input-sm" disabled></td>
+                                    <td><input type="text" class="form-control input-sm" disabled></td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-block waves-effect" id="btn-search" name="btn-search">
+                                            <i class="zmdi zmdi-filter-list m-r-5"></i> Lọc
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <tbody id="ticket-body">
+                                </tbody>
+                                </tbody>
+                            </table>
+                            <div class="text-center" id="ticket-total">
+                                <!--<b>-->
+                                <!--<span class="TXT_TOTAL"></span>:-->
+                                <!--<span class="bold c-red" id="ticket-total">100</span>-->
+                                <!--</b>-->
+                            </div>
+                            <div class="text-center" id="ticket-paging"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%
+var timeRangeArray = [
+    '< 15 giây',
+    '15 giây - 30 giây',
+    '30 giây - 45 giây',
+    '45 giây - 60 giây',
+    '60 giây - 75 giây',
+    '75 giây - 90 giây',
+    '90 giây - 105 giây',
+    '105 giây - 120 giây',
+    '120 giây - 135 giây',
+    '> 135 giây'
+];
+%>
+
+<div class="card">
+    <div class="row z-panel">
+        <div class="col-sm-12 " style="position: relative;">
+            <div id="duration-table">
+                <div class="lv-header-alt clearfix m-b-5">
+                    <h2 class="lvh-label hidden-xs"><span class="TXT_CALL_DURATION_TIME"></span></h2>
+                </div>
+
+                <div class="col-sm-5 p-0">
+                    <table class="table table-bordered table-fix">
+                        <thead>
+                        <tr>
+                            <th class="bgm-orange c-white text-center TXT_CALL_DURATION_TIME"></th>
+                            <th class="bgm-orange c-white text-center TXT_QUANTITY"></th>
+                            <th class="bgm-orange c-white text-center">%</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <% timeRangeArray.forEach(function(el, index){ %>
+                        <tr class="duration-rows" data-index="<%- index %>">
+                            <td class=""><b><%- el %></b></td>
+                            <td class="quantity text-center"></td>
+                            <td class="percent text-center"></td>
+                        </tr>
+                        <% }) %>
+                        <tr>
+                            <td><i><span class="TXT_SEARCH"></span></i></td>
+                            <td colspan="2">
+                                <div class="input-group fg-line" style="width: 100%;">
+                                    <input data-toggle="tooltip"
+                                           data-placement="top"
+                                           data-original-title="Tìm kiếm theo thời gian động"
+                                           placeholder="10-24"
+                                           class="form-control"
+                                           type="text"
+                                           data-type="search-duration-call"
+                                           name="search-duration-call:string">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default reveal searchDynamicDuration" type="button" style="max-height: 35px;">
+                                            <i class="zmdi zmdi-search zmdi-hc-fw f-17"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr id="dynamicDurationSearchPlaceHolder" style="display: none;">
+                            <td class="title"></td>
+                            <td class="text-center searchTotal"></td>
+                            <td class="text-center searchPercent"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-7">
+                    <div id="duration-highchart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="shadow"></div>
+        <div class="loading">
+            <img class="text-center" src="assets/images/loading.gif">
+        </div>
+    </div>
+</div>
+
+
+<div class="card m-t-20">
+    <div class="row z-panel">
+        <div class="col-sm-12">
+            <div id="waiting-time-table">
+                <div class="lv-header-alt clearfix m-b-5">
+                    <h2 class="lvh-label hidden-xs"><span class="TXT_WAIT_TIME"></span></h2>
+                </div>
+
+                <div class="col-sm-5 p-0">
+                    <table class="table table-bordered table-fix">
+                        <thead>
+                        <tr>
+                            <th class="bgm-orange c-white text-center TXT_WAIT_TIME"></th>
+                            <th class="bgm-orange c-white text-center TXT_QUANTITY"></th>
+                            <th class="bgm-orange c-white text-center">%</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <% timeRangeArray.forEach(function(el, index){ %>
+                        <tr class="waiting-rows" data-index="<%- index %>">
+                            <td><b><%- el %></b></td>
+                            <td class="quantity text-center"></td>
+                            <td class="percent text-center"></td>
+                        </tr>
+                        <% }) %>
+                        <tr>
+                            <td><i><span class="TXT_SEARCH"></span></i></td>
+                            <td colspan="2">
+                                <div class="input-group fg-line" style="width: 100%;">
+                                    <input data-toggle="tooltip"
+                                           data-placement="top"
+                                           data-original-title="Tìm kiếm theo thời gian động"
+                                           placeholder="10-24"
+                                           class="form-control"
+                                           type="text"
+                                           data-type="search-duration-call"
+                                           name="search-duration-call:string">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default reveal searchDynamicWaiting" type="button" style="max-height: 35px;">
+                                            <i class="zmdi zmdi-search zmdi-hc-fw f-17"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr id="dynamicWaitSearchPlaceHolder" style="display: none;">
+                            <td class="title"></td>
+                            <td class="text-center searchTotal"></td>
+                            <td class="text-center searchPercent"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-7">
+                    <div id="waiting-highchart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="shadow"></div>
+        <div class="loading">
+            <img class="text-center" src="assets/images/loading.gif">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,561 @@
+<%- breadcrumb %>
+<div class="card">
+    <div class="lv-header-alt clearfix m-b-5">
+        <h2 class="lvh-label hidden-xs"><%- title %></h2>
+        <ul class="lv-actions actions">
+            <li><a data-toggle="tooltip" data-placement="top" data-original-title="Refresh"><i
+                            class="zmdi zmdi-refresh"></i></a></li>
+            <li data-toggle="tooltip" data-placement="top" data-original-title="Cột hiển thị" class="dropdown">
+                <a role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                    <i class="zmdi zmdi-view-column"></i>
+                </a>
+                <ul class="dropdown-menu pull-right p-t-0" id="showHideFields"></ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="panel panel-default">
+        <div>
+            <div class="panel-body p-0 c-overflow">
+                <ul class="tab-nav tn-justified" role="tablist">
+                    <li role="presentation" class="inbound active" data-id="1">
+                        <a class="col-sm-6 p-5 f-13"
+                           href="#tab-inbound"
+                           aria-controls="tab-inbound"
+                           role="tab"
+                           data-toggle="tab" aria-expanded="false">Danh sách gọi vào</a>
+                    </li>
+                    <li role="presentation" class="outbound" data-id="2">
+                        <a class="col-sm-6 p-5 f-13"
+                           href="#tab-outbound"
+                           aria-controls="tab-outbound"
+                           role="tab"
+                           data-toggle="tab" aria-expanded="false">Danh sách gọi ra</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" style="height: 100%" class="tab-pane animated active" id="tab-inbound">
+                        <form role="form" id="frm-inbound">
+                            <table class="table table-bordered table-fix" id="tbl-ticket">
+                                <thead>
+                                <tr>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="assign_subject"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center sort" role="button"
+                                        data-sort="none" sortName="status">
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp tăng dần"
+                                           class="zmdi zmdi-sort-asc"></i>
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp giảm dần"
+                                           class="zmdi zmdi-sort-desc"></i>
+                                        <span class="assign_status"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center sort" role="button"
+                                        data-sort="none" sortName="field_ho_ten">
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp tăng dần"
+                                           class="zmdi zmdi-sort-asc"></i>
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp giảm dần"
+                                           class="zmdi zmdi-sort-desc"></i>
+                                        <span class="assign_customer"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center sort" role="button"
+                                        data-sort="none" sortName="field_so_dien_thoai">
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp tăng dần"
+                                           class="zmdi zmdi-sort-asc"></i>
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp giảm dần"
+                                           class="zmdi zmdi-sort-desc"></i>
+                                        <span class="assign_phone"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center w-180 sort"
+                                        role="button"
+                                        data-sort="none" sortName="updated">
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp tăng dần"
+                                           class="zmdi zmdi-sort-asc"></i>
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp giảm dần"
+                                           class="zmdi zmdi-sort-desc"></i>
+                                        <span class="assign_updated"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center w-180 sort"
+                                        role="button"
+                                        data-sort="none" sortName="deadline">
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp tăng dần"
+                                           class="zmdi zmdi-sort-asc"></i>
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp giảm dần"
+                                           class="zmdi zmdi-sort-desc"></i>
+                                        <span class="assign_deadline"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center w-180 sort" role="button"
+                                        data-sort="none" sortName="createBy">
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp tăng dần"
+                                           class="zmdi zmdi-sort-asc"></i>
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp giảm dần"
+                                           class="zmdi zmdi-sort-desc"></i>
+                                        <span class="assign_createBy"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center w-100">
+                                        <span class="assign_agent"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center w-100">
+                                        <span class="assign_action"></span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr class="filter">
+                                    <td>
+                                        <input type="text" class="form-control input-sm searchColumn"
+                                               id="subject" name="subject"
+                                               placeholder="Tên chiến dịch">
+                                    </td>
+                                    <td>
+                                        <select class="selectpicker searchColumn"
+                                                id="status"
+                                                name="status">
+                                            <option value="-1" selected>Chưa hoàn thành</option>
+                                            <option value="0">Chờ xử lý</option>
+                                            <option value="1">Đang xử lý</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control input-sm searchColumn"
+                                               id="field_ho_ten" name="field_ho_ten"
+                                               placeholder="Tên khách hàng">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control input-sm searchColumn"
+                                               id="field_so_dien_thoai" name="field_so_dien_thoai"
+                                               placeholder="094256789">
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text"
+                                                   class="form-control pull-right multi-date-picker searchColumn"
+                                                   id="updated" name="updated"
+                                                   placeholder="VD: 01/19/2016 9:51 AM">
+                                            <span class="input-group-addon p-l-10 bgm-gray c-white">
+                                                <i role="button" class="zmdi zmdi-calendar"></i></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text"
+                                                   class="form-control pull-right multi-date-picker searchColumn"
+                                                   id="updated" name="deadline"
+                                                   placeholder="VD: 01/19/2016">
+                                            <span class="input-group-addon p-l-10 bgm-gray c-white">
+                                                <i role="button" class="zmdi zmdi-calendar"></i></span>
+                                        </div>
+                                    </td>
+                                    <td><input type="text" class="form-control input-sm searchColumn"
+                                               id="createBy" name="createBy"
+                                               placeholder="Người tạo">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control input-sm searchColumn"
+                                               id="idAgent" name="idAgent"
+                                               placeholder="Điện thoại viên">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-block waves-effect"
+                                                id="btn-search" name="btn-search">
+                                            <i class="zmdi zmdi-filter-list m-r-5"></i> Lọc
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <tbody id="ticket-body">
+                                </tbody>
+                            </table>
+                            <div class="text-center" id="ticket-total"></div>
+                            <div class="text-center" id="ticket-paging"></div>
+                        </form>
+                        <div class="text-center col-sm-2 m-b-5 assign-ticket">
+                            <button data-toggle="modal" href="#modal-inbound" type="button"
+                                    class="btn btn-primary btn-block waves-effect" id="assign-ticket"
+                                    name="assign-ticket">
+                                Gán ticket
+                            </button>
+                        </div>
+                    </div>
+
+                    <div role="tabpanel" style="height: 100%" class="tab-pane animated" id="tab-outbound">
+                        <form role="form" id="frm-outbound">
+                            <table class="table table-bordered table-fix" id="tbl-ticket">
+                                <thead>
+                                <tr>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="assign_subject"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center sort" role="button"
+                                        data-sort="none" sortName="status">
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp tăng dần"
+                                           class="zmdi zmdi-sort-asc"></i>
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp giảm dần"
+                                           class="zmdi zmdi-sort-desc"></i>
+                                        <span class="assign_status"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center sort" role="button"
+                                        data-sort="none" sortName="field_ho_ten">
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp tăng dần"
+                                           class="zmdi zmdi-sort-asc"></i>
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp giảm dần"
+                                           class="zmdi zmdi-sort-desc"></i>
+                                        <span class="assign_customer"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center sort" role="button"
+                                        data-sort="none" sortName="field_so_dien_thoai">
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp tăng dần"
+                                           class="zmdi zmdi-sort-asc"></i>
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp giảm dần"
+                                           class="zmdi zmdi-sort-desc"></i>
+                                        <span class="assign_phone"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center w-180 sort"
+                                        role="button"
+                                        data-sort="none" sortName="updated">
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp tăng dần"
+                                           class="zmdi zmdi-sort-asc"></i>
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp giảm dần"
+                                           class="zmdi zmdi-sort-desc"></i>
+                                        <span class="assign_updated"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center w-180 sort"
+                                        role="button"
+                                        data-sort="none" sortName="deadline">
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp tăng dần"
+                                           class="zmdi zmdi-sort-asc"></i>
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp giảm dần"
+                                           class="zmdi zmdi-sort-desc"></i>
+                                        <span class="assign_deadline"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center w-180 sort" role="button"
+                                        data-sort="none" sortName="createBy">
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp tăng dần"
+                                           class="zmdi zmdi-sort-asc"></i>
+                                        <i data-toggle="tooltip" data-placement="top"
+                                           data-original-title="Sắp xếp giảm dần"
+                                           class="zmdi zmdi-sort-desc"></i>
+                                        <span class="assign_createBy"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center w-100">
+                                        <span class="assign_agent"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center w-100">
+                                        <span class="assign_action"></span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr class="filter">
+                                    <td>
+                                        <input type="text" class="form-control input-sm searchColumn"
+                                               id="subject" name="subject"
+                                               placeholder="Tên chiến dịch">
+                                    </td>
+                                    <td>
+                                        <select class="selectpicker searchColumn"
+                                                id="status"
+                                                name="status">
+                                            <option value="-1" selected>Chưa hoàn thành</option>
+                                            <option value="0">Chờ xử lý</option>
+                                            <option value="1">Đang xử lý</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control input-sm searchColumn"
+                                               id="field_ho_ten" name="field_ho_ten"
+                                               placeholder="Tên khách hàng">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control input-sm searchColumn"
+                                               id="field_so_dien_thoai" name="field_so_dien_thoai"
+                                               placeholder="094256789">
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text"
+                                                   class="form-control pull-right multi-date-picker searchColumn"
+                                                   id="updated" name="updated"
+                                                   placeholder="VD: 01/19/2016">
+                                            <span class="input-group-addon p-l-10 bgm-gray c-white">
+                                                <i role="button" class="zmdi zmdi-calendar"></i></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text"
+                                                   class="form-control pull-right multi-date-picker searchColumn"
+                                                   id="updated" name="deadline"
+                                                   placeholder="VD: 01/19/2016">
+                                            <span class="input-group-addon p-l-10 bgm-gray c-white">
+                                                <i role="button" class="zmdi zmdi-calendar"></i></span>
+                                        </div>
+                                    </td>
+                                    <td><input type="text" class="form-control input-sm searchColumn"
+                                               id="createBy" name="createBy"
+                                               placeholder="Người tạo">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control input-sm searchColumn"
+                                               id="idAgent" name="idAgent"
+                                               placeholder="Điện thoại viên">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-block waves-effect"
+                                                id="btn-search" name="btn-search">
+                                            <i class="zmdi zmdi-filter-list m-r-5"></i> Lọc
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <tbody id="ticket-body">
+                                </tbody>
+                            </table>
+                            <div class="text-center" id="ticket-total"></div>
+                            <div class="text-center" id="ticket-paging"></div>
+                        </form>
+                        <div class="text-center col-sm-2 m-b-5 assign-ticket">
+                            <button data-toggle="modal" href="#modal-outbound" type="button"
+                                    class="btn btn-primary btn-block waves-effect" id="assign-ticket"
+                                    name="assign-ticket">
+                                Gán ticket
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-inbound" tabindex="-1" role="dialog" aria-hidden="true">
+    <form class="form-horizontal m-t-30 form-assign" role="form">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Gán lại ticket</h4>
+                    <div class="text-center" id="ticket-total"></div>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body" style="overflow-y: auto;overflow-x: hidden; max-height: 350px;">
+                        <div class="form-group">
+                            <label for="inbound_company" class="col-sm-3 control-label">Công ty</label>
+                            <div class="col-sm-8">
+                                <select class="selectpicker searchAgent"
+                                        id="inbound_company"
+                                        name="inbound_company">
+                                    <% companies.forEach(function(col){ %>
+                                    <option value="<%- col._id %>"><%- col.name %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inbound_group" class="col-sm-3 control-label">Nhóm</label>
+                            <div class="col-sm-8">
+                                <select class="selectpicker searchAgent"
+                                        id="inbound_group"
+                                        name="inbound_group">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="modal_name" class="col-sm-3 control-label">Họ tên</label>
+                            <div class="col-sm-8">
+                                <div class="fg-line">
+                                    <input type="text" value="" class="form-control input-sm searchAgent"
+                                           id="modal_name" name="modal_name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center col-sm-3" id="frm-search">
+                            <button type="button" class="btn btn-primary btn-block waves-effect queryAgent"
+                                    id="inbound">
+                                Tìm kiếm
+                            </button>
+                        </div>
+                        <form role="form" id="frm-agent">
+                            <table class="table table-bordered table-fix" id="tbl-inbound">
+                                <thead>
+                                <tr>
+                                    <th class="bgm-orange c-white text-center w-30">
+                                        <div class="checkbox m-0">
+                                            <label>
+                                                <input name="select" type="checkbox" class="select-box select-box-all"
+                                                       value="all">
+                                                <i class="input-helper"></i>
+                                            </label>
+                                        </div>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span>Tên hiển thị</span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span>Công ty</span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span>Nhóm</span>
+                                    </th>
+                                    <th class="bgm-orange c-white w-100">
+                                        <span>Số lượng</span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="inbound-agent-body">
+                                </tbody>
+                            </table>
+                            <div class="text-center" id="inbound-agent-paging"></div>
+                            <div class="form-group" style="display: none;">
+                                <label for="modal_deadline" class="col-sm-3 control-label" style="font-weight: bold;">Đặt lại ngày hẹn xử lý</label>
+                                <div class="col-sm-5">
+                                    <div class="fg-line">
+                                        <input type="text" value="" class="form-control input-sm searchAgent datepicker-deadline" id="modal_deadline" name="modal_deadline">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect"
+                            data-dismiss="modal"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Bỏ qua
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i
+                                class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"
+                            style="display: none"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Cập nhật
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal fade" id="modal-outbound" tabindex="-1" role="dialog" aria-hidden="true">
+    <form class="form-horizontal m-t-30 form-assign" role="form">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Gán lại ticket</h4>
+                    <div class="text-center" id="ticket-total"></div>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body" style="overflow-y: auto;overflow-x: hidden; max-height: 350px;">
+                        <div class="form-group">
+                            <label for="outbound_company" class="col-sm-3 control-label">Công ty</label>
+                            <div class="col-sm-8">
+                                <select class="selectpicker searchAgent"
+                                        id="outbound_company"
+                                        name="outbound_company">
+                                    <% companies.forEach(function(col){ %>
+                                    <option value="<%- col._id %>"><%- col.name %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="outbound_group" class="col-sm-3 control-label">Nhóm</label>
+                            <div class="col-sm-8">
+                                <select class="selectpicker searchAgent"
+                                        id="outbound_group"
+                                        name="outbound_group">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="modal_name" class="col-sm-3 control-label">Họ tên</label>
+                            <div class="col-sm-8">
+                                <div class="fg-line">
+                                    <input type="text" value="" class="form-control input-sm searchAgent"
+                                           id="modal_name" name="modal_name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center col-sm-3" id="frm-search">
+                            <button type="button" class="btn btn-primary btn-block waves-effect queryAgent"
+                                    id="outbound">
+                                Tìm kiếm
+                            </button>
+                        </div>
+                        <form role="form" id="frm-agent">
+                            <table class="table table-bordered table-fix" id="tbl-outbound">
+                                <thead>
+                                <tr>
+                                    <th class="bgm-orange c-white text-center w-30">
+                                        <div class="checkbox m-0">
+                                            <label>
+                                                <input name="select" type="checkbox" class="select-box select-box-all"
+                                                       value="all">
+                                                <i class="input-helper"></i>
+                                            </label>
+                                        </div>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span>Tên hiển thị</span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span>Công ty</span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span>Nhóm</span>
+                                    </th>
+                                    <th class="bgm-orange c-white w-100">
+                                        <span>Số lượng</span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="outbound-agent-body">
+                                </tbody>
+                            </table>
+                            <div class="text-center" id="outbound-agent-paging"></div>
+                            <div class="form-group" style="display: none;">
+                                <label for="modal_deadline" class="col-sm-3 control-label" style="font-weight: bold;">Đặt lại ngày hẹn xử lý</label>
+                                <div class="col-sm-5">
+                                    <div class="fg-line">
+                                        <input type="text" value="" class="form-control input-sm searchAgent datepicker-deadline" id="modal_deadline" name="modal_deadline">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect"
+                            data-dismiss="modal"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Bỏ qua
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i
+                                class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"
+                            style="display: none"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Cập nhật
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

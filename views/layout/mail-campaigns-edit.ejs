@@ -1,0 +1,113 @@
+﻿<%-breadcrumb%>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted f-12">( Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập. )</small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="new-campaigns-mail">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Tên chiến dịch <span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control validate[required]" id="name" name="name" placeholder="..." value="<%- mail.name %>">
+                    <input type="hidden" name="old_name" value="<%- mail.name %>"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Công ty <span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <select class="selectpicker validate[required]" name="company" id="edit_company" multiple data-max-options="1">
+                        <% for(var i = 0; i < company.length; i++){ %>
+                        <option value="<%- company[i]._id %>" <%- _equal(company[i]._id, mail.setting.idCompany) ? 'selected' :'' %>><%- company[i].name %></option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Tên cấu hình <span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <select class="selectpicker validate[required]" name="setting" id="edit_setting" title=""></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Ngày gửi <span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <input type="text" class="date-time-picker form-control validate[required]" name="sendDate" id="edit_sendDate" value="<%- _moment(mail.sendDate).format('MM/DD/YYYY hh:mm A') %>" title="">
+                </div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Chọn nguồn </label>
+                <div class="col-sm-6">
+                    <div class="p-relative">
+                        <select class="tag-select" multiple id="sources" name="sources[]" data-placeholder="...">
+                            <% for(var i = 0 ; i < groups.length; i++){ %>
+                            <optgroup label="<%- groups[i].name %>">
+                                <% if(groups[i].sources.length){ %>
+                                <% for(var j = 0 ; j < groups[i].sources.length; j++){ %>
+                                <% if(groups[i].sources[j].status){ %>
+                                <option value="<%- groups[i].sources[j]._id %>" <%- mail.sources.indexOf(groups[i].sources[j]._id) >= 0 ? 'selected' : ''  %> ><%- groups[i].sources[j].name %></option>
+                                <% } %>
+                                <% } %>
+                                <% } %>
+                            </optgroup>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="form-group">
+                <label for="name" class="col-sm-3 control-label">File excel </label>
+                <div class="col-sm-6" id="file-upload">
+                    <div class="fileinput fileinput-new p-relative" data-provides="fileinput">
+                        <span class="btn btn-default btn-info btn-sm btn-file m-r-10 waves-effect">
+                            <span class="fileinput-new"><i class="zmdi zmdi-upload p-r-10 w-13"></i>Chọn file</span>
+                            <span class="fileinput-exists"><i class="zmdi zmdi-upload p-r-10"></i>Chọn lại</span>
+                            <input type="file" id="fupload" name="upload">
+                        </span>
+                        <span class="fileinput-filename"></span>
+                        <a href="#" class="close fileinput-exists" data-dismiss="fileinput">×</a>
+                    </div>
+                </div>
+            </div>-->
+            <hr>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Tiêu đề gửi <span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control validate[required]" id="subject" name="subject" value="<%- mail.subject %>" placeholder="...">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Nội dung <span class="required">*</span></label>
+                <div class="col-sm-6 ">
+                    <textarea class="form-control validate[required]" id="body_raw" name="body_raw" placeholder="..."><%- mail.body_raw %></textarea>
+                </div>
+                <div class="col-sm-3">
+                    <div class="panel-group" role="tablist" id="mail-template-list">
+                        <div class="panel panel-default"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Tệp đính kèm</label>
+                <div class="col-sm-6">
+                    <ul>
+                        <% mail.attachments.forEach(function (file) {%>
+                        <li><a href="<%- file%>"><%- file%></a></li>
+                        <%}) %>
+                    </ul>
+                    <input type="file" multiple class="form-control" id="attachments" name="attachments" placeholder="...">
+                </div>
+            </div>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <input type="hidden" name="type" id="edit_type" value="">
+                    <input type="hidden" name="from" id="edit_from" value="">
+                    <a href="/mail-campaigns" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 m-r-10 waves-effect btn-save" data-type="save"><i class="m-r-5 zmdi zmdi-save"></i>Lưu</button>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 m-r-10 waves-effect btn-send" data-type="send"><i class="m-r-5 zmdi zmdi-mail-send"></i>Xác nhận và gửi</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

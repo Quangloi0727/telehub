@@ -1,0 +1,196 @@
+<%-breadcrumb%>
+<script>
+
+</script>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted"><i>Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập. </i></small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="add-new-campaign">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Tên chiến dịch <span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" value="" class="form-control input-sm validate[required,ajax[NewCheck]]" id="name" name="name">
+                        <input type="hidden" value="" id="updateId">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Chú thích </label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" value="" class="form-control input-sm" id="note" name="note">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Ngày bắt đầu<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <div class="input-group">
+                            <input class="form-control date-time-picker validate[required]" type="text" id="startDate" name="startDate">
+                                        <span class="input-group-addon p-l-10 bgm-gray c-white">
+                                            <i role="button" class="zmdi zmdi-calendar"></i>
+                                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Ngày kết thúc<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <div class="input-group">
+                            <input class="form-control date-time-picker validate[required,custom[DurHighCheck]]" id="endDate" name="endDate">
+                                        <span class="input-group-addon p-l-10 bgm-gray c-white">
+                                            <i role="button" class="zmdi zmdi-calendar"></i>
+                                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Công ty<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line select ">
+                        <select class="selectpicker validate[required,ajax[NewCheck]]" id="idCompany" name="idCompany">
+                            <option value='' disabled selected>---- Chọn ----</option>
+                            <% orgs.forEach(function(el, i) {%>
+                            <option value="<%- el._id%>"><%- el.name%></option>
+                            <%})%>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Trunk<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line select ">
+                        <select class="selectpicker validate[required]" id="trunk" name="trunk">
+                            <option value='' disabled selected>---- Chọn ----</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Loại<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line select ">
+                        <select class="selectpicker validate[required]" id="type" name="type">
+                            <option value='' disabled selected>---- Chọn ----</option>
+                            <option value="1">Gọi Thủ Công</option>
+                            <option value="2">Auto Dialing</option>
+                            <option value="3">Predictive</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="auto-dialing hidden form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Delay time </label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="number" value="0" class="form-control input-sm" id="delayTime" name="delayTime:number">
+                    </div>
+                </div>
+            </div>
+            <div class="auto-dialing hidden form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Retry </label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="number" value="0" class="form-control input-sm" id="retry" name="retry:number">
+                    </div>
+                </div>
+            </div>
+            <div class="auto-dialing hidden form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Retry time </label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="number" value="0" class="form-control input-sm" id="retryTime" name="retryTime:number">
+                    </div>
+                </div>
+            </div>
+            <div class="auto-dialing hidden form-group">
+                <label for="group" class="col-sm-3 control-label">Trạng thái Auto Dialing</label>
+                <div class="col-sm-6">
+                    <div class="fg-line select ">
+                        <select class="selectpicker" id="autoDialingStatus" name="autoDialingStatus">
+                            <option value='0' selected>Waiting</option>
+                            <option value='1'>Start</option>
+                            <option value='2'>Stop</option>
+                            <option value='3'>Completed</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Điện thoại viên</label>
+                <div class="col-sm-6">
+                    <select class="" data-prompt-position="inline:0,10" multiple="multiple" size="10"
+                            name="agents[]"
+                            id="agents">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Nhóm trạng thái cuộc gọi<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line select ">
+                        <select class="selectpicker validate[required]" id="idCategoryReason" name="idCategoryReason">
+                            <option value='' disabled selected>---- Chọn ----</option>
+                            <% reasons.forEach(function(el, i) {%>
+                            <option value="<%- el._id%>"><%- el.name%></option>
+                            <%})%>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Câu hỏi khảo sát</label>
+                <div class="col-sm-6">
+                    <div class="fg-line select">
+                        <select class="selectpicker" id="idSurvey" name="idSurvey">
+                            <option value='' selected>---- Chọn ----</option>
+                            <% surveys.forEach(function(el, i) {%>
+                            <option value="<%- el._id%>"><%- el.name%></option>
+                            <%})%>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Chiến dịch cha</label>
+                <div class="col-sm-6">
+                    <div class="fg-line select">
+                        <select class="selectpicker" id="idCampainParent" name="idCampainParent">
+                            <option value='' selected>---- Chọn ----</option>
+                            <% campains.forEach(function(el, i) {%>
+                            <option value="<%- el._id%>"><%- el.name%></option>
+                            <%})%>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Trạng thái</label>
+                <div class="col-sm-6">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="1" name="status" id="status" checked>
+                            <i class="input-helper"></i>
+                            <span id="status-span" class="p-l-10" data-text-on="Không kích hoạt" data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a type="button" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect" href="/#campains"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

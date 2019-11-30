@@ -1,0 +1,392 @@
+<%- breadcrumb %>
+<script>
+    var recordPath = JSON.parse('<%- JSON.stringify(recordPath); %>');
+</script>
+<div class="card">
+    <div class="lv-header-alt clearfix m-b-5">
+        <h2 class="lvh-label hidden-xs"><%- title %></h2>
+        <ul class="lv-actions actions">
+            <li><a data-toggle="tooltip" data-placement="top" data-original-title="Tải file báo cáo"
+                   id="download-excel"><i
+                            class="zmdi zmdi-cloud-download"></i></a></li>
+            <li><a data-toggle="tooltip" data-placement="top" data-original-title="Refresh"><i
+                            class="zmdi zmdi-refresh"></i></a></li>
+            <li data-toggle="tooltip" data-placement="top" data-original-title="Cột hiển thị" class="dropdown">
+                <a role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                    <i class="zmdi zmdi-view-column"></i>
+                </a>
+                <ul class="dropdown-menu pull-right p-t-0" id="showHideFields"></ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="panel panel-default">
+        <div>
+            <div class="panel-body p-0 c-overflow">
+                <div class="tab-content">
+                    <div role="tabpanel" style="height: 100%" class="tab-pane animated active"
+                         id="tab-not-process-ticket">
+                        <!-- Filter panel-->
+                        <div class="panel panel-default">
+                            <div class="panel-heading p-0">
+                                <h5 class="panel-title">
+                                    <div class="btn-block p-10 bgm-orange c-white text-uppercase">
+                                        Điều kiện xuất báo cáo
+                                    </div>
+                                </h5>
+                                <div class="panel-body c-overflow p-5 p-b-10">
+                                    <form role="form" id="frm-report-order">
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="idCampain" class="control-label f-13 TXT_CAMPAIGN_NAME"></label>
+                                            <select class="selectpicker searchColumn" multiple data-actions-box="true"
+                                                    name="idCampain">
+                                                <option hidden disabled>- Chọn -</option>
+                                                <% if (data) { %>
+                                                <% data.campaign.forEach(function(el){ %>
+                                                <option value="<%- el._id %>"><%- el.name %></option>
+                                                <% })} %>
+                                            </select>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="field_so_dien_thoai"
+                                                   class="control-label f-13 TXT_PHONE_NUMBER"></label>
+                                            <input type="text"
+                                                   class="form-control input-sm searchColumn"
+                                                   name="field_so_dien_thoai"
+                                                   placeholder="VD: 09xxxxxxxx">
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="customersources"
+                                                   class="control-label f-13 TXT_CUSTOMER_SOURCE"></label>
+                                            <select class="selectpicker searchColumn" multiple data-actions-box="true"
+                                                    name="customersources">
+                                                <option hidden disabled>- Chọn -</option>
+                                                <% if (data) { %>
+                                                <% data.customer.forEach(function(el){ %>
+                                                <option value="<%- el._id %>"><%- el.name %></option>
+                                                <% })} %>
+                                            </select>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="status" class="control-label f-13 TXT_STATUS"></label>
+                                            <select class="selectpicker searchColumn" multiple data-actions-box="true"
+                                                    name="status">
+                                                <option hidden disabled>- Chọn -</option>
+                                                <% if (data) { %>
+                                                <option value="0">Chờ xử lý</option>
+                                                <option value="1">Đang xử lý</option>
+                                                <option value="2">Hoàn thành</option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="ticketReasonCategory"
+                                                   class="control-label f-13 TXT_TICKET_REASON_CATEGORY"></label>
+                                            <select class="selectpicker searchColumn" multiple data-actions-box="true"
+                                                    name="ticketReasonCategory">
+                                                <option hidden disabled>- Chọn -</option>
+                                                <% if (data) { %>
+                                                <% data.ticketReasonCategory.forEach(function(el){ %>
+                                                <option value="<%- el._id %>"><%- el.name %></option>
+                                                <% })} %>
+                                            </select>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="ticketReason"
+                                                   class="control-label f-13 TXT_TICKET_REASON"></label>
+                                            <select class="selectpicker searchColumn" multiple data-actions-box="true"
+                                                    name="ticketReason">
+                                                <option hidden disabled>- Chọn -</option>
+                                                <% if (data) { %>
+                                                <% data.ticketReason.forEach(function(el){ %>
+                                                <option value="<%- el._id %>"><%- el.name %></option>
+                                                <% })} %>
+                                            </select>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="ticketSubreason"
+                                                   class="control-label f-13 TXT_TICKET_SUBREASON"></label>
+                                            <select class="tag-select searchColumn" multiple name="ticketSubreason">
+                                                <% if (data) { %>
+                                                <% data.ticketSubreason.forEach(function(el){ %>
+                                                <option value="<%- el._id %>"><%- el.name %></option>
+                                                <% })} %>
+                                            </select>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="callIdLength" class="control-label f-13 TXT_CALLS"></label>
+                                            <input type="number"
+                                                   min="0"
+                                                   class="form-control input-sm searchColumn"
+                                                   name="callIdLength">
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-6 col-md-6">
+                                            <label for="note" class="control-label f-13 TXT_NOTE"></label>
+                                            <input type="text"
+                                                   class="form-control input-sm searchColumn"
+                                                   name="note"
+                                                   placeholder="VD: CNTT">
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="updated" class="control-label f-13 TXT_UPDATED"></label>
+                                            <div class="input-group">
+                                                <input type="text"
+                                                       class="form-control pull-right multi-date-picker searchColumn"
+                                                       id="updated" name="updated">
+                                                <span class="input-group-addon p-l-10 bgm-gray c-white">
+                                                <i role="button" class="zmdi zmdi-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="updateBy" class="control-label f-13 TXT_UPDATED_BY"></label>
+                                            <select class="selectpicker searchColumn" multiple data-actions-box="true"
+                                                    name="updateBy">
+                                                <option hidden disabled>- Chọn -</option>
+                                                <% if (data) { %>
+                                                <% data.user.forEach(function(el){ %>
+                                                <option value="<%- el._id %>"><%- el.displayName + '(' + el.name + ')' %></option>
+                                                <% })} %>
+                                            </select>
+                                        </div>
+
+                                        <!-- Order filter-->
+                                        <div class=" form-group p-l-5 p-r-5 p-t-30 col-sm-12 text-center">
+
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="order_created"
+                                                   class="control-label f-13 TXT_ORDER_CREATED"></label>
+                                            <div class="input-group">
+                                                <input type="text"
+                                                       class="form-control pull-order_created multi-date-picker searchColumn"
+                                                       id="orderCreated" name="orderCreated">
+                                                <span class="input-group-addon p-l-10 bgm-gray c-white">
+                                                <i role="button" class="zmdi zmdi-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="order_phone"
+                                                   class="control-label f-13 TXT_PHONE_NUMBER"></label>
+                                            <input type="text"
+                                                   class="form-control input-sm searchColumn"
+                                                   name="order_phone"
+                                                   placeholder="VD: 09xxxxxxxx">
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="order_name"
+                                                   class="control-label f-13 TXT_CUSTOMER_NAME"></label>
+                                            <input type="text"
+                                                   class="form-control input-sm searchColumn"
+                                                   name="order_name"
+                                                   placeholder="">
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="order_deliveryType"
+                                                   class="control-label f-13 TXT_ORDER_DELIVERY_TYPE"></label>
+                                            <select class="selectpicker searchColumn" multiple data-actions-box="true"
+                                                    name="order_deliveryType">
+                                                <option hidden disabled>- Chọn -</option>
+                                                <% if (data) { %>
+                                                <option value="EMS">EMS</option>
+                                                <option value="SS">SS</option>
+                                                <option value="ZZ">ZZ</option>
+                                                <option value="ĐT">ĐT</option>
+                                                <option value="CK">CK</option>
+                                                <option value="TT">TT</option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="order_cardType"
+                                                   class="control-label f-13 TXT_ORDER_PART"></label>
+                                            <select class="selectpicker searchColumn" multiple data-actions-box="true"
+                                                    name="order_cardType">
+                                                <option hidden disabled>- Chọn -</option>
+                                                <% if (data && _.has(data.orderInfo, 'orderParts')) {
+                                                data.orderInfo.orderParts.map(function(part) {
+                                                %>
+                                                <option value="<%- part ? part : "Trống" %>"><%- part ? part : "Trống" %></option>
+                                                <% });
+                                                } %>
+                                            </select>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="order_card" class="control-label f-13 TXT_ORDER_CARD"></label>
+                                            <select class="selectpicker searchColumn" multiple data-actions-box="true" name="order_card" title="Chọn thẻ">
+                                                <% if (data && _.has(data.orderInfo, 'orderCards')) {
+                                                data.orderInfo.orderCards.map(function(card) {
+                                                %>
+                                                <option value="<%- card %>"><%- card %></option>
+                                                <% });
+                                                } %>
+                                            </select>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="order_isUpSale"
+                                                   class="control-label f-13">Chuyển loại</label>
+                                            <select class="selectpicker searchColumn" multiple data-actions-box="true"
+                                                    name="order_isUpSale">
+                                                <option hidden disabled>- Chọn -</option>
+                                                <% if (data) { %>
+                                                <option value="false">Không chuyển loại</option>
+                                                <option value="true">Là chuyển loại</option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                        <div class="p-l-5 p-r-5 col-xs-4 col-sm-3 col-md-3">
+                                            <label for="order_raw_status"
+                                                   class="control-label f-13 TXT_ORDER_RAW_STATUS"></label>
+                                            <select class="tag-select searchColumn" name="order_raw_status">
+                                                <% if (data) { %>
+                                                <option value="0" selected>Chưa xử lý</option>
+                                                <option value="1">Đã / Đang / Chờ xử lý</option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                        <!-- /Order filter-->
+
+
+                                        <div class=" form-group p-l-5 p-r-5 p-t-30 col-sm-12 text-center">
+                                            <button type="button" class="btn btn-primary waves-effect" id="btn-search"
+                                                    name="btn-search">
+                                                <i class="zmdi zmdi-filter-list m-r-5"></i> Lọc
+                                            </button>
+                                        </div>
+
+                                        <!-- Table orders filtered-->
+                                        <table class="table table-bordered table-fix" id="tbl-ticket">
+                                            <thead>
+                                            <tr>
+                                                <th class="bgm-orange c-white text-center">
+                                                    <span class="TXT_CUSTOMER_NAME"></span>
+                                                </th>
+                                                <th class="bgm-orange c-white text-center">
+                                                    <span class="TXT_PHONE_NUMBER"></span>
+                                                </th>
+                                                <th class="bgm-orange c-white text-center">
+                                                    <span class="TXT_CUSTOMER_EMAIL"></span>
+                                                </th>
+                                                <th class="bgm-orange c-white text-center">
+                                                    <span class="TXT_ORDER_ADDRESS"></span>
+                                                </th>
+                                                <th class="bgm-orange c-white text-center">
+                                                    <span class="TXT_ORDER_PART"></span>
+                                                </th>
+                                                <th class="bgm-orange c-white text-center">
+                                                    <span class="TXT_ORDER_CARD"></span>
+                                                </th>
+                                                <th class="bgm-orange c-white text-center">
+                                                    <span class="TXT_ORDER_CREATED"></span>
+                                                </th>
+                                                <th class="bgm-orange c-white text-center">
+                                                    <span class="TXT_ORDER_DELIVERY_TYPE"></span>
+                                                </th>
+                                                <th class="bgm-orange c-white text-center">
+                                                    <span class="TXT_ACTION"></span>
+                                                </th>
+                                            </thead>
+                                            <tbody id="ticket-body">
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center" id="ticket-total">
+                                            <!--<b>-->
+                                            <!--<span class="TXT_TOTAL"></span>:-->
+                                            <!--<span class="bold c-red" id="ticket-total">100</span>-->
+                                            <!--</b>-->
+                                        </div>
+                                        <div class="text-center" id="ticket-paging"></div>
+                                        <!-- /Table orders filtered-->
+                                    </form>
+
+                                    <!-- Table orders report by days-->
+                                    <table id="reportByDay" data-graph-container-before="1" data-graph-type="column" style="display:none">
+                                        <caption>Thông tin nhóm theo ngày</caption>
+                                        <thead>
+                                        <tr>
+                                            <th class="bgm-orange c-white text-center">
+                                                <span class="TXT_TIME"></span>
+                                            </th>
+                                            <th class="bgm-orange c-white text-center">
+                                                <span class="TXT_ENGLISH"></span>
+                                            </th>
+                                            <th class="bgm-orange c-white text-center">
+                                                <span class="TXT_JAPAN"></span>
+                                            </th>
+                                            <th class="bgm-orange c-white text-center">
+                                                <span class="TXT_OTHER"></span>
+                                            </th>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Filter panel-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modalTicketOrder" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" style="width: 200%; margin-left: -50%;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Chi tiết ticket</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-fix" id="tbl-ticket-order">
+                    <thead>
+                    <tr>
+                        <th class="bgm-orange c-white text-center">
+                            <span class="TXT_CAMPAIGN_NAME"></span>
+                        </th>
+                        <th class="bgm-orange c-white text-center">
+                            <span class="TXT_CUSTOMER_SOURCE"></span>
+                        </th>
+                        <th class="bgm-orange c-white text-center">
+                            <span class="TXT_STATUS"></span>
+                        </th>
+                        <th class="bgm-orange c-white text-center">
+                            <span class="TXT_TICKET_REASON_CATEGORY"></span>
+                        </th>
+                        <th class="bgm-orange c-white text-center">
+                            <span class="TXT_TICKET_REASON"></span>
+                        </th>
+                        <th class="bgm-orange c-white text-center">
+                            <span class="TXT_TICKET_SUBREASON"></span>
+                        </th>
+                        <th class="bgm-orange c-white text-center">
+                            <span class="TXT_CALLS"></span>
+                        </th>
+                        <th class="bgm-orange c-white text-center">
+                            <span class="TXT_NOTE"></span>
+                        </th>
+                        <th class="bgm-orange c-white text-center">
+                            <span class="TXT_UPDATED"></span>
+                        </th>
+                        <th class="bgm-orange c-white text-center">
+                            <span class="TXT_UPDATED_BY"></span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div id="ticket-record">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

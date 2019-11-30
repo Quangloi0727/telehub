@@ -1,0 +1,1036 @@
+﻿<!DOCTYPE html>
+<html>
+<!--[if IE 9 ]>
+<html class="ie9"><![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%- title %></title>
+    <link href="/assets/plugins/swal/style.css" rel="stylesheet">
+    <link href="/assets/css/animate.css" rel="stylesheet">
+    <link href="/assets/plugins/jquery-ui/style.css" rel="stylesheet">
+    <link href="/assets/tabs/notification/style.css" rel="stylesheet">
+    <!--<link href="/assets/css/modalFix.css" rel="stylesheet">-->
+    <% if(plugins){ %>
+    <% plugins.forEach(function(s){ %>
+    <% if(!_equal(typeof s, 'string')){ %>
+    <link href="/assets/plugins/<%- s[0] %>/style.css" rel="stylesheet">
+    <% } %>
+    <% }) %>
+    <% } %>
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/plugins/window/style.css" rel="stylesheet">
+    <link href="/assets/tabs/chat/style.css" rel="stylesheet">
+    <link href="/assets/tabs/voice/style.css" rel="stylesheet">
+    <link href="/assets/plugins/bootstrap-select/style.css" rel="stylesheet">
+    <link href="/assets/plugins/bootstrap-datepicker/style.css" rel="stylesheet">
+    <link href="/assets/plugins/bootstrap-datetimepicker/style.css" rel="stylesheet">
+   <!-- <link href="/assets/plugins/bootstrap-table/style.css" rel="stylesheet">-->
+    <link href="/assets/pages/<%- page %>/style.css" class="dynamic" rel="stylesheet">
+    <script>
+        CKEDITOR_BASEPATH = '/assets/plugins/ckeditor/', window.user = '<%- user._id || null %>';
+        window.crudAccess = JSON.parse('<%- JSON.stringify(crud) %>');
+    </script>
+</head>
+<body class="">
+
+<div class="tab-content p-relative" style="z-index: 11">
+    <div role="tabpanel" class="tab-pane animated fadeIn p-relative " id="tab-chat" style="overflow-x:hidden">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                            aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li class="active" id="btn-visitor"><a><i class="zmdi zmdi-comments f-20 p-relative t-3 m-r-5"></i>Visitor</a></li>
+                        <li class="" id="btn-history"><a><i class="zmdi zmdi-time f-20 p-relative t-2 m-r-5"></i>Lịch sử</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown" id="chat-status-container">
+                            <a class="dropdown-toggle" id="chat-status-info" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="zmdi zmdi-account c-green m-r-5"></i>Sẵn sàng phục vụ <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="chat-status" role="button" data-chat-status="1">Sẵn sàng phục vụ</a></li>
+                                <li><a class="chat-status" role="button" data-chat-status="0">Offline</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+            <!--/.container-fluid -->
+        </nav>
+        <div class="card" id="visitor-panel">
+            <div class="row visitor">
+                <div class="col-sm-2 p-r-0">
+                    <div class="list-group m-t-20" id="chat-task-lists">
+                        <a data-target="#chat-tbl-active-visitor-container" data-id="#chat-tbl-active-visitor-container"
+                           class="task list-group-item active" href="javascript:void(0)">Active Visitors <span class="badge m-t-3 f-10"
+                                                                                                               style="display: none">0</span></a>
+                        <a data-target="#chat-tbl-idle-visitor-container" data-id="#chat-tbl-idle-visitor-container" class="task list-group-item"
+                           href="javascript:void(0)">Idle Visitors <span class="badge m-t-3 f-10" style="display: none">0</span></a>
+                        <a data-target="#chat-tbl-request-visitor-container" data-id="#chat-tbl-request-visitor-container"
+                           class="task list-group-item" href="javascript:void(0)">Chat requests <span class="badge m-t-3 f-10"
+                                                                                                      style="display: none">0</span></a>
+                        <!--<a class="list-group-item" href="javascript:void(0)"><i class="zmdi zmdi-plus m-r-5"></i>New label</a>-->
+                    </div>
+                </div>
+                <div class="col-sm-10">
+                    <div class="lv-header-alt clearfix p-5" style="background-color: #edecec;">
+                        <h2 class="lvh-label p-l-15 c-orange">Active Visitors</h2>
+                    </div>
+                    <div id="chat-tbl-active-visitor-container">
+                        <table id="chat-tbl-active-visitor" data-type="active" data-unique-id="id" data-toggle="table" data-pagination="true"
+                               data-page-size="15" data-filter-control="true" class="table table-fix table-bordered f-13">
+                            <thead>
+                            <tr>
+                                <th data-field="id" data-visible="false"></th>
+                                <th data-field="customer" data-sortable="true" data-filter-control="input"
+                                    style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-account c-gray f-14 p-relative t-1 m-r-10"></i>Khách hàng
+                                </th>
+                                <th data-field="location" data-sortable="true" data-filter-control="input"
+                                    style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-globe c-gray f-14 p-relative t-1 m-r-5"></i>Địa điểm
+                                </th>
+                                <th data-field="online" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-time c-gray f-14 p-relative t-1 m-r-5"></i>Thời gian online
+                                </th>
+                                <th data-field="viewing" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-eye c-gray f-14 p-relative t-1 m-r-5"></i>Đang xem
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="chat-tbl-idle-visitor-container" style="display: none">
+                        <table id="chat-tbl-idle-visitor" data-type="idle" data-unique-id="id" data-toggle="table" data-filter-control="true"
+                               data-pagination="true" data-page-size="15" class="table table-fix table-bordered f-13">
+                            <thead>
+                            <tr>
+                                <th data-field="id" data-visible="false"></th>
+                                <th data-field="customer" data-filter-control="input" data-sortable="true"
+                                    style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-account c-gray f-14 p-relative t-1 m-r-10"></i>Khách hàng
+                                </th>
+                                <th data-field="location" data-filter-control="input" data-sortable="true"
+                                    style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-globe c-gray f-14 p-relative t-1 m-r-5"></i>Địa điểm
+                                </th>
+                                <th data-field="online" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-time c-gray f-14 p-relative t-1 m-r-5"></i>Thời gian online
+                                </th>
+                                <th data-field="viewing" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-eye c-gray f-14 p-relative t-1 m-r-5"></i>Đang xem
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="chat-tbl-request-visitor-container" style="display: none">
+                        <table id="chat-tbl-request-visitor" data-type="cquest" data-unique-id="id" data-toggle="table" data-filter-control="true"
+                               data-pagination="true" data-page-size="15" class="table table-fix table-bordered f-13">
+                            <thead>
+                            <tr>
+                                <th data-field="id" data-visible="false"></th>
+                                <th data-field="customer" data-filter-control="input" data-sortable="true"
+                                    style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-account c-gray f-14 p-relative t-1 m-r-10"></i>Khách hàng
+                                </th>
+                                <th data-field="location" data-filter-control="input" data-sortable="true"
+                                    style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-globe c-gray f-14 p-relative t-1 m-r-5"></i>Địa điểm
+                                </th>
+                                <th data-field="online" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-time c-gray f-14 p-relative t-1 m-r-5"></i>Thời gian online
+                                </th>
+                                <th data-field="viewing" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-eye c-gray f-14 p-relative t-1 m-r-5"></i>Đang xem
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card hidden" id="supervisior-panel">
+            <div class="row visitor">
+                <div class="col-sm-2 p-r-0">
+                    <div class="list-group m-t-20" id="chat-task-lists">
+                        <a data-target="#supervisior-tbl-active-visitor-container" data-id="#chat-tbl-active-visitor-container"
+                           class="task list-group-item active" href="javascript:void(0)">Active Visitors <span class="badge m-t-3 f-10"
+                                                                                                               style="display: none">0</span></a>
+                        <a data-target="#supervisior-tbl-idle-visitor-container" data-id="#chat-tbl-idle-visitor-container"
+                           class="task list-group-item" href="javascript:void(0)">Idle Visitors <span class="badge m-t-3 f-10"
+                                                                                                      style="display: none">0</span></a>
+                        <a data-target="#supervisior-tbl-request-visitor-container" data-id="#chat-tbl-request-visitor-container"
+                           class="task list-group-item" href="javascript:void(0)">Chat requests <span class="badge m-t-3 f-10"
+                                                                                                      style="display: none">0</span></a>
+                    </div>
+                </div>
+                <div class="col-sm-10">
+                    <div class="lv-header-alt clearfix p-5" style="background-color: #edecec;">
+                        <h2 class="lvh-label p-l-15 c-orange">Active Visitors</h2>
+                    </div>
+                    <div id="supervisior-tbl-active-visitor-container">
+                        <table id="chat-tbl-active-visitor" data-type="active" data-unique-id="id" data-toggle="table" data-filter-control="true"
+                               data-pagination="true" data-page-size="15" class="table table-fix  table-bordered f-13">
+                            <thead>
+                            <tr>
+                                <th data-field="id" data-visible="false"></th>
+                                <th data-field="customer" data-filter-control="input" data-sortable="true"
+                                    style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-account c-gray f-14 p-relative t-1 m-r-10"></i>Khách hàng
+                                </th>
+                                <th data-field="location" data-filter-control="input" data-sortable="true"
+                                    style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-globe c-gray f-14 p-relative t-1 m-r-5"></i>Địa điểm
+                                </th>
+                                <th data-field="online" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-time c-gray f-14 p-relative t-1 m-r-5"></i>Thời gian online
+                                </th>
+                                <th data-field="viewing" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-eye c-gray f-14 p-relative t-1 m-r-5"></i>Đang xem
+                                </th>
+                                <th data-field="agent" data-filter-control="input" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-eye c-gray f-14 p-relative t-1 m-r-5"></i>Agent
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="supervisior-tbl-idle-visitor-container" style="display: none">
+                        <table id="chat-tbl-idle-visitor" data-type="idle" data-unique-id="id" data-toggle="table" data-filter-control="true"
+                               data-pagination="true" data-page-size="15" class="table table-fix table-bordered f-13">
+                            <thead>
+                            <tr>
+                                <th data-field="id" data-visible="false"></th>
+                                <th data-field="customer" data-filter-control="input" data-sortable="true"
+                                    style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-account c-gray f-14 p-relative t-1 m-r-10"></i>Khách hàng
+                                </th>
+                                <th data-field="location" data-filter-control="input" data-sortable="true"
+                                    style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-globe c-gray f-14 p-relative t-1 m-r-5"></i>Địa điểm
+                                </th>
+                                <th data-field="online" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-time c-gray f-14 p-relative t-1 m-r-5"></i>Thời gian online
+                                </th>
+                                <th data-field="viewing" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-eye c-gray f-14 p-relative t-1 m-r-5"></i>Đang xem
+                                </th>
+                                <th data-field="agent" data-filter-control="input" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-eye c-gray f-14 p-relative t-1 m-r-5"></i>Agent
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="supervisior-tbl-visitor-request-container" style="display: none">
+                        <table id="chat-tbl-visitor-request" data-type="cquest" data-unique-id="id" data-toggle="table" data-filter-control="true"
+                               data-pagination="true" data-page-size="15" class="table table-fix table-bordered f-13">
+                            <thead>
+                            <tr>
+                                <th data-field="id" data-visible="false"></th>
+                                <th data-field="customer" data-filter-control="input" data-sortable="true"
+                                    style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-account c-gray f-14 p-relative t-1 m-r-10"></i>Khách hàng
+                                </th>
+                                <th data-field="location" data-filter-control="input" data-sortable="true"
+                                    style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-globe c-gray f-14 p-relative t-1 m-r-5"></i>Địa điểm
+                                </th>
+                                <th data-field="online" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-time c-gray f-14 p-relative t-1 m-r-5"></i>Thời gian online
+                                </th>
+                                <th data-field="viewing" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-eye c-gray f-14 p-relative t-1 m-r-5"></i>Đang xem
+                                </th>
+                                <th data-field="agent" data-filter-control="input" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-eye c-gray f-14 p-relative t-1 m-r-5"></i>Agent
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card hidden" id="history-panel">
+            <div class="row visitor">
+                <div class="col-sm-12">
+                    <!--<div class="lv-header-alt clearfix p-5" style="background-color: #edecec;">-->
+                    <!--<h2 class="lvh-label p-l-15 c-orange">Active Visitors</h2>-->
+                    <!--<ul class="lv-actions actions">-->
+                    <!--<li><a href="/menu-manager" data-toggle="tooltip" data-placement="top" data-original-title="Tìm kiếm"><i class="zmdi zmdi-search"></i></a></li>-->
+                    <!--<li><a href="/menu-manager" data-toggle="tooltip" data-placement="top" data-original-title="Refresh"><i class="zmdi zmdi-refresh"></i></a></li>-->
+                    <!--</ul>-->
+                    <!--</div>-->
+
+                    <div id="history-filter-toolbar" class="row" role="form">
+                        <div>
+                            <table class="table table-bordered table-search-history">
+                                <thead>
+                                <tr>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="text-center">
+                                        <div>
+                                            <label class="text-center col-sm-2 control-label p-t-8">Tên Agent: </label>
+                                            <div class="col-sm-2">
+                                                <input class="filter p-t-6 form-control" type="text" id="agent-search-chat" name="agent-search-chat">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="text-center col-sm-2 control-label p-t-8">Từ ngày: </label>
+                                            <div class="col-sm-2">
+                                                <input class="date-picker filter p-t-6 form-control" type="text" id="fromTime-search-chat"
+                                                       name="fromTime-search-chat">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="text-center col-sm-2 control-label p-t-8">Đến ngày: </label>
+                                            <div class="col-sm-2">
+                                                <input class="date-picker filter p-t-6 form-control" type="text" id="toTime-search-chat" name="toTime-search-chat">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">
+                                        <div>
+                                            <label class="text-center col-sm-2 control-label p-t-8">Tên visitor: </label>
+                                            <div class="col-sm-2">
+                                                <input class="filter p-t-6 form-control" type="text" id="name-search-chat" name="name-search-chat">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="text-center col-sm-2 control-label p-t-8">Email visitor: </label>
+                                            <div class="col-sm-2">
+                                                <input class="filter p-t-6 form-control" type="text" id="mail-search-chat" name="mail-search-chat">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="text-center col-sm-2 control-label p-t-8">Số điện thoại visitor: </label>
+                                            <div class="col-sm-2">
+                                                <input class="filter p-t-6 form-control" type="text" id="phone-search-chat" name="phone-search-chat">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">
+                                        <div>
+                                            <label class="text-center col-sm-2 control-label p-t-8">Tin nhắn: </label>
+                                            <div class="col-sm-2">
+                                                <input class="filter p-t-6 form-control" type="text" id="content-search-chat" name="content-search-chat">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="text-center col-sm-2 control-label p-t-8">Loại: </label>
+                                            <div class="col-sm-2">
+                                                <select class="selectpicker filter" id="type-search-chat" name="type-search-chat">
+                                                    <option value="-1" selected>-- Tất cả --</option>
+                                                    <option value="1">Visitor mới</option>
+                                                    <option value="3">Visitor quay lại</option>
+                                                    <option value="0">Cuộc chat bỏ lỡ</option>
+                                                    <option value="2">Tin nhắn offline</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">
+                                        <div class="col-sm-10">
+                                            <a class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect waves-effect"
+                                               id="btn-search-history-chat" name="btn-search-history-chat" type="submit"><i></i>Tìm kiếm</a>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <a class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect waves-effect"
+                                               style="background-color: #4a4a4a" href="javascript: void(0)" id="btn-show-export-history"
+                                               name="btn-show-export-history"><i class=""></i>
+                                                <div class="c-white">Xuất</div>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <form class="frm-export-history hidden card" style="display: block;" role="form">
+                            <div class="card-header" style="background-color: rgba(237, 236, 236, 0.6)">
+                                <h4 class="m-b-5">Xuất lịch sử chat</h4>
+                            </div>
+                            <div class="card-body card-padding">
+                                <div class="m-t-10">
+                                    <div class="col-sm-6">
+                                        <input class="form-control date-picker" placeholder="Từ ngày" type="text" id="fromDate" name="fromDate">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input class="form-control date-picker" type="text" placeholder="Đến ngày" id="toDate" name="toDate">
+                                    </div>
+                                    <div class="col-sm-12 p-t-20">
+                                        <input class="form-control" type="text" placeholder="Các email ngăn cách nhau bởi dấu phẩy" id="toEmail"
+                                               name="toEmail">
+                                    </div>
+                                    <div class="col-sm-12 p-t-10">
+                                        <i class="m-t-10" style="font-size: 12px">Lịch sử chat sẽ được gửi vào các email trên</i>
+                                    </div>
+                                    <div class="col-sm-12 p-t-10">
+                                        <div class="col-sm-6">
+                                            <button type="submit" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect waves-effect"
+                                                    style="background-color: #4a4a4a" id="btn-export-history" name="btn-export-history">
+                                                <i
+                                                        class=""></i>
+                                                <div class="c-white">Xuất</div>
+                                            </button>
+                                            <a class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect waves-effect"
+                                               style="background-color: #e1e1e1" href="javascript: void(0)" id="btn-show-export-history"
+                                               name="btn-show-export-history"><i class=""></i>
+                                                <div class="c-black">Hủy</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="history-tbl-container">
+                        <table id="chat-tbl-history" data-type="active" data-unique-id="id" data-toolbar="#history-toolbar"
+                               data-response-handler="responseHandler" data-toggle="table" data-pagination="true" data-page-size="15"
+                               class="table table-fix table-bordered f-13">
+                            <thead>
+                            <tr>
+                                <th data-field="id" data-visible="false"></th>
+                                <th data-field="customer" data-sortable="true" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-account c-gray f-14 p-relative t-1 m-r-10"></i>Khách hàng
+                                </th>
+                                <th data-field="content" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-comment-more c-gray f-14 p-relative t-1 m-r-5"></i>Tin nhắn
+                                </th>
+                                <th data-field="location" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-globe c-gray f-14 p-relative t-1 m-r-5"></i>Địa điểm
+                                </th>
+                                <th data-field="time" data-sortable="true" style="background-color: rgba(237, 236, 236, 0.6);"><i
+                                            class="zmdi zmdi-eye c-gray f-14 p-relative t-1 m-r-5"></i>Thời gian
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="history-view hidden" style="display: block;">
+                        <div class="viewhistory-top">
+                            <div id="tabs">
+                                <ul class="main-tabs tab-nav tn-justified tn-icon p-fixed b-0" style="z-index: 12" role="tablist">
+                                    <li role="presentation" class="active">
+                                        <a class="col-sx-4 p-relative" id="tab-transcript" aria-controls="tab-transcript" role="tab" data-toggle="tab"
+                                           aria-expanded="false">
+                                            <i class="zmdi zmdi-comment icon-tab visible-sm visible-xs"></i><span class="m-l-10 hidden-sm hidden-xs">TRANSCRIPT</span>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="">
+                                        <a class="col-xs-4 p-relative" id="tab-info" aria-controls="tab-info" role="tab" data-toggle="tab"
+                                           aria-expanded="false">
+                                            <i class="zmdi zmdi-account-box-mail icon-tab visible-sm visible-xs"></i><span
+                                                    class="m-l-10 hidden-sm hidden-xs">THÔNG TIN</span>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="">
+                                        <a class="col-xs-4 p-relative" id="tab-note" aria-controls="tab-note" role="tab" data-toggle="tab"
+                                           aria-expanded="true">
+                                            <i class="zmdi zmdi-star icon-tab visible-sm visible-xs"></i><span class="m-l-10 hidden-sm hidden-xs">GHI CHÚ</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="text-right p-r-10" id="close-history-view" role="button">
+                                    <span class="closesearch" id="closehistory">Đóng<i class="subizdasboard iclose"></i></span>
+                                    <i class="zmdi zmdi-close"></i>
+                                </div>
+                                <!--<div role="tabpanel" class="tab-pane animated fadeIn p-relative" id="tab-mail">mail</div>-->
+                                <!--<div role="tabpanel" class="tab-pane animated fadeIn p-relative" id="tab-voice"></div>-->
+                                <!--<div id="tab-history" class="content-tab" style="display: block;"></div>-->
+                            </div>
+                        </div>
+                        <!--<div class="chat-dialog ui-widget-content p-0 p-absolute ui-draggable">-->
+                        <!--<div class="content">-->
+
+                        <!--</div>-->
+                        <!--</div>-->
+                        <div class="transcript chat-msg-container m-b-5 m-r-0 p-r-5 p-relative c-overflow"
+                             style="width: 100%; height: 405px; overflow: scroll">
+                        </div>
+                        <div class="info hidden" style="width: 100%; height: 420px;">
+                            <div id="info-time" class="hidden">
+                                <span>Thời gian trên website: </span>
+                            </div>
+                            <div id="info-location">
+                                <span>Địa điểm: </span>
+                            </div>
+                            <div id="info-ip">
+                                <span>Địa chỉ ip: </span>
+                            </div>
+                        </div>
+                        <div class="note hidden p-relative c-overflow" style="width: 100%; height: 405px; overflow: scroll">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul id="chat-bars-container"></ul>
+
+        <!-- Chat setting client modal-->
+        <div class="modal fade in" id="modal-chat-setting-client" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="false">
+            <form class="form-horizontal m-t-30" role="form" id="create-reason">
+                <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Cài đặt</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="enable-notification" class="col-sm-3 control-label"><span class="TXT_STATUS">Notification</span></label>
+                            <div class="col-sm-6">
+                                <div class="checkbox m-b-15">
+                                    <label>
+                                        <input type="checkbox" id="enable-notification" name="enable-notification" checked="" value="1">
+                                        <i class="input-helper"></i>
+                                        <span class="p-l-10" data-text-on="Không kích hoạt" data-text-off="Kích hoạt">Kích hoạt</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="enable-sound" class="col-sm-3 control-label"><span class="TXT_STATUS">Âm thanh</span></label>
+                            <div class="col-sm-6">
+                                <div class="checkbox m-b-15">
+                                    <label>
+                                        <input type="checkbox" id="enable-sound" name="enable-sound" checked="" value="1">
+                                        <i class="input-helper"></i>
+                                        <span class="p-l-10" data-text-on="Không kích hoạt" data-text-off="Kích hoạt">Kích hoạt</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="auto-close-notification" class="col-sm-3 control-label"><span class="TXT_STATUS">Thời gian tự tắt notification</span></label>
+                            <div class="col-sm-6">
+                                <input type="number" class="form-control input-sm" id="auto-close-notification" name="auto-close-notification" placeholder="Tính bằng giây">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary waves-effect create">Xác nhận</button>
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Bỏ qua</button>
+                </div>
+            </div>
+        </div>
+            </form>
+        </div>
+        <!-- /Chat setting client modal-->
+    </div>
+    <div role="tabpanel" class="tab-pane animated fadeIn p-relative " id="tab-mail" style="overflow-x:hidden">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#"><i class="zmdi zmdi-comments f-20 p-relative t-3 m-r-5"></i>Email</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right m-t-17">
+                        <li>Offline</li>
+                        <li id="toggle-width" class="m-r-20 m-l-20">
+                            <div class="toggle-switch">
+                                <input id="tw-switch" type="checkbox" hidden="hidden"><label for="tw-switch" class="ts-helper"></label>
+                            </div>
+                        </li>
+                        <li>Online</li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+            <!--/.container-fluid -->
+        </nav>
+        <div class="card bgm-white">
+            <div class="row">
+                <div class="col-sm-2 p-r-0">
+                    <div class="list-group m-t-20" id="mail-task-lists">
+                        <a data-target="#mail-tbl-new-container" data-type="new" data-text="Thư mới - chưa đọc" class="task list-group-item btn-float active" href="javascript:void(0)"><i class="zmdi zmdi-email f-22 p-relative t-3 m-r-10"></i>Thư mới <span class="badge m-t-3 f-10 p-relative t-2" style="display: none">0</span></a>
+                        <a data-target="#mail-tbl-unprogressing-container" data-type="unprogressing" data-text="Chưa xử lý" class="task list-group-item btn-float " href="javascript:void(0)"><i class="zmdi zmdi-time f-22 p-relative t-3 m-r-10"></i>Chưa xử lý <span class="badge m-t-3 f-10 p-relative t-2" style="display: none">0</span></a>
+                        <a data-target="#mail-tbl-progressing-container" data-type="progressing" data-text="Đang xử lý" class="task list-group-item btn-float " href="javascript:void(0)"><i class="zmdi zmdi-time f-22 p-relative t-3 m-r-10"></i>Đang xử lý <span class="badge m-t-3 f-10 p-relative t-2" style="display: none">0</span></a>
+                        <a data-target="#mail-tbl-progressed-container" data-type="progressed" data-text="Đã xử lý" class="task list-group-item btn-float " href="javascript:void(0)"><i class="zmdi zmdi-email-open f-22 p-relative t-3 m-r-10"></i>Đã xử lý <span class="badge m-t-3 f-10 p-relative t-2" style="display: none">0</span></a>
+                    </div>
+                </div>
+                <div class="col-sm-10" id="list-mail">
+                    <div class="lv-header-alt clearfix p-5" style="background-color: #edecec;">
+                        <h2 class="lvh-label p-l-15 c-orange">Thư mới - Thư chưa đọc</h2>
+                        <ul class="lv-actions actions">
+                            <li><a role="button" class="btn-refresh-tbl" data-toggle="tooltip" data-placement="top" data-original-title="Refresh"><i class="zmdi zmdi-refresh"></i></a></li>
+                        </ul>
+                    </div>
+                    <div id="mail-tbl-new-container">
+                        <table id="tbl-new"
+                               data-toggle="table"
+                               data-url="/mail-client"
+                               data-query-params="MailFilterParams"
+                               data-side-pagination="server"
+                               data-pagination="true"
+                               data-page-list="[10, 20, 50, 100, 200]"
+                               data-search="true"
+                               class="table table-fix table-bordered table-hover f-13">
+                            <thead>
+                            <tr>
+                                <th data-field="checked" data-checkbox="true"></th>
+                                <th data-field="from" data-sortable="true" data-width="200"><i class="zmdi zmdi-account c-gray f-14 p-relative t-1 m-r-10"></i>Người gửi</th>
+                                <th data-field="subject" data-width="250"><i class="zmdi zmdi-eye c-gray f-14 p-relative t-1 m-r-5"></i>Tiêu đề</th>
+                                <th data-field="body"><i class="zmdi zmdi-comment c-gray f-14 p-relative t-1 m-r-5"></i>Nội dung</th>
+                                <th data-field="created" data-formatter="TableCellDateFormat" data-sortable="true" data-width="150" data-class="text-center"><i class="zmdi zmdi-time c-gray f-14 p-relative t-1 m-r-5"></i>Ngày gửi</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div id="mail-tbl-unprogressing-container" style="display: none">
+                        <table id="tbl-unprogressing"
+                               data-toggle="table"
+                               data-url="/mail-client"
+                               data-query-params="MailFilterParams"
+                               data-side-pagination="server"
+                               data-pagination="true"
+                               data-page-list="[10, 20, 50, 100, 200]"
+                               data-search="true"
+                               class="table table-fix table-bordered table-hover f-13">
+                            <thead>
+                            <tr>
+                                <th data-field="checked" data-checkbox="true"></th>
+                                <th data-field="from" data-sortable="true" data-width="200"><i class="zmdi zmdi-account c-gray f-14 p-relative t-1 m-r-10"></i>Người gửi</th>
+                                <th data-field="subject" data-width="250"><i class="zmdi zmdi-eye c-gray f-14 p-relative t-1 m-r-5"></i>Tiêu đề</th>
+                                <th data-field="body"><i class="zmdi zmdi-comment c-gray f-14 p-relative t-1 m-r-5"></i>Nội dung</th>
+                                <th data-field="created" data-formatter="TableCellDateFormat" data-sortable="true" data-width="150" data-class="text-center"><i class="zmdi zmdi-time c-gray f-14 p-relative t-1 m-r-5"></i>Ngày gửi</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div id="mail-tbl-progressing-container" style="display: none">
+                        <table id="tbl-progressing"
+                               data-toggle="table"
+                               data-url="/mail-client"
+                               data-query-params="MailFilterParams"
+                               data-side-pagination="server"
+                               data-pagination="true"
+                               data-page-list="[10, 20, 50, 100, 200]"
+                               data-search="true"
+                               class="table table-fix table-bordered table-hover f-13">
+                            <thead>
+                            <tr>
+                                <th data-field="checked" data-checkbox="true"></th>
+                                <th data-field="from" data-sortable="true" data-width="200"><i class="zmdi zmdi-account c-gray f-14 p-relative t-1 m-r-10"></i>Người gửi</th>
+                                <th data-field="subject" data-width="250"><i class="zmdi zmdi-eye c-gray f-14 p-relative t-1 m-r-5"></i>Tiêu đề</th>
+                                <th data-field="body"><i class="zmdi zmdi-comment c-gray f-14 p-relative t-1 m-r-5"></i>Nội dung</th>
+                                <th data-field="created" data-formatter="TableCellDateFormat" data-sortable="true" data-width="150" data-class="text-center"><i class="zmdi zmdi-time c-gray f-14 p-relative t-1 m-r-5"></i>Ngày gửi</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div id="mail-tbl-progressed-container" style="display: none">
+                        <table id="tbl-progressed"
+                               data-toggle="table"
+                               data-url="/mail-client"
+                               data-query-params="MailFilterParams"
+                               data-side-pagination="server"
+                               data-pagination="true"
+                               data-page-list="[10, 20, 50, 100, 200]"
+                               data-search="true"
+                               class="table table-fix table-bordered table-hover f-13">
+                            <thead>
+                            <tr>
+                                <th data-field="checked" data-checkbox="true"></th>
+                                <th data-field="from" data-sortable="true" data-width="200"><i class="zmdi zmdi-account c-gray f-14 p-relative t-1 m-r-10"></i>Người gửi</th>
+                                <th data-field="subject" data-width="250"><i class="zmdi zmdi-eye c-gray f-14 p-relative t-1 m-r-5"></i>Tiêu đề</th>
+                                <th data-field="body"><i class="zmdi zmdi-comment c-gray f-14 p-relative t-1 m-r-5"></i>Nội dung</th>
+                                <th data-field="created" data-formatter="TableCellDateFormat" data-sortable="true" data-width="150" data-class="text-center"><i class="zmdi zmdi-time c-gray f-14 p-relative t-1 m-r-5"></i>Ngày gửi</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-10 p-t-20" id="detail-mail" style="display: none">
+
+                    <h4 class="m-t-0"></h4>
+                    <h5>Người gửi : <span id="from" class="text-muted"></span></h5>
+                    <hr class="m-0 m-b-5">
+                    <div class="content m-b-10">
+                        <iframe class="w-p-100" frameborder="0"></iframe>
+                    </div>
+                    <hr class="m-0"/>
+                    <ul class="tab-nav tn-justified m-r-10" role="tablist">
+                        <li role="presentation" class="">
+                            <a class="col-sx-4" href="#tab-1" aria-controls="tab-1" role="tab" data-toggle="tab" aria-expanded="false">Trả lời
+                            </a>
+                        </li>
+                        <li role="presentation" class="active">
+                            <a class="col-xs-4" href="#tab-2" aria-controls="tab-2" role="tab" data-toggle="tab" aria-expanded="true">Ticket
+                            </a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content m-r-10">
+                        <div role="tabpanel" class="tab-pane animated fadeIn" id="tab-1">
+                            <div class="row m-t-10">
+                                <div class="col-sm-8">
+                                    <textarea id="reply-container" rows="2" class="m-r-10"></textarea>
+                                    <button class="btn btn-float btn-primary btn-sm m-t-10 pull-right btn-reply"><i class="zmdi zmdi-mail-send m-r-5"></i>Gửi</button>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="panel-group" role="tablist" id="tab-mail-template-list">
+                                        <div class="panel panel-default"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab-2">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane animated fadeIn p-relative" id="tab-voice">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                            aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#"><i class="zmdi zmdi-comments f-20 p-relative t-3 m-r-5"></i>Voice</a></li>
+                    </ul>
+                    <!--<ul class="nav navbar-nav navbar-right">-->
+                    <!--<li class="dropdown">-->
+                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="zmdi zmdi-settings m-r-5"></i>Cài đặt <span class="caret"></span></a>-->
+                    <!--<ul class="dropdown-menu">-->
+                    <!--<li><a href="#">Action</a></li>-->
+                    <!--<li><a href="#">Another action</a></li>-->
+                    <!--<li><a href="#">Something else here</a></li>-->
+                    <!--<li role="separator" class="divider"></li>-->
+                    <!--<li class="dropdown-header">Nav header</li>-->
+                    <!--<li><a href="#">Separated link</a></li>-->
+                    <!--<li><a href="#">One more separated link</a></li>-->
+                    <!--</ul>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown" id="voice-status-container">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i
+                                        class="zmdi zmdi-account m-r-5"></i>Trạng thái <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="button">
+                                <li><a class="voice-status" role="button" data-voice-status="1">Ngủ</a></li>
+                                <li><a class="voice-status" role="button" data-voice-status="2">Ăn trưa</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a id="call-status-info" role="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                        class="zmdi zmdi-account m-r-5"></i>DISCONNECTED</a>
+                            <ul class="dropdown-menu" id="call-status-menu">
+                                <li><a role="button" id="disconnect-call">DISCONNECTED</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div><!--/.container-fluid -->
+        </nav>
+
+        <ul id="voice-bars-container"></ul>
+    </div>
+    <div role="tabpanel" class="tab-pane animated fadeIn p-relative active" id="tab-crm">
+        <header id="header">
+            <ul class="header-inner">
+                <li id="menu-trigger" data-trigger="#sidebar" class="">
+                    <div class="line-wrap">
+                        <div class="line top"></div>
+                        <div class="line center"></div>
+                        <div class="line bottom"></div>
+                    </div>
+                </li>
+                <!--DUONGNB: insert logo to nav top bar-->
+                <li class="">
+                    <img class="logo-nav-top" src="assets/images/logo-neg.png">
+                </li>
+                <li class="logo hidden-xs">
+                    <a href="/#articles-list"><%- projectName %>
+                        <% if(company && company.name){ %>
+                        <span class="m-l-10 m-r-10">-</span><%- company.name %>
+                        <% } %>
+                    </a>
+                </li>
+
+                <li class="pull-right">
+                    <ul class="top-menu">
+                        <li class="dropdown b-10">
+                            <a role="button" data-toggle="dropdown" class="zmdi zmdi-globe c-white" aria-expanded="false">
+                                <i class="tmn-counts c-white" style="display: none">1</i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-lg pull-right">
+                                <div class="listview">
+                                    <div class="lv-header">
+                                        Thông báo
+                                    </div>
+                                    <div class="lv-body p-relative" style="height: 295px">
+                                    </div>
+                                    <a class="lv-footer" href="/#notification/<%- user._id %>">Xem tất cả</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="t--20 p-l-2 p-r-20 hidden-xs">
+                            <a role="button" class="c-white t-7">
+                                <span class="text-uppercase"><%- auth %></span><span
+                                        class="m-l-10 m-r-10">-</span><span><%- user.displayName %></span>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a role="button" data-toggle="dropdown" class="tm-settings" aria-expanded="false"></a>
+                            <ul class="dropdown-menu dm-icon pull-right">
+                                <li class="hidden-xs">
+                                    <a data-action="fullscreen" href=""><i class="zmdi zmdi-fullscreen"></i>Toggle Fullscreen</a>
+                                </li>
+                                <li>
+                                    <a data-action="clear-localstorage" href=""><i class="zmdi zmdi-delete"></i>Clear Local Storage</a>
+                                </li>
+                                <li id="auth-l">
+                                    <a href="/auth"><i class="zmdi zmdi-sign-in"></i>Chọn quyền truy cập</a>
+                                </li>
+                                <li id="account">
+                                    <a href="/users/<%- user._id %>"><i class="zmdi zmdi-account"></i>Thông tin chi tiết</a>
+                                </li>
+                                <li>
+                                    <a href="/logout"><i class="zmdi zmdi-sign-in"></i>Đăng xuất</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+        </header>
+        <%- _breadCrumbs(menu, _url); %>
+        <section id="main">
+            <aside id="sidebar">
+                <div class="sidebar-inner c-overflow">
+                    <div class="profile-menu">
+                        <a href="javascript:;">
+                            <div class="profile-pic">
+                                <img src="<%- user.avatar %>" alt="">
+                            </div>
+
+                            <div class="profile-info">
+                                <%- user.email %>
+                                <i class="zmdi zmdi-arrow-drop-down"></i>
+                            </div>
+                        </a>
+                        <ul class="main-menu" style="display: none">
+                            <li>
+                                <a href="/users/<%- user._id %>"><i class="zmdi zmdi-account"></i>Tài khoản</a>
+                            </li>
+                            <li>
+                                <a href=""><i class="zmdi zmdi-settings"></i>Cài đặt</a>
+                            </li>
+                            <li>
+                                <a href="/logout"><i class="zmdi zmdi-sign-in"></i>Đăng xuất</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="panel-group" role="tablist" aria-multiselectable="false" id="accordion">
+                        <% var __html = '';
+                        for (var i = 0; i < menu.length; ++i) {
+                            if (menu && menu[i] && menu[i].childs.length && menu[i].access) {
+                                __html += _Tags([{
+                                    tag: 'div', attr: {class: 'panel panel-collapse m-t-0'},
+                                    childs: [
+                                        {
+                                            tag: 'div',
+                                            attr: {
+                                                class: 'panel-heading',
+                                                role: 'role',
+                                                id: 'headingMenu' + i
+                                            },
+                                            childs: [{
+                                                tag: 'h5', attr: {class: 'panel-title'},
+                                                childs: [{
+                                                    tag: 'a',
+                                                    attr: {
+                                                        'data-toggle': 'collapse',
+                                                        'data-parent': '#menu-accordion',
+                                                        'href': '#collapseManager' + i,
+                                                        'aria-expanded': false,
+                                                        'aria-controls': 'collapseManager' + i,
+                                                        class: 'class'
+                                                    },
+                                                    content: menu[i].name
+                                                }]
+                                            }]
+                                        },
+                                        {
+                                            tag: 'div',
+                                            attr: {
+                                                id: 'collapseManager' + i,
+                                                class: 'collapse',
+                                                role: 'tabpanel',
+                                                'aria-labelledby': 'headingMenu' + i,
+                                                'aria-expanded': false,
+                                                style: 'height: 0px;'
+                                            },
+                                            childs: [{
+                                                tag: 'div',
+                                                attr: {class: 'panel-body p-0 p-b-10'},
+                                                content: _parseMenu(menu[i].childs, 'main-menu')
+                                            }]
+                                        }
+                                    ]
+                                }]);
+                            }
+                        }
+                        %>
+                        <%- __html %>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </aside>
+            <div class="container m-b-50"><%- include('layout/'+ page) %></div>
+        </section>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<ul id="crm-tab-nav-bar" class="main-tabs tab-nav tn-justified tn-icon p-fixed b-0" style="z-index: 12" role="tablist">
+    <li id="label-tab-chat" role="presentation" class="">
+        <a class="col-sx-4 p-relative" href="#tab-chat" aria-controls="tab-chat" role="tab" data-toggle="tab" aria-expanded="true">
+            <i class="zmdi zmdi-comments icon-tab visible-sm visible-xs"></i><span class="m-l-10 hidden-sm hidden-xs">Chat</span>
+            <i class="tmn-counts" style="display: none">0</i>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a class="col-xs-4 p-relative" href="#tab-mail" aria-controls="tab-mail" role="tab" data-toggle="tab" aria-expanded="false">
+            <i class="zmdi zmdi-account-box-mail icon-tab visible-sm visible-xs"></i><span class="m-l-10 hidden-sm hidden-xs">Email</span>
+            <i class="tmn-counts" style="display: none">0</i>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a class="col-xs-4 p-relative" href="#tab-voice" aria-controls="tab-voice" role="tab" data-toggle="tab" aria-expanded="false">
+            <i class="zmdi zmdi-account-box-phone icon-tab visible-sm visible-xs"></i><span class="m-l-10 hidden-sm hidden-xs">Voice</span>
+            <i class="tmn-counts" style="display: none"></i>
+        </a>
+    </li>
+    <li role="presentation" class="active">
+        <a class="col-xs-4 p-relative" href="#tab-crm" aria-controls="tab-crm" role="tab" data-toggle="tab" aria-expanded="false">
+            <i class="zmdi zmdi-star icon-tab visible-sm visible-xs"></i><span class="m-l-10 hidden-sm hidden-xs">CRM</span>
+        </a>
+    </li>
+</ul>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.js"></script>
+
+<script type="text/javascript" src="/assets/js/jquery-migrate.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap.js"></script>
+<script type="text/javascript" src="/assets/js/bbq.js"></script>
+<script type="text/javascript" src="/assets/plugins/jquery-ui/script.js"></script>
+<script type="text/javascript" src="/assets/plugins/moment/script.js"></script>
+<script type="text/javascript" src="/assets/plugins/waves/script.js"></script>
+<script type="text/javascript" src="/assets/plugins/nicescroll/script.js"></script>
+<script type="text/javascript" src="/assets/plugins/underscore/script.js"></script>
+<script type="text/javascript" src="/assets/plugins/underscore/string.js"></script>
+<script type="text/javascript" src="/assets/plugins/validation/script.js"></script>
+<script type="text/javascript" src="/assets/plugins/validation/i18n/script.js"></script>
+<script type="text/javascript" src="/assets/plugins/swal/script.js"></script>
+<script type="text/javascript" src="/assets/plugins/bootstrap-table/script.js"></script>
+<script type="text/javascript" src="/assets/plugins/bootstrap-table/extensions/filter-control/script.js"></script>
+<script type="text/javascript" src="/assets/plugins/bootstrap-table/extensions/advanced-toolbar/script.js"></script>
+<script type="text/javascript" src="/assets/plugins/ckeditor/script.js"></script>
+<script type="text/javascript" src="/assets/plugins/ckeditor/adapters/jquery.js"></script>
+<script type="text/javascript" src="/assets/plugins/swal/script.js"></script>
+<script type="text/javascript" src="/assets/plugins/bootstrap-select/script.js"></script>
+<script type="text/javascript" src="/assets/plugins/bootstrap-datepicker/script.js"></script>
+<script type="text/javascript" src="/assets/plugins/bootstrap-datetimepicker/script.js"></script>
+<script type="text/javascript" src="/assets/plugins/bootstrap-typeahead/script.js"></script>
+<script type="text/javascript" src="/assets/plugins/notification/script.js"></script>
+<% if(plugins){ %>
+<% plugins.forEach(function (s){ %>
+<script type="text/javascript" src="/assets/plugins/<%- s %>/script.js"></script>
+<% }) %>
+<% } %>
+<script type="text/javascript" src="/assets/js/global.js"></script>
+<script type="text/javascript" src="/assets/js/util.js"></script>
+<script type="text/javascript" src="/assets/tabs/chat/script.js"></script>
+<script type="text/javascript" src="/assets/tabs/mail/script.js"></script>
+<script type="text/javascript" src="/assets/tabs/voice/script.js"></script>
+<script type="text/javascript" src="/assets/tabs/notification/script.js"></script>
+<div class="page-loader">
+    <div class="preloader pls-blue">
+        <svg class="pl-circular" viewBox="25 25 50 50">
+            <circle class="plc-path" cx="50" cy="50" r="20"></circle>
+        </svg>
+
+        <p>Please wait...</p>
+    </div>
+</div>
+<style>
+    @media (min-width: 1280px) {
+        #tab-crm > #main > .container.stoggled {
+            padding-left: 283px;
+            padding-right: 15px;
+            width: 100%;
+        }
+    }
+</style>
+</body>
+</html>

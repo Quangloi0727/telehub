@@ -1,0 +1,164 @@
+<%-breadcrumb%>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5 f-16">THÔNG TIN CHIẾN DỊCH</h2>
+    </div>
+    <div class="p-l-20 p-b-20">
+        <label>Chủ đề chiến dịch:</label>
+        <label class="c-blue p-l-10" id="campainName"> 0</label>
+    </div>
+    <div class="row p-l-20 p-b-20">
+        <div class="col-sm-3">
+            <label>Tổng số KH:</label>
+            <label class="c-blue p-l-10" id="count"> 0</label>
+        </div>
+        <div class="col-sm-3">
+            <label>SL chưa phân:</label>
+            <label class="c-blue p-l-10" id="called"> 0</label>
+        </div>
+        <div class="col-sm-3">
+            <label>Ngày bắt đầu:</label>
+            <label class="c-blue p-l-10" id="startDate"> 0</label>
+        </div>
+        <div class="col-sm-3">
+            <label>Ngày kết thúc:</label>
+            <label class="c-blue p-l-10" id="endDate"> 0</label>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="m-b-5 f-16">CHỌN ĐIỆN THOẠI VIÊN</h2>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <ul class="tab-nav tn-justified tn-icon" role="tablist">
+                        <li role="presentation" class="active">
+                            <a class="col-sx-4 group-tab" href="#tab-campain-1" aria-controls="tab-1" role="tab" data-toggle="tab">
+                                <label class="f-16">BỘ PHẬN</label>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a class="col-xs-4 agent-tab" href="#tab-campain-2" aria-controls="tab-2" role="tab" data-toggle="tab">
+                                <label class="f-16">ĐIỆN THOẠI VIÊN</label>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content p-t-20 p-relative ">
+                        <div role="tabpanel" class="tab-pane animated active" id="tab-campain-1">
+                            <label class="p-l-10" id="group-count">Tổng: 0</label>
+                            <div class="table-responsive group-group">
+                                <table class="table table-hover table-condensed table-bordered" id="form-group">
+                                    <thead>
+                                    <tr class="f-11">
+                                        <th class="bgm-orange c-white text-center w-40">#</th>
+                                        <th class="bgm-orange c-white text-center p-0">
+                                            <div class="checkbox m-0">
+                                                <label>
+                                                    <input type="checkbox" value="" id="select_all_group" name="select_all_group">
+                                                    <i class="input-helper"></i>
+                                                </label>
+                                            </div>
+                                        </th>
+                                        <th class="bgm-orange c-white text-center">Nhóm</th>
+                                        <th class="bgm-orange c-white text-center">Số lượng ĐTV</th>
+                                        <th class="bgm-orange c-white text-center">Số lượng </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane animated" id="tab-campain-2">
+                            <div class="text-center p-b-20">
+                                <label class="p-r-20">Chọn tên</label>
+                                <input type="text" id="search-agent-name" name="search-agent-name">
+                            </div>
+                            <div class="table-responsive add-group m-0 p-0">
+                                <label class="p-l-10" id="add-count">Tổng: 0</label>
+                                <table class="table table-hover table-condensed table-bordered" id="form-add-agent">
+                                    <thead>
+                                    <tr class="f-11">
+                                        <th class="bgm-orange c-white text-center w-40">#</th>
+                                        <th class="bgm-orange c-white text-center p-0">
+                                            <div class="checkbox m-0">
+                                                <label>
+                                                    <input type="checkbox" value="" id="select_all_add" name="select_all_add">
+                                                    <i class="input-helper"></i>
+                                                </label>
+                                            </div>
+                                        </th>
+                                        <th class="bgm-orange c-white text-center">Họ tên</th>
+                                        <th class="bgm-orange c-white text-center">Đã phân</th>
+                                        <th class="bgm-orange c-white text-center">Số lượng </th>
+                                        <th class="bgm-orange c-white text-center">Quyền hạn </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-1" style="height: 300px; padding-top:150px">
+        <div class="text-center">
+            <button type="reset" class="btn btn-default waves-effect waves-effect" id="add-btn" name="add-btn" data-toggle="tooltip" data-placement="top" data-original-title="Thêm">
+                <i class="zmdi zmdi-arrow-right zmdi-hc-fw"></i>
+            </button>
+        </div>
+        <div class="text-center">
+            <button type="reset" class="btn btn-default waves-effect waves-effect " id="remove-btn" name="remove-btn" data-toggle="tooltip" data-placement="top" data-original-title="Loại">
+                <i class="zmdi zmdi-arrow-left zmdi-hc-fw"></i>
+            </button>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="m-b-5 f-16">DANH SÁCH ĐÃ CHỌN</h2>
+            </div>
+            <div class="card-body">
+                <div class="text-center p-b-20">
+                    <label class="p-r-20">Chọn tên</label>
+                    <input type="text" id="search-added-agent-name" name="search-added-agent-name">
+                </div>
+                <div class="table-responsive added-group">
+                    <label class="p-l-10" id="added-count">Tổng: 0</label>
+                    <table class="table table-hover table-condensed table-bordered" id="form-added-agent">
+                        <thead>
+                        <tr class="f-11">
+                            <th class="bgm-orange c-white text-center w-40">#</th>
+                            <th class="bgm-orange c-white text-center p-0">
+                                <div class="checkbox m-0">
+                                    <label>
+                                        <input type="checkbox" value="" id="select_all_added" name="select_all_added">
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </th>
+                            <th class="bgm-orange c-white text-center">Họ tên</th>
+                            <th class="bgm-orange c-white text-center">Đã gọi</th>
+                            <th class="bgm-orange c-white text-center">Chưa gọi</th>
+                            <th class="bgm-orange c-white text-center">Quyền hạn</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a type="button" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect" href="/#campains"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>

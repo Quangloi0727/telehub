@@ -1,0 +1,113 @@
+<%-breadcrumb%>
+<script>
+    var answerList = JSON.parse('<%- JSON.stringify(answerList)%>');
+</script>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted"><i>Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập.</i></small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="form-edit">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Nhóm câu hỏi</label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <span class="c-blue f-20"><%- current.idSurvey.name%></span>
+                        <input type="hidden" id="idSurvey" name="idSurvey" value="<%- current.idSurvey._id%>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Nội dung câu hỏi<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="hidden" id="updateId" name="updateId" value="<%- current._id %>">
+                        <input type="text" value="<%- current.content%>" class="form-control validate[required,ajax[SurveyQuestionCheck]]" id="contentQ" name="contentQ">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Loại câu hỏi<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <select class="selectpicker validate[required]" id="questionType" name="questionType">
+                            <option value='' disabled selected>---- Chọn ----</option>
+                            <option value="0" <%- (_equal(current.questionType.toString(),'0') ? 'selected' : '')%>>Một câu trả lời</option>
+                            <option value="1" <%- (_equal(current.questionType.toString(),'1') ? 'selected' : '')%>>Nhiều câu trả lời</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Loại câu trả lời<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <select class="selectpicker validate[required]" id="answerType" name="answerType">
+                            <option value='' disabled selected>---- Chọn ----</option>
+                            <option value="1" <%- (_equal(current.answerType.toString(),'1') ? 'selected' : '')%>>Chọn đáp án</option>
+                            <option value="2" <%- (_equal(current.answerType.toString(),'2') ? 'selected' : '')%>>Chấm điểm</option>
+                            <option value="3" <%- (_equal(current.answerType.toString(),'3') ? 'selected' : '')%>>Lấy ý kiến</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label"> Câu hỏi đầu tiên</label>
+                <div class="col-sm-6">
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" value="1" id="isStart" name="isStart" <%- (current.isStart ? 'checked' : '')%>>
+                            <i class="input-helper"></i>
+                            <span class="p-l-10" data-text-on="Không kích hoạt" data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Câu hỏi kế</label>
+                <div class="col-sm-6">
+                    <div class="fg-line select">
+                        <select class="selectpicker" id="idNextQuestion" name="idNextQuestion">
+                            <option value="" selected>---- Chọn ----</option>
+                            <% questionList.forEach(function(el, i) {%>
+                            <option value="<%- el._id%>" <%- ((current.idNextQuestion && _equal(current.idNextQuestion.toString(),el._id.toString())) ? 'selected' : '')%>><%- el.content%></option>
+                            <%})%>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group answer-group">
+                <label for="group" class="col-sm-3 control-label">Câu trả lời</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div id="answer-n">
+                            <% for(var i = 0; i < 10;i++){%>
+                            <div class="col-sm-6 m-b-20">
+                                <div class="input-group">
+                                    <span class="w-30 input-group-addon p-r-0 p-l-10 bgm-blue c-white" id="basic-addon3"><%- (String.fromCharCode(97+i))%>.</span>
+                                    <input type="text" value="" tabindex="3" class="form-control" id="<%- ('answer_'+i)%>" name="<%- ('answer_'+i)%>">
+                                </div>
+                            </div>
+                            <div class="col-sm-6 m-b-20">
+                                <select class="selectpicker" id="<%- ('answer_'+i+'_nextQuestion')%>" name="<%- ('answer_'+i+'_nextQuestion')%>">
+                                    <option value="" selected>---- Chọn câu hỏi kế ----</option>
+                                    <% questionList.forEach(function(el) {%>
+                                    <option value="<%- el._id%>"><%- el.content%></option>
+                                    <%})%>
+                                </select>
+                            </div>
+                            <%}%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a type="button" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect" href="/#survey-question?idSurvey=<%- current.idSurvey._id%>"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

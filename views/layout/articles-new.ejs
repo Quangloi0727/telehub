@@ -1,0 +1,81 @@
+<%- breadcrumb %>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted"><i>Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập.</i></small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="add-new-article" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label"><span class="TXT_ARTICLE_GROUP"></span></label>
+                <div class="col-sm-6">
+                    <select class="selectpicker" id="group" name="group">
+                        <option value="quy trình"><span class=""></span>Quy trình</option>
+                        <option value="faq"><span class=""></span>FAQ</option>
+                        <option value="kiến thức"><span class=""></span>Kiến thức</option>
+                        <option value="khuyến mãi"><span class=""></span>Khuyến mãi</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label"><span class="TXT_ARTICLE_CATEGORY"></span></label>
+                <div class="col-sm-6">
+                    <div class="p-relative">
+                        <select class="tag-select validate[required]" multiple id="category" name="category[]" data-placeholder="Chọn danh mục">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label"><span class="TXT_ARTICLE_TITLE"></span><span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" class="form-control validate[required]" id="title" name="title" placeholder="VD: Kỹ năng nghe máy">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="body" class="col-sm-3 control-label"><span class="TXT_ARTICLE_CONTENT"></span></label>
+                <div class="col-sm-9">
+                    <div class="fg-line">
+                        <textarea class="form-control " id="body" name="body"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label"><span class="TXT_ARTICLE_STATUS"></span></label>
+                <div class="col-sm-6">
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" checked id="status" name="status">
+                            <i class="input-helper"></i>
+                            <span class="p-l-10" data-text-on="Không kích hoạt" data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <% for(var i = 0; i < 5; i++) {%>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">File đính kèm <%- i+1%></label>
+                <div class="col-sm-6" id="file-upload">
+                    <div class="fileinput fileinput-new p-relative" data-provides="fileinput">
+                    <span class="btn btn-default btn-info btn-sm btn-file m-r-10 waves-effect">
+                        <span class="fileinput-new"><i class="zmdi zmdi-upload p-r-10 w-13"></i>Chọn file</span>
+                        <span class="fileinput-exists"><i class="zmdi zmdi-upload p-r-10"></i>Chọn lại</span>
+                            <input type="file" id="fupload" name="upload" data-prompt-position="inline" data-prompt-target="file-upload">
+                        </span>
+                        <span class="fileinput-filename"></span>
+                        <a href="#" class="close fileinput-exists" data-dismiss="fileinput">×</a>
+                    </div>
+                </div>
+            </div>
+            <%}%>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect waves-effect" id="btn-back" name="btn-back" href="/#articles"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

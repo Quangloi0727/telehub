@@ -1,0 +1,103 @@
+<%-breadcrumb%>
+<script>
+    var searchData = JSON.parse('<%- JSON.stringify(searchData)%>');
+</script>
+<div class="lv-header-alt clearfix">
+    <h2 class="lvh-label hidden-xs"><%- title %></h2>
+    <ul class="lv-actions actions">
+        <li>
+            <a href="/#surveys/new" data-toggle="tooltip" data-placement="left" data-original-title="Tạo mới">
+                <i class="zmdi zmdi-plus"></i>
+            </a>
+        </li>
+        <li>
+            <a data-toggle="tooltip" data-placement="left" data-original-title="Làm mới danh sách">
+                <i class="zmdi zmdi-refresh"></i>
+            </a>
+        </li>
+        <li class="hidden" id="li-hidden">
+            <a role="button" data-toggle="tooltip" data-placement="top" data-original-title="Xóa các mục đánh dấu" id="btn-delSelection">
+                <i class="zmdi zmdi-delete"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="card">
+    <div class="card-body table-responsive">
+        <form id="survey">
+            <table class="table table-hover table-fix table-bordered">
+                <thead>
+                <tr class="">
+                    <th class="bgm-orange c-white select-cell text-center w-40">#</th>
+                    <th class="bgm-orange c-white w-120 text-center">Câu hỏi khảo sát</th>
+                    <th class="bgm-orange c-white w-100 text-center">Chú thích</th>
+                    <th data-sort="none" role="button" class="bgm-orange c-white w-60 text-center" data-field="numQuest">
+                        <i data-toggle="tooltip" data-original-title="Sắp xếp theo thứ tự tăng dần" class="zmdi zmdi-sort-asc"></i>
+                        <i data-toggle="tooltip" data-original-title="Sắp xếp theo thứ tự giảm dần" class="zmdi zmdi-sort-desc"></i>
+                        Số câu hỏi
+                    </th>
+                    <th class="bgm-orange c-white w-70 text-center">Kích hoạt</th>
+                    <th class="bgm-orange c-white w-60 text-center">Tạo bởi</th>
+                    <th class="bgm-orange c-white w-90 text-center">Ngày tạo</th>
+                    <th class="bgm-orange c-white w-80 text-center">Tác vụ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="row-filter filter">
+                    <td>
+                        <div class="checkbox text-center">
+                            <label>
+                                <input id="select_all" type="checkbox" class="select-box" value="all">
+                                <i class="input-helper"></i>
+                            </label>
+                        </div>
+                    </td>
+                    <td><input class="form-control" type="text" id="filter_name" name="filter_name" value="<%- searchData.name%>"></td>
+                    <td><input class="form-control" type="text" id="filter_note" name="filter_note" value="<%- searchData.note%>"></td>
+                    <td></td>
+                    <td>
+                        <select class="selectpicker" id="filter_status" name="filter_status">
+                            <option value='' selected class="text-center">Tất cả</option>
+                            <option value="1" <%- (_equal('1',searchData.status ? searchData.status.toString() : '') ? 'selected' : ''); %>>Kích hoạt</option>
+                            <option value="0" <%- (_equal('0',searchData.status ? searchData.status.toString() : '') ? 'selected' : ''); %>>Vô hiệu hóa</option>
+                        </select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td><button  type="button" class="btn btn-primary btn-block waves-effect btn-filter"><i class="zmdi zmdi-filter-list m-r-5"></i> Lọc</button></td>
+                </tr>
+                <% categories.forEach(function(el, i) { %>
+                <tr>
+                    <td class="select-cell text-center">
+                        <div class="checkbox m-0">
+                            <label>
+                                <input type="checkbox"  class="select-box selection" value="<%- el._id %>">
+                                <i class="input-helper"></i>
+                            </label>
+                        </div>
+                    </td>
+                    <td><%- el.name %></td>
+                    <td><%- el.note %></td>
+                    <td class="text-center"><a href="/#survey-question?idSurvey=<%- el._id %>"><%- el.questions.length%></a></td>
+                    <td class="text-center">
+                        <div class="checkbox" style="margin: 0 auto">
+                            <label>
+                                <input disabled type="checkbox" class="select-box" <%- (el.status ? 'checked' : ''); %> />
+                                <i class="input-helper"></i>
+                            </label>
+                        </div>
+                    </td>
+                    <td class="text-center"><%- (el.createBy ? el.createBy.name : '') %></td>
+                    <td class="text-center"><%- (el.created ? _moment(el.created).format("DD/MM/YYYY") : '') %></td>
+                    <td class="text-center">
+                        <a href="/#surveys/<%- el._id %>/edit" class="p-t-3 btn-flat-bg"><i class="zmdi zmdi-edit green f-17"></i></a>
+                        <a role="button" type="click" class="btn-remove btn-flat-bg" data-id="<%- el._id %>"><i class="zmdi zmdi-close red f-23"></i></a>
+                    </td>
+                </tr>
+                <% }); %>
+                </tbody>
+            </table>
+            <% include ../paging.ejs %>
+        </form>
+    </div>
+</div>

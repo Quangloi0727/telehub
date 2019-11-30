@@ -1,0 +1,146 @@
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="user-detail">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Tài khoản :</label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" maxlength="100" class="form-control" value="<%- currentUser.name %>" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Mật khẩu :</label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" maxlength="100" class="form-control" value="<%- currentUser.password %>" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Họ tên :</label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" maxlength="100" class="form-control" value="<%- currentUser.displayName %>" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Email :</label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" maxlength="100" class="form-control" value="<%- currentUser.email %>" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Mã tài khoản :</label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" maxlength="100" class="form-control" value="<%- currentUser.accountCode %>" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Quản lý dự án :</label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" maxlength="200" class="form-control"
+                               value= "Vị trí: <% if(roleTernal.length > 0){roleTernal.forEach(function(sl, i){ %><%- sl.name + "," %><% })} else{%> Không có, <%}%>  Dự án: <%- config.app.name + "," %>"  readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Quản lý công ty :</label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" maxlength="200" class="form-control"
+                               value="Vị trí: <% if(roleCompany.length > 0){roleCompany.forEach(function(sl, i){ %><%- sl.name + "," %><% })} else{%> Không có, <%}%>  Công ty: <% if(companies.length > 0){companies.forEach(function(sl, i){ %><%- sl.name + "," %><% })} else{%> Không có, <%}%>" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Quản lý nhóm :</label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" maxlength="200" class="form-control"
+                               value= "Vị trí: <% if(roleLeaders.length > 0){roleLeaders.forEach(function(sl, i){ %><%- sl.name + "," %><% })} else{%> Không có, <%}%>  Nhóm: <% if(agentGroupLeaders.length > 0){agentGroupLeaders.forEach(function(sl, i){ %><%- sl.name + "," %><% })} else{%> Không có, <%}%>" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Thành viên :</label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" maxlength="200" class="form-control"
+                               value="Vị trí: <% if(roleMember.length > 0){roleMember.forEach(function(sl, i){ %><%- sl.name + "," %><% })} else{%> Không có, <%}%>  Thành viên: <% if(agentGroupMembers.length > 0){agentGroupMembers.forEach(function(sl, i){ %><%- sl.name + "," %><% })} else{%> Không có, <%}%>" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Cài đặt giờ - báo cáo cuộc đến hẹn(Giây):</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="notifDeadline" min="0"
+                           name="notifDeadline" value="<%- currentUser.notifDeadline %>" placeholder="Nhập số giây">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Thời gian lặp lại(Giây):</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="notifDelay" min="0"
+                           name="notifDelay" value="<%- currentUser.notifDelay %>" placeholder="Nhập số giây">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Cảnh báo mail(Giây):</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="mailNotification" min="0"
+                           name="mailNotification" value="<%- currentUser.mailNotification %>" placeholder="Nhập số giây">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Cài đặt hiển thị thông báo từ admin :</label>
+                <div class="col-sm-6">
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" id="notifAdnim" name="notifAdnim"
+                                    <% if (currentUser.notifAdnim == 1){ %>
+                                   checked
+                                    <% } %>
+                            >
+                            <i class="input-helper"></i>
+                            <span class="p-l-10" data-text-on="Không được ủy quyền"
+                                  data-text-off="Được ủy quyền"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Cài đặt thông báo về thông tin được ủy quyền :</label>
+                <div class="col-sm-6">
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" id="notifAssign" name="notifAssign"
+                                    <% if (currentUser.notifAssign == 1){ %>
+                                   checked
+                                    <% } %>
+                            >
+                            <i class="input-helper"></i>
+                            <span class="p-l-10" data-text-on="Không được ủy quyền"
+                                  data-text-off="Được ủy quyền"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect waves-effect" id="btn-back" name="btn-back"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect" id="btn-submit" value="<%- currentUser.notifDeadline %>"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

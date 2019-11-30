@@ -1,0 +1,63 @@
+<%-breadcrumb%>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted f-12">( Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập. )</small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="add-new-customer" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Chọn nguồn <span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="p-relative">
+                        <select class="tag-select validate[required]" multiple id="sources" name="sources[]" data-placeholder="...">
+                            <% for(var i = 0 ; i < groups.length; i++){ %>
+                            <optgroup label="<%- groups[i].name %>">
+                                <% if(groups[i].sources.length){ %>
+                                <% for(var j = 0 ; j < groups[i].sources.length; j++){ %>
+                                <%if(groups[i].sources[j].status){%>
+                                <option value="<%- groups[i].sources[j]._id %>"><%- groups[i].sources[j].name %></option>
+                                <%}%>
+                                <% } %>
+                                <% } %>
+                            </optgroup>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Độ ưu tiên </label>
+                <div class="col-sm-6">
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" value="1" id="prioritize" name="prioritize" checked>
+                            <i class="input-helper"></i>
+                            <span class="p-l-10" data-text-on="Không" data-text-off="Ưu tiên"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">File excel <span class="required">*</span></label>
+                <div class="col-sm-6" id="file-upload">
+                    <div class="fileinput fileinput-new p-relative" data-provides="fileinput">
+                    <span class="btn btn-default btn-info btn-sm btn-file m-r-10 waves-effect">
+                        <span class="fileinput-new"><i class="zmdi zmdi-upload p-r-10 w-13"></i>Chọn file</span>
+                        <span class="fileinput-exists"><i class="zmdi zmdi-upload p-r-10"></i>Chọn lại</span>
+                            <input type="file" id="fupload" name="upload" data-prompt-position="inline" data-prompt-target="file-upload" class="validate[required]">
+                        </span>
+                        <span class="fileinput-filename"></span>
+                        <a href="#" class="close fileinput-exists" data-dismiss="fileinput">×</a>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a href="/#customer" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

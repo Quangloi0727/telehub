@@ -1,0 +1,94 @@
+<div class="card">
+    <div class="portlet-title">
+        <div class="lv-header-alt clearfix">
+            <h2 class="lvh-label hidden-xs">Báo cáo phân loại chat</h2>
+            <ul class="lv-actions actions">
+                <li><a href="/#report-productivity-agent" data-toggle="tooltip" data-placement="top" data-original-title="Refresh"><i class="zmdi zmdi-refresh"></i></a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <form class="form-horizontal" role="form" id="report-productivity-agent">
+            <div class="form-body">
+                <div class="row m-0 m-t-20">
+                    <div class="col-md-3 m-b-20">
+                        <label for="startDate"
+                               class="control-label f-13"><span>Ngày bắt đầu</span></label>
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control pull-right search-field date-picker filter-campain input validate[required]"
+                                   id="startDate" name="startDate"
+                                   placeholder="VD: 01/01/2016">
+                            <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button" class="zmdi zmdi-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <label for="endDate" class="control-label f-13"><span>Ngày kết thúc</span></label>
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control pull-right search-field date-picker filter-campain input validate[required]"
+                                   id="endDate" name="endDate"
+                                   placeholder="VD: 31/12/2016">
+                            <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button" class="zmdi zmdi-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <label for="idCompany" class="control-label f-13"><span>Công ty</span></label>
+                        <select name="idCompany" class="selectpicker input " title="Chọn công ty" >
+                            <%company.forEach(function (loop, i) {%>
+                            <option value="<%-loop._id%>"><%-loop.name%></option>
+                            <%})%>
+                        </select>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <label for="idAgent" class="control-label f-13"><span>Điện thoại viên</span></label>
+                        <select name="idAgent" class="selectpicker input" title="Chọn điện thoại viên" multiple>
+                            <%agent.forEach(function (loop, i) {%>
+                            <option value="<%-loop._id%>"><%-loop.displayName%></option>
+                            <%})%>
+                        </select>
+                    </div>
+                    <div class="row m-0">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6 m-b-20">
+                            <div class="btn-group btn-group btn-group-justified">
+                                <button type="submit" class="btn bgm-blue uppercase c-white" style="width:180px;float: left;"><i class="fa fa-search m-r-10"></i><strong>Tìm kiếm</strong></button>
+                                <div class="col-md-2"></div>
+                                <a id="exportexcel" class="btn bgm-blue default c-white" style="width:180px"><i class="fa fa-file-excel-o m-r-10"></i>Xuất Excel</a>
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-body table-responsive" style=" min-height:200px">
+        <table class="table table-hover table-condensed table-bordered table-fix" style="table-layout: fixed;" id="exceldata">
+            <thead>
+            <tr>
+                <th class="bgm-orange c-white text-center">Tên điện thoại viên</th>
+                <th class="bgm-orange c-white text-center">SL</th>
+                <th class="bgm-orange c-white text-center">TL</th>
+            </tr>
+            </thead>
+            <body>
+            <% if(agentDays.length == 0){ %>
+            <script> var isAlertSearch = true;</script>
+            <% } else{ %>
+            <script> var isAlertSearch = false;</script>
+            <% } %>
+                <% agentDays.forEach(function (loop, i) { %>
+                    <tr>
+                        <td class=""><%-loop.agentName%></td>
+                        <td class="text-right"><%-loop.average%></td>
+                        <%if(totalDays == 0){%>
+                        <td class="text-right"> 0.00% </td>
+                        <%}else{%>
+                        <td class="text-right"><%- ((loop.average/totalDays) * 100).toFixed(2) + "%" %></td>
+                        <%}%>
+                    </tr>
+                <%})%>
+            </body>
+        </table>
+    </div>
+</div>

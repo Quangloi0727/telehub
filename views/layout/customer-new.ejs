@@ -1,0 +1,61 @@
+<%-breadcrumb%>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted f-12">( Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập. )</small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="add-new-customer">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Họ Tên <span class="c-red">*</span></label>
+                <div class="col-sm-6">
+                    <input value="" class="form-control " type="text" id="edit_field_ho_ten" name="field_ho_ten:string">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Số điện thoại <span class="c-red">*</span></label>
+                <div class="col-sm-6">
+                    <input value="" class="form-control validate[custom[number]]" type="text" id="edit_field_so_dien_thoai" name="field_so_dien_thoai:string">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">E-mail <span class="c-red">*</span></label>
+                <div class="col-sm-6">
+                    <input value="" class="form-control validate[custom[email]]" type="text" id="edit_field_e_mail" name="field_e_mail">
+                </div>
+            </div>
+            <% for(var i = 3; i < fields.length; i++){ %>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label"><%- fields[i].displayName %> <%- _switch(fields[i].isRequired, [0, 1], ['', '<span class="c-red">*</span>']) %></label>
+                <div class="col-sm-6">
+                    <%- _dInputField(fields[i]) %>
+                </div>
+            </div>
+            <% } %>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Nguồn</label>
+                <div class="col-sm-6">
+                    <select class="tag-select" multiple id="sources" name="sources[]" data-placeholder="Khách hàng này không thuộc nguồn nào">
+                        <% for(var i = 0 ; i < groups.length; i++){ %>
+                        <optgroup label="<%- groups[i].name %>">
+                            <% if(groups[i].sources.length){ %>
+                            <% for(var j = 0 ; j < groups[i].sources.length; j++){ %>
+                            <% if(groups[i].sources[j].status){ %>
+                            <option value="<%- groups[i].sources[j]._id %>"><%- groups[i].sources[j].name %></option>
+                            <% } %>
+                            <% } %>
+                            <% } %>
+                        </optgroup>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a href="/#customer" id="btn-back" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

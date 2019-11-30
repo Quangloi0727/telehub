@@ -1,0 +1,76 @@
+<script> window.page = 'auth'; </script>
+<div class="card m-t-20">
+    <div class="lv-header-alt clearfix m-b-5">
+        <!--DUONGNB: Change text in h2 from 'tư cách' to 'quyen'-->
+        <h2 class="lvh-label hidden-xs">Chọn quyền truy cập dự án</h2>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-hover table-fix" id="auth-manager-table">
+            <thead>
+            <tr>
+                <th class="p-0"></th>
+                <th class="p-0"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="p-l-10"><span class="text-muted p-r-5">Dự án :</span><%- projectName %></td>
+                <td class="text-right">
+                    <% if(pmRole){ %>
+                    <a class="m-l-8 btn btn-xs btn-info f-12 w-95 text-capitalize-f"
+                       data-company-id=""
+                       data-company-name=""
+                       data-group-id=""
+                       data-group-name=""
+                       data-role-id="<%- pmRole._id %>"
+                       data-role-name="<%- pmRole.name %>"><%- pmRole.name %>
+                    </a>
+                    <% } %>
+                </td>
+            </tr>
+            <% if(companies.length){ %>
+            <% for(var i = 0; i < companies.length; i++){ %>
+            <tr style="background-color: rgba(220,220,220,0.2)">
+                <td class="p-l-10">
+                    <div class="indentation m-r-10 tree-child<%- _equal(i, companies.length - 1) ? '-last' : '' %>">&nbsp;</div>
+                    <span class="text-muted p-r-5">Công ty :</span><%- companies[i].name %></td>
+                <td class="text-right">
+                    <% if (!!companies[i].role) { %>
+                    <a class="btn btn-xs btn-warning f-12 w-95 text-capitalize-f"
+                       data-company-id="<%- companies[i]._id %>"
+                       data-company-name="<%- companies[i].name %>"
+                       data-group-id=""
+                       data-group-name=""
+                       data-role-id="<%- companies[i].role._id %>"
+                       data-role-group="<%- companies[i].role.roleGroup %>"
+                       data-role-name="<%- companies[i].role.name %>"><%- companies[i].role.name %></a>
+                    <% } %>
+                </td>
+            </tr>
+            <% companies[i].agentgroups.forEach(function(el, index){ %>
+            <tr>
+                <td class="p-l-10">
+                    <div class="indentation tree-child-left <%- _equal(i, companies.length - 1) ? 'nobg' : '' %>">&nbsp;</div>
+                    <div class="indentation w-40 m-l-20 m-r-10 tree-child<%- _equal(index, companies[i].agentgroups.length - 1) ? '-last' : '' %>">
+                        &nbsp;</div>
+                    <span class="text-muted p-r-5">Nhóm :</span><%- el.name %></td>
+                <td class="text-right">
+                    <% if (!!el.role){ %>
+                    <a class="m-l-8 btn btn-xs btn-default f-12 w-95 text-capitalize-f"
+                       data-company-id="<%- companies[i]._id %>"
+                       data-company-name="<%- companies[i].name %>"
+                       data-group-id="<%- el._id %>"
+                       data-group-name="<%- el.name %>"
+                       data-role-id="<%- el.role._id %>"
+                       data-role-group="<%- el.role.roleGroup %>"
+                       data-role-name="<%- el.role.name %>"><%- el.role.name %></a>
+                    <% } %>
+                </td>
+            </tr>
+            <% }) %>
+            <% } %>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>

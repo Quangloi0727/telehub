@@ -1,0 +1,129 @@
+<%- breadcrumb %>
+<div class="card">
+    <div class="portlet-title">
+        <div class="lv-header-alt clearfix">
+            <h2 class="lvh-label hidden-xs">
+                <%= title %>
+            </h2>
+            <ul class="lv-actions actions">
+                <li><a data-toggle="tooltip" data-placement="top" data-original-title="Refresh"><i
+                                class="zmdi zmdi-refresh"></i></a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <form class="form-horizontal" role="form">
+            <div class="form-body">
+                <div class="row m-0 m-t-20">
+                    <div class="col-md-4 m-b-20">
+                        <label for="startDate" class="control-label f-13"><span>Ngày bắt đầu</span></label>
+
+                        <div class="input-group">
+                            <input type="text" class="form-control pull-right search-field date-picker filter-campain input" id="startDate" name="startDate"
+                                   placeholder="Ngày bắt đầu, VD: 01/01/2016">
+                            <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button"
+                                                                                       class="zmdi zmdi-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 m-b-20">
+                        <label for="endDate" class="control-label f-13"><span>Ngày kết thúc</span></label>
+
+                        <div class="input-group">
+                            <input type="text" class="form-control pull-right search-field date-picker filter-campain input" id="endDate" name="endDate"
+                                   placeholder="Ngày kết thúc, VD: 31/12/2016">
+                            <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button"
+                                                                                       class="zmdi zmdi-calendar"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 m-b-20">
+                        <label for="companies" class="control-label f-13"><span>Công ty</span></label>
+                        <select name="companies" class="selectpicker input" title="Chọn bộ phận" multiple>
+                            <% for(var i = 0;i < companies.length;i++){ %>
+                            <option value=<%- companies[i]._id %>><%- companies[i].name %></option>
+                            <% } %>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="row m-0">
+                    <div class="col-md-3 m-b-20">
+                        <div class="btn-group btn-group btn-group-justified">
+                            <a type="submit" id="report-overall" class="btn bgm-blue uppercase c-white" style="width:auto">
+                                <i class="fa fa-search m-r-10"></i>
+                                <strong>Tìm kiếm - Tổng quát</strong>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <div class="btn-group btn-group btn-group-justified">
+                            <a type="submit" id="report-detail" class="btn bgm-blue uppercase c-white" style="width:auto">
+                                <i class="fa fa-search m-r-10"></i><strong>Tìm kiếm - Chi tiết</strong>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <div class="btn-group btn-group btn-group-justified">
+                            <a id="exportexcel-overall" class="btn bgm-blue default c-white" style="width:auto">
+                                <i class="fa fa-file-excel-o m-r-10"></i> Xuất Excel - Tổng quát</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <div class="btn-group btn-group btn-group-justified">
+                            <a id="exportexcel-detail" class="btn bgm-blue default c-white" style="width:auto"><i class="fa fa-file-excel-o m-r-10"></i>
+                                Xuất Excel - Chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+    <div class="card-body table-responsive" style=" min-height:200px">
+        <table class="table table-hover table-condensed table-bordered table-fix" style="table-layout: fixed;" id="exceldata-overall">
+            <thead>
+            <tr>
+                <th class="bgm-orange c-white text-center"><span class="TXT_COMPANY"></span></th>
+                <th class="bgm-orange c-white text-center"><span class="TXT_MISSED"></span></th>
+                <th class="bgm-orange c-white text-center"><span class="TXT_TYPE_1"></span></th>
+                <th class="bgm-orange c-white text-center"><span class="TXT_TYPE_2"></span></th>
+                <th class="bgm-orange c-white text-center"><span class="TXT_TYPE_3"></span></th>
+                <th class="bgm-orange c-white text-center"><span class="TXT_TYPE_4"></span></th>
+                <th class="bgm-orange c-white text-center"><span class="TXT_TYPE_5"></span></th>
+                <th class="bgm-orange c-white text-center"><span class="TXT_TYPE_OTHER"></span></th>
+                <th class="bgm-orange c-white text-center"><span class="TXT_WAIT_DURATION"></span></th>
+                <th class="bgm-orange c-white text-center"><span class="TXT_WAIT_AVG"></span></th>
+            </tr>
+            </thead>
+            <tbody id="tbBody-overall">
+
+            </tbody>
+        </table>
+        <div id="container">
+        </div>
+    </div>
+    <div class="card-body table-responsive" style=" min-height:200px">
+        <form role="form" id="frm-report-misscall-detail">
+            <table class="table table-hover table-condensed table-bordered table-fix" style="table-layout: fixed;" id="exceldata-detail">
+                <thead>
+                <tr>
+                    <th class="bgm-orange c-white text-center"><span class="TXT_COMPANY"></span></th>
+                    <th class="bgm-orange c-white text-center"><span class="TXT_PHONE_NUMBER"></span></th>
+                    <th class="bgm-orange c-white text-center"><span class="TXT_START_TIME"></span></th>
+                    <th class="bgm-orange c-white text-center"><span class="TXT_END_TIME"></span></th>
+                    <th class="bgm-orange c-white text-center"><span class="TXT_WAIT_DURATION"></span></th>
+                    <th class="bgm-orange c-white text-center"><span class="TXT_REASON"></span></th>
+                </tr>
+                </thead>
+                <tbody id="tbBody-detail">
+
+                </tbody>
+            </table>
+            <div class="text-center" id="ticket-total"></div>
+            <div class="text-center" id="ticket-paging"></div>
+            <div id="container-detail">
+            </div>
+        </form>
+    </div>
+</div>

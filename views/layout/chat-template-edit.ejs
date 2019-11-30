@@ -1,0 +1,81 @@
+<%-breadcrumb%>
+<script>var _channelId = JSON.parse('<%- JSON.stringify(template.channelId._id) %>');</script>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted"><i>Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập.</i></small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="add-new-template">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label" id="txt_template_name">Tên <span class="c-red">*</span></label>
+
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" class="form-control validate[required]" id="name"
+                               maxlength="60"
+                               name="name" placeholder="" value="<%= template.name%>">
+                        <input type="hidden" id="_id" name="_id" value="<%= template._id%>">
+                        <input type="hidden" id="current_name" value="<%=template.name%>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="companyId" class="col-sm-3 control-label"><span id="txt_template_company"> Công ty</span></label>
+                <div class="col-sm-6">
+                    <div class="p-relative">
+                        <select class="selectpicker validate[required]" id="companyId" name="companyId">
+                            <option value='' disabled selected>---- Chọn ----</option>
+                            <% companies.forEach(function(c, i){ %>
+                            <option <%= (_.isEqual(c._id, template.channelId.idCompany)?'selected':'')%> value="<%= c._id %>"> <%= c.name %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="channelId" class="col-sm-3 control-label"><span id="txt_template_channel"> Channel</span>
+                    <span class="c-red">*</span></label>
+
+                <div class="col-sm-6">
+                    <select class="selectpicker validate[required]" id="channelId" name="channelId">
+                        <option value='' disabled selected>---- Chọn ----</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="body" class="col-sm-3 control-label"><span
+                            id="txt_template_body">Nội dung</span><span class="c-red">*</span></label>
+
+                <div class="col-sm-9" >
+                    <div class="fg-line">
+                        <textarea class="form-control validate[required]" id="body" name="body"><%= template.body%></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label"><span>Trạng thái</span></label>
+
+                <div class="col-sm-6">
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" <%= (template.status==1)?'checked':''%> id="status" name="status" value="<%= template.status%>">
+                            <i class="input-helper"></i>
+                            <span class="p-l-10" data-text-on="Không kích hoạt" data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect waves-effect" id="btn-back"
+                       name="btn-back" href="/#chat-template"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button id="btn-submit" type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i
+                                class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

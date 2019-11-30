@@ -1,0 +1,56 @@
+<%- breadcrumb %>
+<div class="card">
+    <div class="lv-header-alt clearfix">
+        <h2 class="lvh-label hidden-xs"><%- title %></h2>
+        <ul class="lv-actions actions">
+            <li>
+                <a href="/#product/new" data-toggle="tooltip" data-placement="top" data-original-title="Tạo mới">
+                    <i class="zmdi zmdi-plus"></i>
+                </a>
+            </li>
+            <li>
+                <a id="refresh" data-toggle="tooltip" data-placement="top" data-original-title="Làm mới">
+                    <i class="zmdi zmdi-refresh"></i>
+                </a>
+            </li>
+            <li class="hidden" id="li-hidden">
+                <a role="button" data-toggle="tooltip" data-placement="top" data-original-title="Xóa các mục đánh dấu" id="btn-delSelection">
+                    <i class="zmdi zmdi-delete"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <form id="form-articles">
+            <table class="table table-bordered" id="tbl-articles">
+                <thead>
+                    <tr>
+                        <th role="button" class="bgm-orange c-white text-center sort" id="sortByTitle" name="sortByTitle" data-sort="none" data-field="title" value="title"><i class="zmdi zmdi-hc-fw p-r-10 c-white" data-toggle="tooltip" data-placement="top"></i><span class="TXT_PRODUCT_NAME"></span></th>
+                        <th role="button" class="bgm-orange c-white text-center sort" id="sortByBody" name="sortByBody" data-sort="none" data-field="body" value="title"><i class="zmdi zmdi-hc-fw p-r-10 c-white" data-toggle="tooltip" data-placement="top"></i><span class="TXT_PRODUCT_PRICE"></span></th>
+                        <th role="button" class="bgm-orange c-white text-center sort" id="sortByGroup" name="sortByGroup" data-sort="none" data-field="group" value="title"><i class="zmdi zmdi-hc-fw p-r-10 c-white" data-toggle="tooltip" data-placement="top"></i><span class="TXT_PRODUCT_DESCRIPTION"></span></th>
+                        <th role="button" class="bgm-orange c-white text-center sort" id="sortByAuthor" name="sortByAuthor" data-sort="none" data-field="author" value="title"><i class="zmdi zmdi-hc-fw p-r-10 c-white" data-toggle="tooltip" data-placement="top"></i><span class="TXT_PRODUCT_AUTHOR"></span></th>
+                        <th role="button" class="bgm-orange c-white text-center sort" id="sortByUpdater" name="sortByUpdater" data-sort="none" data-field="updater" value="title"><i class="zmdi zmdi-hc-fw p-r-10 c-white" data-toggle="tooltip" data-placement="top"></i><span class="TXT_PRODUCT_UPDATED_BY"></span></th>
+                        <th class="w-100 bgm-orange c-white text-center"><span class="TXT_ARTICLE_TASK"></span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        product.forEach(function(product){%> 
+                            <tr class="filter">
+                                    <td class="text-center"><%= product.name %></td>
+                                    <td class="text-center"><%= product.price %></td>
+                                    <td class="text-center"><%= product.description %></td>
+                                    <% user.forEach(function(user){
+                                        if(product.author=user._id){%>
+                                            <% console.log('hello')%> 
+                                        <%}
+                                    })%>
+                            </tr>
+                        <%})
+                    %>
+                </tbody>
+            </table>
+            <div class="text-center" ><div id="paging"></div></div>
+        </form>
+    </div>
+</div>

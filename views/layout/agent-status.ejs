@@ -1,0 +1,112 @@
+<div class="card">
+    <div class="lv-header-alt clearfix">
+        <h2 class="lvh-label hidden-xs"><%- title %></h2>
+
+        <div class="lvh-search">
+            <input type="text" placeholder="Start typing..." class="lvhs-input">
+
+            <i class="lvh-search-close">×</i>
+        </div>
+
+        <ul class="lv-actions actions">
+            <!--<li>-->
+            <!--<a href="" class="lvh-search-trigger" data-toggle="tooltip" data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." title="" data-original-title="Tìm kiếm">-->
+            <!--<i class="zmdi zmdi-search"></i>-->
+            <!--</a>-->
+            <!--</li>-->
+            <li>
+                <a href="/agent-status/new" data-toggle="tooltip" data-placement="top" data-original-title="Tạo mới">
+                    <i class="zmdi zmdi-plus"></i>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" data-original-title="Làm mới danh sách">
+                    <i class="zmdi zmdi-refresh"></i>
+                </a>
+            </li>
+            <li class="hidden" id="li-hidden">
+                <a role="button" data-toggle="tooltip" data-placement="top" data-original-title="Xóa các mục đánh dấu" id="btn-delSelection">
+                    <i class="zmdi zmdi-delete"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body table-responsive">
+        <table class="table table-hover table-condensed table-bordered m-b-10">
+            <thead>
+            <tr class="">
+                <th class="select-cell bgm-orange c-white text-center w-60">
+                    <div class="checkbox">
+                        <label>
+                            <input name="select" id="select_all" type="checkbox" class="select-box" value="all">
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </th>
+                <th role="button" class="name bgm-orange c-white text-center">
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp <%- (_equal(sortData.name? sortData.name.toString():'1','1')? "tăng dần": "giảm dần")%>" class="<%- (_equal(sortData.name? sortData.name.toString():'1','1')? 'zmdi zmdi-sort-asc c-white zmdi-hc-fw p-r-10': 'zmdi zmdi-sort-desc c-white zmdi-hc-fw p-r-10')%>"></i>
+                    Tên </th>
+                <th class="bgm-orange c-white text-center">Cập nhật bởi</th>
+                <th role="button" class="updatedDate bgm-orange c-white text-center">
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp <%- (_equal(sortData.updated? sortData.updated.toString():'1','1')? 'tăng dần': 'giảm dần')%>" class="<%- (_equal(sortData.updated? sortData.updated.toString():'1','1')? 'zmdi zmdi-sort-amount-asc c-white zmdi-hc-fw p-r-10': 'zmdi zmdi-sort-amount-desc c-white zmdi-hc-fw p-r-10')%>"></i>Cập nhật ngày</th>
+                <th class="w-90 bgm-orange c-white text-center">Trạng thái</th>
+                <th class="w-90 bgm-orange c-white text-center">Tác vụ</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="filter">
+                <td></td>
+                <td><input class="form-control" type="text" id="search_name" name="search_name" ></td>
+
+                <td></td>
+                <td></td>
+                <td></td>
+
+                <td><button class="btn btn-primary btn-block waves-effect" id="btn-filter" name="btn-filter"><i class="zmdi zmdi-search m-r-5"></i> </button></td>
+            </tr>
+            <% if(statuses.length==0){ %>
+            <td colspan="12" class="text-center">Không có dữ liệu</td>
+            <%}%>
+
+            <script>
+                var dataLength= <%= statuses.length%>;
+            </script>
+            <% statuses.forEach(function(el, i) { %>
+            <tr>
+                <td class="select-cell text-center">
+                    <div class="checkbox m-0">
+                        <label>
+                            <input name="select" type="checkbox"  class="select-box selection" value="<%- el._id %>">
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+                <td><%- (el.name?el.name:'') %></td>
+                <!--<td></td>-->
+                <!--<td></td>-->
+                <td class="text-center"><%- (el.updateBy?el.updateBy.displayName:'') %></td>
+                <td class="text-center"><%- (el.updated?_moment(el.updated).format("hh:mm DD/MM/YYYY"):'')%></td>
+
+                <td class="text-center">
+                    <div class="checkbox" style="margin: 0 auto">
+                        <label>
+                            <input name="select" type="checkbox" class="select-box" disabled="disabled" value="<%- el._id %>" <%- (el.status ? 'checked' : ''); %> />
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <a class="p-t-3 btn-flat-bg" href="/agent-status/<%- el._id %>/edit" data-toggle="tooltip" data-placement="top" data-original-title="Sửa"><i class="zmdi zmdi-edit green f-17"></i></a>
+                    <a role="button" class="btn-remove btn-flat-bg" data-toggle="tooltip" data-placement="top" data-original-title="Xoá" data-id="<%- el._id %>"><i class="zmdi zmdi-close red f-23 "></i></a>
+                </td>
+            </tr>
+            <% }); %>
+            </tbody>
+        </table>
+
+        <% if(paging.pageCount > 1){ %>
+        <% include ../paging.ejs %>
+        <% } %>
+    </div>
+</div>

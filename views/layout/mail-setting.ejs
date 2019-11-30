@@ -1,0 +1,121 @@
+<div class="card">
+    <div class="lv-header-alt clearfix">
+        <h2 class="lvh-label hidden-xs"><%- title %></h2>
+
+        <ul class="lv-actions actions">
+            <li>
+                <a href="/#mail-setting/new" data-toggle="tooltip" data-placement="top" data-original-title="Tạo service mới">
+                    <i class="zmdi zmdi-plus"></i>
+                </a>
+            </li>
+            <li>
+                <a href="/#mail-setting" data-toggle="tooltip" data-placement="top" data-original-title="Làm mới danh sách">
+                    <i class="zmdi zmdi-refresh"></i>
+                </a>
+            </li>
+            <li class="hidden" id="li-hidden">
+                <a role="button" data-toggle="tooltip" data-placement="top" data-original-title="Xóa các mục đánh dấu"
+                   id="btn-delSelection">
+                    <i class="zmdi zmdi-delete"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-body" style="min-height: 200px">
+        <table class="table table-hover table-bordered table-fix table-condensed ">
+            <thead>
+            <tr>
+                <th class="w-50 bgm-orange c-white">
+                </th>
+                <th data-sort="none" sortName="name" role="button" class="text-left bgm-orange c-white filter"
+                    data-original-title="Click để sắp xếp dữ liệu tăng dần/giảm dần" data-container="body"
+                    data-toggle="tooltip" data-placement="top">
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp tăng dần"
+                       class="zmdi zmdi-sort-asc"></i>
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp giảm dần"
+                       class="zmdi zmdi-sort-desc"></i>
+                    <span id="txt_service_name"></span>
+                </th>
+                <th class="w-150 text-center bgm-orange c-white" id="txt_service_status"></th>
+
+                <th class="w-80 text-center bgm-orange c-white" id="txt_service_actions"></th>
+            </tr>
+            </thead>
+
+
+            <tbody>
+            <tr id="searchForm" class="filter">
+                <td class="text-center select-cell">
+                    <div class="checkbox m-0">
+                        <label>
+                            <input name="select" type="checkbox" class="select-box select-box-all c-white" value="all"
+                                   id="deleteAll">
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+                <td><input class="form-control searchColumn" type="text" id="search_name"
+                           name="name"></td>
+                <td>
+                    <div>
+                        <select class="selectpicker searchColumn" name="status" id="search_status">
+                            <option selected value="2">Tất cả</option>
+                            <option value="1">Kích hoạt</option>
+                            <option value="0">Vô hiệu hoá</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <button class="btn btn-primary btn-block waves-effect" id="btn-search" name="btn-search"><i
+                                class="zmdi zmdi-search"></i></button>
+                </td>
+            </tr>
+
+            <% if(services.length == 0){ %>
+            <script> var isNullService = true;</script>
+            <% } else{ %>
+            <script> var isNullService = false;</script>
+            <% services.forEach(function(element, index) { %>
+            <tr>
+                <td class="select-cell text-center">
+                    <div class="checkbox m-0">
+                        <label>
+                            <input data-id="<%- element._id %>" name="select" type="checkbox"
+                                   class="select-box select-box-cell" value="all">
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+
+                <td class="truncate"><%- element.name %></td>
+                <!--displayName: result.displayName,-->
+                <!--agentGroup: result.agentGroup,-->
+                <td>
+                    <div class="checkbox text-center" style="margin: 0 auto">
+                        <label>
+                            <input id="orgIndex" disabled name="select" type="checkbox"
+                                   class="select-box" <%- (element.status ? 'checked' : ''); %> />
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+
+                <td class="text-center">
+                    <a class="p-t-3 btn-flat-bg" href="#mail-setting/<%- element._id %>/edit" data-toggle="tooltip"
+                       data-placement="top" data-original-title="Sửa"><i class="zmdi zmdi-edit green f-17"></i></a>
+                    <a class="btn-remove btn-flat-bg" data-toggle="tooltip" role="button" data-placement="top"
+                       data-original-title="Xoá" company-id="<%- element._id %>" company-name="<%- element.name %>"><i
+                                class="zmdi zmdi-close red f-23 "></i></a>
+                </td>
+            </tr>
+            <% }); %>
+            <% }%>
+            </tbody>
+        </table>
+
+        <% if(paging.pageCount > 1){ %>
+        <% include ../paging.ejs %>
+        <% } %>
+    </div>
+</div>

@@ -1,0 +1,257 @@
+<%-breadcrumb%>
+<div class="lv-header-alt clearfix">
+    <h2 class="lvh-label hidden-xs"><%- title %></h2>
+    <ul class="lv-actions actions">
+        <li>
+            <a data-toggle="modal" href="#frm-item" data-placement="left" data-original-title="Tạo mới" class="new-item">
+                <i class="zmdi zmdi-plus"></i>
+            </a>
+        </li>
+        <li>
+            <a data-toggle="tooltip" data-placement="left" data-original-title="Làm mới danh sách">
+                <i class="zmdi zmdi-refresh"></i>
+            </a>
+        </li>
+        <li class="hidden" id="li-hidden">
+            <a role="button" data-toggle="tooltip" data-placement="top" data-original-title="Xóa các mục đánh dấu" id="btn-delSelection">
+                <i class="zmdi zmdi-delete"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="card">
+    <div class="card-body table-responsive">
+        <form id="mark-data">
+            <table class="table table-hover table-bordered table-fix">
+                <thead>
+                <tr class="">
+                    <th class="text-center bgm-orange c-white w-40">#</th>
+                    <th class="text-center bgm-orange c-white w-150">
+                        Tên dữ liệu
+                    </th>
+                    <th class="bgm-orange c-white w-100 text-center">
+                        Bộ tiêu chí chấm điểm
+                    </th>
+                    <th data-sort="none" class="text-center bgm-orange c-white w-60" data-field="startDate">
+                        <i data-toggle="tooltip" data-original-title="Sắp xếp theo thứ tự tăng dần" class="zmdi zmdi-sort-asc"></i>
+                        <i data-toggle="tooltip" data-original-title="Sắp xếp theo thứ tự giảm dần" class="zmdi zmdi-sort-desc"></i>
+                        Ngày bắt đầu
+                    </th>
+                    <th class="bgm-orange c-white w-60 text-center">
+                        Ngày kết thúc
+                    </th>
+                    <th class="bgm-orange c-white w-60 text-center">
+                        Tổng số agent
+                    </th>
+                    <th class="bgm-orange c-white w-60 text-center">
+                        Tổng số dữ liệu ticket
+                    </th>
+                    <th class="bgm-orange c-white w-60 text-center">
+                        Tạo bởi
+                    </th>
+                    <th class="bgm-orange c-white w-60 text-center sortCreateDate">
+                        Ngày tạo
+                    </th>
+                    <th class="bgm-orange c-white w-60 text-center">
+                        Trạng thái
+                    </th>
+                    <th class="bgm-orange c-white w-60 text-center">Tác vụ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="row-filter filter">
+                    <td class="text-center p-0">
+                        <div class="checkbox m-0 m-l-3" data-toggle="tooltip" data-placement="top" data-original-title="Chọn tất cả">
+                            <label>
+                                <input name="select" type="checkbox" class="select-box select-box-all" value="all">
+                                <i class="input-helper"></i>
+                            </label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="text-center">
+                            <input name="fname" id="fname" type="text" class="form-control data-filter">
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <div class="fg-line select ">
+                            <select class="selectpicker data-filter" id="idCollection" name="idCollection">
+                                <option value='' disabled selected>---- Chọn ----</option>
+                                <% collection.forEach(function(col, i){ %>
+                                <option value="<%- col._id %>"><%- col.name %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                    </td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-primary btn-block btn-filter"><i class="zmdi zmdi-filter-list m-r-5"></i> Lọc</button>
+                    </td>
+                </tr>
+                <% data.forEach(function(md, i) { %>
+                <tr>
+                    <td class="select-cell text-center w-60">
+                        <div class="checkbox m-0">
+                            <label>
+                                <input data-id="<%- md._id %>" name="select" type="checkbox" class="select-box select-box-cell" value="all">
+                                <i class="input-helper"></i>
+                            </label>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <%- md.name %>
+                    </td>
+                    <td class="text-center"><%- md.idCollection.name %></td>
+                    <td class="text-center"><%- moment(md.startDate).format('DD/MM/YYYY') %></td>
+                    <td class="text-center"><%- moment(md.endDate).format('DD/MM/YYYY') %></td>
+                    <td class="text-center"><%- md.agents.length %></td>
+                    <td class="text-center"><%- md.ticketAdded.length %></td>
+                    <td class="text-center"><%- md.createBy.displayName %></td>
+                    <td class="text-center"><%- moment(md.created).format('DD/MM/YYYY') %></td>
+                    <td class="text-center">
+                        <div class="checkbox m-0">
+                            <label>
+                                <input disabled name="select" type="checkbox" class="select-box" value="<%- md._id %>" <%- (md.status ? 'checked' : ''); %> />
+                                <i class="input-helper"></i>
+                            </label>
+                        </div>
+                    </td>
+                    <td class="text-center task" data-id="<%- md._id %>">
+                        <a role="button" class="p-t-3 btn-flat-bg addQAMarking" data-toggle="tooltip" data-placement="top" data-original-title="Thêm người chấm"><i class="zmdi zmdi-accounts-outline green f-17"></i></a>
+                        <a role="button" class="p-t-3 btn-flat-bg addAgentMarking" data-toggle="tooltip" data-placement="top" data-original-title="Chọn agent"><i class="zmdi zmdi-accounts-add green f-17"></i></a>
+                        <!--<a role="button" class="p-t-3 btn-flat-bg edit" data-toggle="tooltip" data-placement="top" data-original-title="Sửa"><i class="zmdi zmdi-edit green f-17"></i></a>-->
+                        <a role="button" class="p-t-3 btn-flat-bg delete" data-toggle="tooltip" data-placement="top" data-original-title="Xoá"><i class="zmdi zmdi-close red f-17"></i></a>
+                    </td>
+                </tr>
+                <% });%>
+                </tbody>
+            </table>
+            <% include ../paging.ejs %>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="frm-item" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+    <form class="form-horizontal m-t-30" role="form">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tạo mới dữ liệu</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body" style="max-height: 400px; overflow-y: scroll; overflow-x: hidden">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-3 control-label">Tên dữ liệu <span class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <div class="fg-line">
+                                    <input type="text" value="" class="form-control input-sm validate[required,ajax[KpiDataName]]" id="name" name="name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="idCompany" class="col-sm-3 control-label">Công ty <span class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <select class="tag-select" multiple id="idCompany" name="idCompany[]" data-placeholder="--Chọn--">
+                                    <% for(var i = 0 ; i < company.length; i++){ %>
+                                    <option value="<%- company[i]._id %>"><%- company[i].name %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="note" class="col-sm-3 control-label">Chú thích </label>
+                            <div class="col-sm-8">
+                                <div class="fg-line">
+                                    <input type="text" value="" class="form-control input-sm" id="note" name="note">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="startDate" class="col-sm-3 control-label">Ngày bắt đầu<span class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <div class="fg-line">
+                                    <div class="input-group">
+                                        <input class="form-control date-picker validate[required]" type="text" id="startDate" name="startDate">
+                                        <span class="input-group-addon p-l-10 bgm-gray c-white">
+                                            <i role="button" class="zmdi zmdi-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate" class="col-sm-3 control-label">Ngày kết thúc<span class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <div class="fg-line">
+                                    <div class="input-group">
+                                        <input class="form-control date-picker validate[required,custom[DurHighCheck]]" id="endDate" name="endDate">
+                                        <span class="input-group-addon p-l-10 bgm-gray c-white">
+                                            <i role="button" class="zmdi zmdi-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="collection" class="col-sm-3 control-label">Bộ dữ liệu<span class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <div class="fg-line select ">
+                                    <select class="selectpicker validate[required]" id="idCollection" name="idCollection">
+                                        <!--<option value='' disabled selected>---- Chọn ----</option>-->
+                                        <% collection.forEach(function(col, i){ %>
+                                           <option value="<%- col._id %>"><%- col.name %></option> 
+                                        <% }) %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="ticket" class="col-sm-3 control-label p-t-60">Số lượng<span class="required">*</span></label>
+                                <div class="col-sm-2">
+                                    <div class="fg-line">
+                                        <input type="number" value="" class="form-control input-sm validate[required, custom[DurNumCheck,min[0]]]" id="maxTicket" name="maxTicket">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="fg-line" style="width: 96%">
+                                        <select class="selectpicker" id="typeNumber" name="typeNumber">
+                                            <option value='1' selected>Số lượng chính xác</option>
+                                            <option value='2' selected>Số lượng phần trăm</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="status" class="col-sm-3 control-label">Trạng thái</label>
+                            <div class="col-sm-6">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="1" name="status" id="status" checked>
+                                        <i class="input-helper"></i>
+                                        <span id="status-span" class="p-l-10" data-text-on="Không kích hoạt" data-text-off="Kích hoạt"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect" data-dismiss="modal"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Bỏ qua</button>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận</button>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect" style="display: none"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+

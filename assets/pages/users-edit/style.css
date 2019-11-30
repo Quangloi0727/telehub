@@ -1,0 +1,51 @@
+.pwdInput {
+    border-left-width: 0;
+    left: -2px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+div.indentation {
+    float: left; /* LTR */
+    margin: -0.6em -0.2em -0.6em 0.08em;
+    width: 30px;
+    height: 52px;
+    opacity: 0.5;
+}
+
+div.tree-child {
+    background: url('/assets/plugins/mrblack-table/assets/tree.png') no-repeat 10px center; /* LTR */
+}
+
+div.tree-child-left {
+    background: url('/assets/plugins/mrblack-table/assets/tree-left.png') no-repeat 10px center; /* LTR */
+}
+
+div.tree-child-last {
+    background: url('/assets/plugins/mrblack-table/assets/tree-bottom.png') no-repeat 10px center !important; /* LTR */
+}
+
+div.tree-child-horizontal {
+    background: url('/assets/plugins/mrblack-table/assets/tree.png') no-repeat -10px center;
+}
+
+tr td:first-child {
+    color: #2371f2;
+}
+
+tr:last-child td:first-child div:first-child {
+    background: none;
+}
+
+.nobg {
+    background: none !important;
+}
+
+.vertial-td {
+    display: flex;
+    align-items: center;
+}
+
+.chosen-single > span {
+    text-transform: capitalize;
+}

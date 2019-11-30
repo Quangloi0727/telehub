@@ -1,0 +1,310 @@
+﻿<!DOCTYPE html>
+<html class="p-0 m-0">
+<!--[if IE 9 ]>
+<html class="ie9 p-0 m-0">
+<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="/assets/plugins/swal/style.css" rel="stylesheet">
+    <link href="/assets/css/animate.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/plugins/bootstrap-select/style.css" rel="stylesheet">
+    <link href="/assets/plugins/bootstrap-datetimepicker/style.css" rel="stylesheet">
+    <style>
+        .panel.panel-default .panel-collapse {
+            height: calc(100vh - 121px);
+        }
+
+        .no-transition {
+            -webkit-transition: height 0.001s;
+            -moz-transition: height 0.001s;
+            -ms-transition: height 0.001s;
+            -o-transition: height 0.001s;
+            transition: height 0.001s;
+        }
+
+        #ticket-accordion h5 a[aria-expanded="false"] {
+            opacity: 0.7;
+        }
+
+        .bootstrap-datetimepicker-widget {
+            font-size: 14px;
+            text-transform: capitalize;
+        }
+
+        .btn-group.bootstrap-select.open {
+            z-index: 99999 !important;
+        }
+    </style>
+    <script>
+        var ReasonCategoy = JSON.parse('<%- JSON.stringify(ReasonCategoy); %>');
+        //customerID
+        var _c = JSON.parse('<%- JSON.stringify(customer); %>') || {};
+        
+    </script>
+</head>
+<body class="p-0 m-0" style="height: 100vh;">
+    <div class="panel-group m-0" id="ticket-accordion">
+        <div class="panel panel-default  m-t-0">
+            <div class="panel-heading p-0">
+                <h5 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#ticket-accordion" href="#collapseCustomerInfo" data-id="showCustomer" class="btn-block p-10 bgm-gray c-white text-uppercase" aria-expanded="true">THÔNG TIN KHÁCH HÀNG</a>
+                </h5>
+            </div>
+            <div id="collapseCustomerInfo" class="panel-collapse collapse no-transition in" style="overflow-x: hidden">
+                <form class="panel-body p-5 p-b-10">
+                    <div class="row m-0">
+                        <% for(var i = 0; i < Fields.companyProfile.fieldId.length; i++){ %>
+                        <div class="col-xs-12 col-sm-4 col-md-3 p-r-10 p-l-10 m-t-20">
+                            <label for="name" class="control-label"><%- Fields.companyProfile.fieldId[i].displayName %> <%- _switch(Fields.companyProfile.fieldId[i].isRequired, [0, 1], ['', '<span class="c-red">*</span>']) %> :</label>
+                            <div>
+                                <%- fnInfo(Fields.companyProfile.fieldId[i], customer); %>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-default m-t-0">
+            <div class="panel-heading p-0">
+                <h5 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#ticket-accordion" href="#collapseTicket" data-id="showCustomer" class="btn-block p-10 bgm-gray c-white text-uppercase">THÔNG TIN TICKET</a>
+                </h5>
+            </div>
+            <div id="collapseTicket" class="panel-collapse collapse no-transition" style="overflow-x: hidden">
+                <div class="panel-body p-5 p-t-0 p-b-10">
+                    <ul class="tab-nav tn-justified" role="tablist">
+                        <li role="presentation" class="ticketTab active" data-id="1">
+                            <a class="col-sm-6 p-5 f-14 p-b-10" href="#tab-edit-ticket" aria-controls="tab-new-ticket" role="tab" data-toggle="tab" aria-expanded="true"><b>Phiếu hiện tại</b></a>
+                        </li>
+                        <li role="presentation" class="ticketTab" data-id="2">
+                            <a class="col-sm-6 p-5 f-14 p-b-10" href="#tab-old-ticket" aria-controls="tab-old-ticket" role="tab" data-toggle="tab" aria-expanded="false"><b>Phiếu liên quan</b></a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane animated active" id="tab-edit-ticket">
+                            <div class="row m-0">
+                                <div class="col-xs-12 col-sm-4 col-md-3 p-r-10 p-l-10 m-t-20">
+                                    <label for="name" class="control-label">Nhóm tình trạng :</label>
+                                    <select class="selectpicker" id="edit-ReasonCategoy">
+                                        <option value="">---- Chọn ----</option>
+                                        <% for(var i = 0; i < ReasonCategoy.length; i++){ %>
+                                        <option value="<%- ReasonCategoy[i]._id %>"><%- ReasonCategoy[i].name %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-3 p-r-10 p-l-10 m-t-20">
+                                    <label for="name" class="control-label">Tình Trạng Hiện Tại :</label>
+                                    <select class="selectpicker" id="edit-Reason">
+                                        <option value="">---- Chọn ----</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-3 p-r-10 p-l-10 m-t-20">
+                                    <label for="name" class="control-label">Hẹn xử lý lúc :</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control date-time-picker" id="edit-deadline" name="deadline" placeholder="DD/MM/YYYY">
+                                        <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button" class="zmdi zmdi-calendar"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-3 p-r-10 p-l-10 m-t-20">
+                                    <label for="name" class="control-label">Trạng thái :</label>
+                                    <select class="selectpicker" id="edit-status" name="status">
+                                        <option value="">---- Chọn ----</option>
+                                        <option value="0">Chờ xử lý</option>
+                                        <option value="1">Đang xử lý</option>
+                                        <option value="2">Đã xử lý</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-sm-8 col-md-6 p-r-10 p-l-10 m-t-20">
+                                    <label for="name" class="control-label">Uỷ quyền xử lý cho :</label>
+                                    <select class="selectpicker" id="edit-Assign" data-live-search="true">
+                                        <option value="">---- Chọn ----</option>
+                                        <% for(var i = 0; i < AgentGroup.length; i++){ %>
+                                        <option data-type="groupId" value="<%- AgentGroup[i].agentgroups._id %>" style="font-weight: bold"><%- AgentGroup[i].agentgroups.name %></option>
+                                        <% for(var j = 0; j < AgentGroup[i].agentgroups.leaders.length; j++){ %>
+                                        <option data-type="idAgent" data-icon="zmdi zmdi-face" value="<%- AgentGroup[i].agentgroups.leaders[j]._id %>" style="text-indent: 5px"><%- AgentGroup[i].agentgroups.leaders[j].displayName %> - <%- AgentGroup[i].agentgroups.leaders[j].name %></option>
+                                        <% } %>
+                                        <% } %>
+                                    </select>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-12 p-r-10 p-l-10 m-t-20">
+                                    <label for="name" class="control-label">Ghi chú :</label>
+                                    <textarea class="form-control" id="edit-Note" placeholder="..." rows="5"></textarea>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane animated" id="tab-old-ticket">
+                            <form>
+                                <div class="table-responsive" style="height: calc(100vh - 171px);margin-bottom: 0;">
+                                    <table class="table table-fix table-fixed-header" style="min-width: 600px">
+                                        <thead class="header">
+                                            <tr>
+                                                <th class="text-center w-200 p-b-5 f-11" style="background: rgb(243, 243, 243)">Nhóm tình trạng</th>
+                                                <th class="text-center w-200 p-b-5 f-11" style="background: rgb(243, 243, 243)">Tình trạng hiện tại</th>
+                                                <th class="text-center w-200 p-b-5 f-11" style="background: rgb(243, 243, 243)">Chú thích</th>
+                                                <th class="text-center w-150 p-b-5 f-11" style="background: rgb(243, 243, 243)">Trạng thái</th>
+                                                <th class="text-center w-150 p-b-5 f-11" style="background: rgb(243, 243, 243)">Ngày hẹn xử lý</th>
+                                                <th class="text-center w-200 p-b-5 f-11" style="background: rgb(243, 243, 243)">Người cập nhật</th>
+                                                <th class="text-center w-150 p-b-5 f-11" style="background: rgb(243, 243, 243)">Ngày cập nhật</th>
+                                                <th class="text-center w-55 p-b-5 f-11" style="background: rgb(243, 243, 243)"></th>
+                                            </tr>
+                                        </thead>
+                                        <thead>
+                                            <tr>
+                                                <td class="p-t-0 w-200">
+                                                    <select class="selectpicker w-190" data-width="190px" id="filter-ReasonCategoy" name="ticketReasonCategory">
+                                                        <option value="">---- Chọn ----</option>
+                                                        <% for(var i = 0; i < ReasonCategoy.length; i++){ %>
+                                                        <option value="<%- ReasonCategoy[i]._id %>"><%- ReasonCategoy[i].name %></option>
+                                                        <% } %>
+                                                    </select>
+                                                </td>
+                                                <td class="p-t-0 w-200">
+                                                    <select class="selectpicker w-190" data-width="190px" id="filter-Reason" name="ticketReason">
+                                                        <option value="">---- Chọn ----</option>
+                                                    </select>
+                                                </td>
+                                                <td class="p-t-0"><input class="form-control searchColumn text-left f-13" placeholder="..." style="min-width: 190px" type="text" id="filter-Note" name="note"></td>
+                                                <td class="p-t-0 w-150">
+                                                    <select class="selectpicker w-140" data-width="140px" name="status">
+                                                        <option class="f-13" value="">---- Chọn ----</option>
+                                                        <option class="f-13" value="0">Chờ xử lý</option>
+                                                        <option class="f-13" value="1">Đang xử lý</option>
+                                                        <option class="f-13" value="2">Đã xử lý</option>
+                                                    </select>
+                                                </td>
+
+                                                <td class="p-t-0 w-150">
+                                                    <div class="input-group">
+                                                        <input class="form-control date-picker f-13 text-center w-140" placeholder="DD/MM/YYYY" id="filter-deadline" name="deadline" type="text" />
+                                                    </div>
+                                                </td>
+                                                <td class="p-t-0 w-200">
+                                                    <input class="form-control searchColumn text-center f-12 w-190" id="filter-updateBy" name="updateBy" type="text">
+                                                </td>
+                                                <td class="p-t-0 w-150">
+                                                    <div class="input-group">
+                                                        <input class="form-control date-picker f-13 text-center w-140" placeholder="DD/MM/YYYY" id="filter-updated" name="updated" type="text" />
+                                                    </div>
+                                                </td>
+                                                <td class="text-center p-t-0 w-55">
+                                                    <button class="btn btn-primary btn-block waves-effect" type="button" id="btn-search-ticket"><i class="zmdi zmdi-search"></i></button>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-5 text-center">
+        <button class="btn btn-primary btn-float" id="btn-save-ticket" data-ticket-id="<%- TicketId %>">Lưu</button>
+    </div>
+    <script type="text/javascript" src="/assets/js/jquery.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-migrate.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/assets/js/async.js"></script>
+    <script type="text/javascript" src="/assets/plugins/moment/script.js"></script>
+    <script type="text/javascript" src="/assets/plugins/jquery-ui/script.js"></script>
+    <script type="text/javascript" src="/assets/plugins/waves/script.js"></script>
+    <script type="text/javascript" src="/assets/plugins/nicescroll/script.js"></script>
+    <script type="text/javascript" src="/assets/plugins/underscore/script.js"></script>
+    <script type="text/javascript" src="/assets/plugins/underscore/string.js"></script>
+    <script type="text/javascript" src="/assets/plugins/validation/script.js"></script>
+    <script type="text/javascript" src="/assets/plugins/validation/i18n/script.js"></script>
+    <script type="text/javascript" src="/assets/plugins/swal/script.js"></script>
+    <script type="text/javascript" src="/assets/plugins/bootstrap-select/script.js"></script>
+    <script type="text/javascript" src="/assets/plugins/bootstrap-datetimepicker/script.js"></script>
+    <script type="text/javascript" src="/assets/plugins/underscore/script.js"></script>
+    <script type="text/javascript" src="/assets/plugins/underscore/string.js"></script>
+    <script type="text/javascript" src="/assets/pages/ticket/script.js"></script>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="zmdi zmdi-tag-more m-r-5"></i>Chi tiết phiếu</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row p-0">
+                        <div class="col-xs-12 col-sm-4 p-r-10 p-l-10 m-t-20">
+                            <label for="name" class="control-label">Nhóm tình trạng :</label>
+                            <select class="selectpicker" id="ticketReasonCategory">
+                                <option value="">---- Chọn ----</option>
+                                <% for(var i = 0; i < ReasonCategoy.length; i++){ %>
+                                <option value="<%- ReasonCategoy[i]._id %>"><%- ReasonCategoy[i].name %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 p-r-10 p-l-10 m-t-20">
+                            <label for="name" class="control-label">Tình Trạng Hiện Tại :</label>
+                            <select class="selectpicker" id="ticketReason">
+                                <option value="">---- Chọn ----</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 p-r-10 p-l-10 m-t-20">
+                            <label for="name" class="control-label">Hẹn xử lý lúc :</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control date-time-picker p-6 f-13 text-center" id="deadline" placeholder="DD/MM/YYYY">
+                                <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button" class="zmdi zmdi-calendar"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 p-r-10 p-l-10 m-t-20">
+                            <label for="name" class="control-label">Trạng thái :</label>
+                            <select class="selectpicker" id="status">
+                                <option value="">---- Chọn ----</option>
+                                <option value="0">Chờ xử lý</option>
+                                <option value="1">Đang xử lý</option>
+                                <option value="2">Đã xử lý</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-8 p-r-10 p-l-10 m-t-20">
+                            <label for="name" class="control-label">Uỷ quyền xử lý cho :</label>
+                            <select class="selectpicker" id="edit-Assign" data-live-search="true">
+                                <option value="">---- Chọn ----</option>
+                                <% for(var i = 0; i < AgentGroup.length; i++){ %>
+                                <option data-type="groupId" value="<%- AgentGroup[i].agentgroups._id %>" style="font-weight: bold"><%- AgentGroup[i].agentgroups.name %></option>
+                                <% for(var j = 0; j < AgentGroup[i].agentgroups.leaders.length; j++){ %>
+                                <option data-type="idAgent" data-icon="zmdi zmdi-face" value="<%- AgentGroup[i].agentgroups.leaders[j]._id %>" style="text-indent: 5px"><%- AgentGroup[i].agentgroups.leaders[j].displayName %> - <%- AgentGroup[i].agentgroups.leaders[j].name %></option>
+                                <% } %>
+                                <% } %>
+                            </select>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-12 p-r-10 p-l-10 m-t-20">
+                            <label for="name" class="control-label">Ghi chú :</label>
+                            <textarea class="form-control" id="edit-Note" placeholder="..." rows="5"></textarea>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding: 5px 20px 20px">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary">Lưu phiếu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-loader">
+        <div class="preloader pls-blue">
+            <svg class="pl-circular" viewBox="25 25 50 50">
+                <circle class="plc-path" cx="50" cy="50" r="20"></circle>
+            </svg>
+
+            <p>Please wait...</p>
+        </div>
+    </div>
+
+</body>
+</html>

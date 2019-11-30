@@ -1,0 +1,89 @@
+<%-breadcrumb%>
+<script>
+
+</script>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted"><i>Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập. </i></small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="add-new-sync">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Tên nhóm kỹ năng<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" class="form-control validate[required,ajax[NameCheck]]" id="name" name="name">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Loại<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line select">
+                        <select class="selectpicker validate[required]" id="type" name="type">
+                            <option value='' disabled selected>---- Chọn ----</option>
+                            <option value="1">Đồng bộ</option>
+                            <option value="2">Tải về</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Kích thước gói tin<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="number" class="form-control validate[required]" min="0" max="1000" id="packageSize" name="packageSize">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Bộ lọc<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line select">
+                        <select class="selectpicker validate[required]" id="query" name="query">
+                            <option value='' disabled selected>---- Chọn ----</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Nguồn<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <select class="tag-select validate[required]" id="source" name="source">
+                        <option value='' disabled selected>---- Chọn ----</option>
+                        <% for(var i = 0 ; i < groups.length; i++){ %>
+                        <optgroup label="<%- groups[i].name %>">
+                            <% if(groups[i].sources.length){ %>
+                            <% for(var j = 0 ; j < groups[i].sources.length; j++){ %>
+                            <% if(groups[i].sources[j].status){ %>
+                            <option value="<%- groups[i].sources[j]._id %>"><%- groups[i].sources[j].name %></option>
+                            <% } %>
+                            <% } %>
+                            <% } %>
+                        </optgroup>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Khởi động ngay</label>
+                <div class="col-sm-6">
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" value="1" id="isStart" name="isStart" checked>
+                            <i class="input-helper"></i>
+                            <span class="p-l-10" data-text-on="Không kích hoạt" data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a type="button" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect" href="/#sync-customer"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

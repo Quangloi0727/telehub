@@ -1,0 +1,194 @@
+<%-breadcrumb%>
+<script>
+    var monitorData = JSON.parse('<%- JSON.stringify(data)%>');
+    var statusData = JSON.parse('<%- JSON.stringify(status)%>');
+    var serviceData = JSON.parse('<%- JSON.stringify(serviceData)%>');
+    var firstGroups = JSON.parse('<%- JSON.stringify(groups)%>');
+    var firstServices = JSON.parse('<%- JSON.stringify(services)%>');
+</script>
+<div class="lv-header-alt clearfix">
+    <h2 class="lvh-label hidden-xs"><%- title %></h2>
+    <ul class="lv-actions actions">
+        <li>
+            <a id="setting-btn" data-toggle="tooltip" data-placement="top"
+               data-original-title="Cấu hình cảnh báo">
+                <i class="zmdi zmdi-settings"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="card">
+    <div class="panel panel-default">
+        <div>
+            <div class="panel-body p-0 c-overflow">
+                <ul class="tab-nav tn-justified" role="tablist" id="tab-list-service">
+                </ul>
+                <div class="tab-content" id="tab-content-service">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="panel panel-default">
+        <div>
+            <div class="panel-body p-0 c-overflow">
+                <ul class="tab-nav tn-justified" role="tablist" id="tab-list-group">
+                </ul>
+                <div class="tab-content" id="tab-content-group">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="frm-item" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+    <form class="form-horizontal m-t-30" role="form">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title c-red">Cấu hình cảnh báo</h4>
+                    <div class="radio">
+                        <label class="p-l-25">
+                            <input id="type-setting" name="type-setting" type="radio" value="1" checked>Nhóm
+                            <i class="input-helper"></i>
+                        </label>
+                        <label class="p-l-25">
+                            <input id="type-setting" name="type-setting" type="radio" value="2">Queue
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body" style="max-height: 400px; overflow-y: scroll; overflow-x: hidden">
+                        <div class="" id="group-setting">
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">Số agent tạm nghỉ</label>
+                                <div class="col-sm-5">
+                                    <div class="fg-line">
+                                        <input type="number" value="<%- setting ? setting.agentNoAcd : ''%>" min="0" class="form-control input-sm" id="agentNoAcd" name="agentNoAcd">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">Thời gian gọi - Ngưỡng trên(giây)</label>
+                                <div class="col-sm-5">
+                                    <div class="fg-line">
+                                        <input type="number" value="<%- setting ? setting.answerDurHigh : ''%>" min="0" class="form-control input-sm" id="answerDurHigh" name="answerDurHigh">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">Thời gian gọi - Ngưỡng dưới(giây)</label>
+                                <div class="col-sm-5">
+                                    <div class="fg-line">
+                                        <input type="number" value="<%- setting ? setting.answerDurLow : ''%>" min="0" class="form-control input-sm" id="answerDurLow" name="answerDurLow">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">Thời gian trạng thái(giây)</label>
+                                <div class="col-sm-5">
+                                    <div class="fg-line">
+                                        <input type="number" value="<%- setting ? setting.statusDur : ''%>" min="0" class="form-control input-sm" id="statusDur" name="statusDur">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden" id="queue-setting">
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">Số KH trên hàng đợi</label>
+                                <div class="col-sm-5">
+                                    <div class="fg-line">
+                                        <input type="number" value="<%- setting ? setting.waitingCustomer : ''%>" min="0" class="form-control input-sm" id="waitingCustomer" name="waitingCustomer">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label">Tỉ lệ rớt(%)</label>
+                                <div class="col-sm-5">
+                                    <div class="fg-line">
+                                        <input type="number" value="<%- setting ? setting.callDropRate : ''%>" min="0" class="form-control input-sm" id="callDropRate" name="callDropRate">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect" data-dismiss="modal"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Bỏ qua</button>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal fade" id="transfer-info" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title c-red">Transfer Call</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Loại</label>
+                    <div class="col-sm-8">
+                        <div class="m-t-5">
+                            <label class="radio radio-inline m-r-20">
+                                <input type="radio" value="b" id="transfer-type" name="transfer-type" checked>
+                                <i class="input-helper"></i>
+                                <span class="p-l-5">Blind Transfer</span>
+                            </label>
+                            <label class="radio radio-inline m-r-20">
+                                <input type="radio" value="c" id="transfer-type" name="transfer-type">
+                                <i class="input-helper"></i>
+                                <span class="p-l-5">Confrirm Transfer</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label m-t-10">Chọn Agent</label>
+                    <div class="col-sm-8 text-center m-t-10">
+                        <div class="fg-line">
+                            <select class="selectpicker" id="transfer-agent">
+                                <option value="" selected class="text-center">Chọn</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect" data-dismiss="modal"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Bỏ qua</button>
+                <button type="button" id="transfer-btn" class="btn btn-primary btn-icon-text m-t-10 waves-effect" data-dismiss="modal"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="change-agent-status" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title c-red">Agent Status</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label m-t-10">Lựa chọn trạng thái</label>
+                    <div class="col-sm-8 text-center m-t-10">
+                        <div class="fg-line">
+                            <select class="selectpicker" id="agent-status-list">
+                                <option value="" selected class="text-center">Chọn</option>
+                                <% status.forEach(function(el, i) { %>
+                                <option value="<%- el.statusCode%>"><%- el.name%></option>
+                                <% }); %>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect" data-dismiss="modal"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Bỏ qua</button>
+                <button type="button" id="change-agent-status-btn" class="btn btn-primary btn-icon-text m-t-10 waves-effect" data-dismiss="modal"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>

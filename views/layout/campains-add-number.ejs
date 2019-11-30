@@ -1,0 +1,224 @@
+<%-breadcrumb%>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="m-b-5">CHỌN KHÁCH HÀNG VÀO CHIẾN DỊCH</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="form-group">
+                    <form role="form" class="form-horizontal" id="search-customer">
+                        <div class="row">
+                            <div class="col-sm-6 p-b-10">
+                                Từ nguồn
+                                <span class="c-red">*</span>
+                                <select class="tag-select" multiple id="inSources" name="inSources[]">
+                                    <% for(var i = 0 ; i < groups.length; i++){ %>
+                                    <optgroup label="<%- groups[i].name %>">
+                                        <% if(groups[i].sources.length){ %>
+                                        <% for(var j = 0 ; j < groups[i].sources.length; j++){ %>
+                                        <% if(groups[i].sources[j].status){ %>
+                                        <option value="<%- groups[i].sources[j]._id %>"><%- groups[i].sources[j].name %></option>
+                                        <% } %>
+                                        <% } %>
+                                        <% } %>
+                                    </optgroup>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 p-b-10">
+                                Cùng chiến dịch
+                                <select class="tag-select" multiple id="inCampains" name="inCampains[]">
+                                    <% if(campains.length){ %>
+                                    <% for(var i = 0 ; i < campains.length; i++){ %>
+                                    <option value="<%- campains[i]._id %>"><%- campains[i].name %></option>
+                                    <% } %>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="col-sm-6 p-b-10">
+                                Khác chiến dịch
+                                <select class="tag-select" multiple id="notInCampains" name="notInCampains[]">
+                                    <% if(campains.length){ %>
+                                    <% for(var i = 0 ; i < campains.length; i++){ %>
+                                    <option value="<%- campains[i]._id %>"><%- campains[i].name %></option>
+                                    <% } %>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <% for(var i = 0; i < fields.length; i++){ %>
+                            <%if (fields[i].fieldType != 2) { %>
+                            <div class="col-sm-6 p-b-10 text-left">
+                                <%- fields[i].displayName%><%- _dInputFilter(fields[i]) %>
+                            </div>
+                            <% }else{%>
+                            <div class="col-sm-12 p-b-10 text-left">
+                                <%- fields[i].displayName%><%- _dInputFilter2(fields[i]) %>
+                            </div>
+                            <% } %>
+                            <% } %>
+                        </div>
+                    </form>
+                </div>
+                <div class="text-center m-t-20">
+                    <button disabled type="reset" class="btn btn-default waves-effect waves-effect" id="customer-search-btn" name="customer-search-btn">
+                        <i class="zmdi zmdi-search zmdi-hc-fw"></i>
+                        Tìm kiếm
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <label class="p-l-10" id="add-count">Tổng: 0</label>
+                <div class="table-responsive add-group">
+                    <table class="table table-hover table-condensed table-bordered" id="form-add-customer">
+                        <thead>
+                        <tr class="f-11">
+                            <th class="bgm-orange c-white text-center w-40">#</th>
+                            <th class="bgm-orange c-white text-center p-0">
+                                <div class="checkbox m-0">
+                                    <label>
+                                        <input type="checkbox" value="" id="select_all" name="select_all">
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </th>
+                            <th class="bgm-orange c-white text-center">Tên</th>
+                            <th class="bgm-orange c-white text-center">Di động</th>
+                            <th class="bgm-orange c-white text-center">Địa chỉ</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center add-paging"><ul class="pagination"></ul></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-1" style="height: 300px; padding-top:150px">
+        <div class="text-center">
+            <button type="reset" class="btn btn-default waves-effect waves-effect" id="add-btn" name="add-btn" data-toggle="tooltip" data-placement="top" data-original-title="Thêm">
+                <i class="zmdi zmdi-arrow-right zmdi-hc-fw"></i>
+            </button>
+            <button type="reset" class="btn btn-default waves-effect waves-effect" id="remove-btn" name="remove-btn" data-toggle="tooltip" data-placement="top" data-original-title="Loại">
+                <i class="zmdi zmdi-arrow-left zmdi-hc-fw"></i>
+            </button>
+            <div class="p-t-20">
+                <input class="form-control" placeholder="All" type="number" id="count" min="0">
+                <button type="reset" class="btn btn-default waves-effect waves-effect" id="add-all-btn" name="add-all-btn" data-toggle="tooltip" data-placement="top" data-original-title="Thêm nhiều">
+                    <i class="zmdi zmdi-arrow-right zmdi-hc-fw"></i>
+                    <i class="zmdi zmdi-arrow-right zmdi-hc-fw"></i>
+                </button>
+                <button type="reset" class="btn btn-default waves-effect waves-effect" id="remove-all-btn" name="remove-all-btn" data-toggle="tooltip" data-placement="top" data-original-title="Loại nhiều">
+                    <i class="zmdi zmdi-arrow-left zmdi-hc-fw"></i>
+                    <i class="zmdi zmdi-arrow-left zmdi-hc-fw"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="m-b-5">DANH SÁCH ĐÃ CHỌN</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="form-group">
+                    <form role="form" class="form-horizontal" id="search-added-customer">
+                        <div class="row">
+                            <div class="col-sm-6 p-b-10">
+                                Từ nguồn
+                                <select class="tag-select" multiple id="inSources" name="inSources[]">
+                                    <% for(var i = 0 ; i < groups.length; i++){ %>
+                                    <optgroup label="<%- groups[i].name %>">
+                                        <% if(groups[i].sources.length){ %>
+                                        <% for(var j = 0 ; j < groups[i].sources.length; j++){ %>
+                                        <% if(groups[i].sources[j].status){ %>
+                                        <option value="<%- groups[i].sources[j]._id %>"><%- groups[i].sources[j].name %></option>
+                                        <% } %>
+                                        <% } %>
+                                        <% } %>
+                                    </optgroup>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 p-b-10">
+                                Cùng chiến dịch
+                                <select class="tag-select" multiple id="inCampains" name="inCampains[]">
+                                    <% if(campains.length){ %>
+                                    <% for(var i = 0 ; i < campains.length; i++){ %>
+                                    <option value="<%- campains[i]._id %>"><%- campains[i].name %></option>
+                                    <% } %>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="col-sm-6 p-b-10">
+                                Khác chiến dịch
+                                <select class="tag-select" multiple id="notInCampains" name="notInCampains[]">
+                                    <% if(campains.length){ %>
+                                    <% for(var i = 0 ; i < campains.length; i++){ %>
+                                    <option value="<%- campains[i]._id %>"><%- campains[i].name %></option>
+                                    <% } %>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <% for(var i = 0; i < fields.length; i++){ %>
+                            <%if (fields[i].fieldType != 2) { %>
+                            <div class="col-sm-6 p-b-10 text-left">
+                                <%- fields[i].displayName%><%- _dInputFilter(fields[i]) %>
+                            </div>
+                            <% }else{%>
+                            <div class="col-sm-12 p-b-10 text-left">
+                                <%- fields[i].displayName%><%- _dInputFilter2(fields[i]) %>
+                            </div>
+                            <% } %>
+                            <% } %>
+                        </div>
+                    </form>
+                </div>
+                <div class="text-center m-t-20">
+                    <button type="reset" class="btn btn-default waves-effect waves-effect" id="added-customer-search-btn" name="customer-search-btn">
+                        <i class="zmdi zmdi-search zmdi-hc-fw"></i>
+                        Tìm kiếm
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <label class="p-l-10" id="added-count">Tổng: 0</label>
+                <div class="table-responsive added-group">
+                    <table class="table table-hover table-condensed table-bordered" id="form-added-customer">
+                        <thead>
+                        <tr class="f-11">
+                            <th class="bgm-orange c-white text-center w-40">#</th>
+                            <th class="bgm-orange c-white text-center p-0">
+                                <div class="checkbox m-0">
+                                    <label>
+                                        <input type="checkbox" value="" id="select_all_added" name="select_all_added">
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </th>
+                            <th class="bgm-orange c-white text-center">Tên</th>
+                            <th class="bgm-orange c-white text-center">Di động</th>
+                            <th class="bgm-orange c-white text-center">Địa chỉ</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a type="button" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect" href="/#campains"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>

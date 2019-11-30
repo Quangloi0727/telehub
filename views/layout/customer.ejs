@@ -1,0 +1,197 @@
+<%-breadcrumb%>
+<div class="card">
+
+    <div class="lv-header-alt clearfix m-b-5">
+        <h2 class="lvh-label hidden-xs">Danh sách khách hàng</h2>
+        <div class="lvh-search">
+            <input type="text" placeholder="Start typing..." class="lvhs-input">
+            <i class="lvh-search-close">×</i>
+        </div>
+
+        <ul class="lv-actions actions">
+            <li><a role="button" id="btn-add-group" data-toggle="modal" data-target="#frm-source" data-placement="top"
+                   data-original-title="Thêm nhóm"><i class="zmdi zmdi-collection-plus"></i></a></li>
+            <li>
+                <a class="btn-delete-all" role="button" data-toggle="tooltip" data-placement="top" data-original-title="Xoá các mục đã chọn">
+                    <i class="zmdi zmdi-delete c-red"></i>
+                </a>
+            </li>
+            <li class="dropdown" data-toggle="tooltip" data-placement="top" data-original-title="Tạo mới">
+                <a role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                    <i class="zmdi zmdi-plus"></i>
+                </a>
+
+                <ul class="dropdown-menu pull-right">
+                    <li><a href="/#customer/new"><i class="fa fa-user-plus m-r-5"></i>Trực tiếp</a></li>
+                    <li><a href="/#customer-import"><i class="fa fa-file-excel-o m-r-10"></i>Từ nguồn excel</a></li>
+                </ul>
+            </li>
+            <li><a data-toggle="tooltip" data-placement="top" data-original-title="Tải file mẫu" data-url="/customer-excel" id="download-excel"><i
+                            class="zmdi zmdi-cloud-download"></i></a></li>
+            <li><a href="/#customer" data-toggle="tooltip" data-placement="top" data-original-title="Refresh"><i class="zmdi zmdi-refresh"></i></a>
+            </li>
+            <li data-toggle="tooltip" data-placement="top" data-original-title="Cột hiển thị" class="dropdown">
+                <a role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                    <i class="zmdi zmdi-view-column"></i>
+                </a>
+                <ul class="dropdown-menu pull-right p-t-0">
+                    <% for(var i = 0; i < fields.length; i++){ %>
+                    <li class="p-l-15 p-r-20">
+                        <div class="checkbox">
+                            <label>
+                                <input name="select" type="checkbox" class="select-box column-display" data-id="<%- fields[i]._id %>"
+                                       value="<%- fields[i].modalName %>" <%- fields[i].isDefault ? 'checked' : '' %>><i class="input-helper"></i>
+                                <a role="button" class="p-l-5 text-capitalize text-nowrap"><%- fields[i].displayName %></a>
+                            </label>
+                        </div>
+                    </li>
+                    <% } %>
+                    <li class="p-l-15 p-r-20">
+                        <div class="checkbox">
+                            <label>
+                                <input name="select" type="checkbox" class="select-box column-display" data-id="" value="sources[]" checked><i class="input-helper"></i>
+                                <a role="button" class="p-l-5 text-capitalize text-nowrap">Nguồn</a>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body table-responsive" style="min-height: 500px">
+        <form id="customer">
+            <table class="table table-hover table-bordered table-fix">
+                <thead>
+                <tr>
+                    <th class="text-center bgm-orange c-white w-20">#</th>
+                    <% for(var i = 0; i < fields.length; i++){ %>
+                    <th data-sort="none" role="button"
+                        class="text-center bgm-orange c-white w-<%- fields[i].displayWidth %> <%- fields[i].isDefault ? '' : ' hidden' %>"
+                        data-field="<%- fields[i].modalName %>">
+                        <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp <%- fields[i].displayName %> tăng dần"
+                           class="zmdi zmdi-sort-<%- _switch(fields[i].fieldType, [1, 2, 3, 4, 5, 6], ['', 'amount-', '', '', '', 'amount-']) %>asc"></i>
+                        <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp <%- fields[i].displayName %> giảm dần"
+                           class="zmdi zmdi-sort-<%- _switch(fields[i].fieldType, [1, 2, 3, 4, 5, 6], ['', 'amount-', '', '', '', 'amount-']) %>desc"></i>
+                        <%- fields[i].displayName %>
+                    </th>
+                    <% } %>
+                    <th data-sort="none" role="button" class="text-center bgm-orange c-white w-100" data-field="source">
+                        Nguồn
+                    </th>
+                    <th class="text-center bgm-orange c-white w-40">Tác vụ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="row-filter filter">
+                    <td class="text-center p-0">
+                        <div class="checkbox m-0 m-l-3" data-toggle="tooltip" data-placement="top" data-original-title="Chọn tất cả">
+                            <label>
+                                <input type="checkbox" id="check-all">
+                                <i class="input-helper"></i>
+                            </label>
+                        </div>
+                    </td>
+                    <% for(var i = 0; i < fields.length; i++){ %>
+                    <td class="text-center <%- fields[i].isDefault ? '' : 'hidden' %>"
+                        data-field="<%- fields[i].modalName %>"><%- _dInputFilter(fields[i]) %></td>
+                    <% } %>
+                    <td class="text-center" data-field="source">
+                        <select class="tag-select" multiple id="edit_sources" name="sources[]">
+                            <% for(var i = 0 ; i < groups.length; i++){ %>
+                            <optgroup label="<%- groups[i].name %>">
+                                <% if(groups[i].sources.length){ %>
+                                <% for(var j = 0 ; j < groups[i].sources.length; j++){ %>
+                                <% if(groups[i].sources[j].status){ %>
+                                <option value="<%- groups[i].sources[j]._id %>"><%- groups[i].sources[j].name %></option>
+                                <% } %>
+                                <% } %>
+                                <% } %>
+                            </optgroup>
+                            <% } %>
+                        </select>
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-primary btn-block btn-filter"><i class="zmdi zmdi-search"></i></button>
+                    </td>
+                </tr>
+                <% for(var i = 0; i < customers.length; i++){ var j = i; %>
+                <tr>
+                    <td class="text-center p-0">
+                        <div class="checkbox m-0 m-l-3">
+                            <label>
+                                <input type="checkbox" class="check-list" id="<%- customers[i]._id %>">
+                                <i class="input-helper"></i>
+                            </label>
+                        </div>
+                    </td>
+                    <% for(var k = 0; k < fields.length; k++){ %>
+                    <td class="text-center text-capitalize <%- fields[k].isDefault ? '' : 'hidden' %>"
+                        data-field="<%- fields[k].modalName %>"><%- _fieldValue(customers[i], fields[k].modalName, fields[k].fieldType) %></td>
+                    <% } %>
+                    <td class="text-left" data-field="source">
+                        <ul>
+                            <% customers[i].sources.forEach(function (el, index) { %>
+                            <li><%- el.name%> - <%- el.group ? el.group.name : ''%></li>
+                            <% }) %>
+                        </ul>
+                    </td>
+                    <!--<td class="text-center">< _switch(customers[i].status, [0, 1], ['<i class="zmdi zmdi-block c-gray"></i>', '<i class="zmdi zmdi-check c-green"></i>']); ></td>-->
+                    <td class="text-center">
+                        <a role="button" href="/#customer/<%- customers[i]._id %>/edit" class="p-t-3 btn-flat-bg" data-toggle="tooltip"
+                           data-placement="top" data-original-title="Sửa"><i class="zmdi zmdi-edit green f-17"></i></a>
+                        <a role="button" data-id="<%- customers[i]._id %>" class="p-t-3 btn-flat-bg btn-delete" data-toggle="tooltip"
+                           data-placement="top" data-original-title="Xoá"><i class="zmdi zmdi-close red f-17"></i></a>
+                    </td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+            <% include ../paging.ejs %>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="frm-source" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+    <form class="form-horizontal m-t-30" role="form">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tạo nguồn mới</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Tên nguồn <span class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <div class="fg-line">
+                                    <input type="text" class="form-control input-sm validate[required, ajax[SourceCheck]]"
+                                           id="validate-source-for-name" name="name" placeholder="vd : Lập trình">
+                                    <!--<input type="hidden" value="" id="validate-source-for-x-name">-->
+                                    <!--<input type="hidden" value="Filter" id="validate-source-for-group" name="group">-->
+                                    <input type="hidden" value="filter" name="type">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-8">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="1" name="status" id="status" checked>
+                                        <i class="input-helper"></i>
+                                        <span class="p-l-5 text-capitalize-f">Kích hoạt</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button id="btn-submit-source" type="submit" class="btn btn-primary waves-effect">Xác nhận</button>
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Bỏ qua</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

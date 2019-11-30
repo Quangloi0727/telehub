@@ -1,0 +1,119 @@
+<%-breadcrumb%>
+<script>
+    var companies = JSON.parse('<%- JSON.stringify(companies)%>');
+</script>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted"><i>Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập.</i></small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="add-new-group">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label"> <span id="new_agent_name_group"></span><span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" class="form-control validate[required, ajax[GroupAvailCheck]]" id="name" name="name" placeholder="" >
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label"id="new_agent_company"></label>
+                <div class="col-sm-6">
+                    <div class="fg-line select">
+                        <select class="selectpicker form-control " id="idParent" name="idParent">
+                            <option value='' selected>---- Chọn ----</option>
+                            <% companies.forEach(function(c,i){%>
+                                <option value="<%= c._id%>"><%= c.name %></option>
+                            <%}) %>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label"id="new_agent_call"></label>
+                <div class="col-sm-6">
+                    <div class="p-relative">
+                        <select class="selectpicker form-control" id="idProfile" name="idProfile">
+                            <option value='' selected>---- Chọn ----</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label"id="new_agent_chat"></label>
+                <div class="col-sm-6">
+                    <div class="p-relative">
+                        <select class="selectpicker form-control" id="idProfileChat" name="idProfileChat">
+                            <option value='' selected>---- Chọn ----</option>
+                            <% groupsProfileChat.forEach(function(c,i){%>
+                            <option value="<%= c._id%>"><%= c.name %></option>
+                            <%}) %>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label"id="new_agent_mail"></label>
+                <div class="col-sm-6">
+                    <div class="p-relative">
+                        <select class="selectpicker form-control" id="idProfileMail" name="idProfileMail">
+                            <option value='' selected>---- Chọn ----</option>
+                            <% groupsProfileMail.forEach(function(c,i){%>
+                            <option value="<%= c._id%>"><%= c.name %></option>
+                            <%}) %>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label"> <span id="new_agent_list_leader"></span><span class="required">*</span></label>
+
+                <div class="col-sm-6">
+                    <select class="validate[required]" data-prompt-position="inline:0,10" multiple="multiple" size="10"
+                            name="leaders[]"
+                            id="leaders">
+                        <% leaders.forEach(function(element, index){ %>
+                        <option class="duallist-option" value=<%- element._id %>>  <%- element.displayName + ' (' + element.name + ')' %> </option>
+                        <% }) %>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label"><span id="new_agent_lits_agent"></span><span class="required">*</span></label>
+
+                <div class="col-sm-6">
+                    <select class="validate[required]" data-prompt-position="inline:0,10" multiple="multiple" size="10"
+                            name="members[]"
+                            id="members">
+                        <% agents.forEach(function(element, index){ %>
+                        <option class="duallist-option" value=<%- element._id %>><%- element.displayName + ' (' + element.name + ')' %></option>
+                        <% }) %>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label"id="new_agent_status"></label>
+                <div class="col-sm-6">
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" value="1" id="status" name="status" checked>
+                            <i class="input-helper"></i>
+                            <span class="p-l-5 text-capitalize-f" data-text-on="Không kích hoạt"
+                                  data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <button type="button" id="btn-back" class="btn btn-default btn-icon-text m-t-10 waves-effect"><i class="m-r-5 zmdi zmdi-arrow-back"></i>Quay lại</button>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i class="m-r-5 zmdi zmdi-check"></i>Xác nhận</button>
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>

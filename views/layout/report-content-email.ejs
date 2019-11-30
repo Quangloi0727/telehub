@@ -1,0 +1,107 @@
+<div class="card">
+    <div class="portlet-title">
+        <div class="lv-header-alt clearfix">
+            <h2 class="lvh-label hidden-xs">Báo cáo nội dung email</h2>
+            <ul class="lv-actions actions">
+                <li><a href="/#report-content-email" data-toggle="tooltip" data-placement="top"
+                       data-original-title="Refresh"><i class="zmdi zmdi-refresh"></i></a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <form class="form-horizontal" role="form">
+            <div class="form-body">
+                <div class="row m-0 m-t-20">
+                    <div class="col-md-3 m-b-20">
+                        <label for="startDate"
+                               class="control-label f-13"><span>Ngày bắt đầu</span></label>
+
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control pull-right search-field date-picker filter-campain input"
+                                   id="startDate" name="startDate"
+                                   placeholder="VD: 01/01/2016">
+                            <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button"
+                                                                                       class="zmdi zmdi-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <label for="endDate" class="control-label f-13"><span>Ngày kết thúc</span></label>
+
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control pull-right search-field date-picker filter-campain input"
+                                   id="endDate" name="endDate"
+                                   placeholder="VD: 31/12/2016">
+                            <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button"
+                                                                                       class="zmdi zmdi-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 m-b-20" >
+                        <label for="idCompany"
+                               class="control-label f-13"><span>Công ty</span></label>
+                        <select name="idCompany" class="selectpicker input" title="Chọn công ty">
+                            <% for(var i = 0;i < company.length;i++){ %>
+                            <option value=<%- company[i]._id %>><%- company[i].name %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <label for="idAgent" class="control-label f-13"><span>Điện thoại viên</span></label>
+                        <select name="idAgent" id="query_idAgent" class="selectpicker input"
+                                title="Chọn điện thoại viên" multiple>
+                            <% agent.forEach(function (loop, i) { %>
+                            <option value="<%- loop._id %>"><%- loop.displayName %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                </div>
+                <div class="row m-0">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6 m-b-20">
+                        <div class="btn-group btn-group btn-group-justified">
+                            <a type="submit" class="btn bgm-blue uppercase c-white" style="width:auto"><i
+                                        class="fa fa-search m-r-10"></i><strong>Tìm kiếm</strong></a>
+
+                            <div class="col-md-2"></div>
+                            <a id="exportexcel" class="btn bgm-blue default c-white" style="width:auto"><i
+                                        class="fa fa-file-excel-o m-r-10"></i>Xuất Excel</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-body table-responsive" style=" min-height:200px">
+        <table class="table table-hover table-condensed table-bordered table-fix" style="table-layout: fixed;"
+               id="exceldata">
+            <thead>
+            <tr>
+                <th class="bgm-orange c-white text-center" style="width:250px;">Điện thoại viên</th>
+                <th class="bgm-orange c-white text-center">Tiêu đề</th>
+                <th class="bgm-orange c-white text-center">Nội dung</th>
+            </tr>
+            </thead>
+            <body>
+            <% if(endResult.length > 0){ %>
+            <script> var isAlertSearch = false;</script>
+            <% endResult.forEach(function (loop, i) { %>
+            <tr>
+                <td class="text-center" style="text-overflow: ellipsis;"><%- loop.idAgent.displayName %></td>
+                <td title="<%- loop.mailId.subject %>" style="text-overflow: ellipsis; overflow: hidden;"><%- loop.mailId.subject %></td>
+                <td title="<%- loop.mailId.body %>" style="text-overflow: ellipsis; overflow: hidden;"><%- loop.mailId.body %></td>
+            </tr>
+            <% }) %>
+            <% }else{ %>
+            <script> var isAlertSearch = true;</script>
+            <% } %>
+            </body>
+        </table>
+        <script>
+            var currentPage = JSON.parse('<%- JSON.stringify(paging);%>');
+        </script>
+        <% if(paging.pageCount > 1){ %>
+        <% include ../paging.ejs %>
+        <% }%>
+    </div>
+</div>

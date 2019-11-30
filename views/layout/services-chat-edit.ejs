@@ -1,0 +1,108 @@
+<%-breadcrumb%>
+<script>
+    var companyId = JSON.parse('<%- JSON.stringify(currentService.idChannel.idCompany._id) %>');
+    var channelId = JSON.parse('<%- JSON.stringify(currentService.idChannel._id) %>');
+    var skillId = JSON.parse('<%- JSON.stringify(currentService.idSkill._id) %>');
+</script>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted"><i>Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập.</i></small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="update-service">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Tên chiến dịch<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="hidden" id="updateId" name="updateId" value="<%- currentService._id %>">
+                        <input type="text" value="<%- currentService.name%>" class="form-control validate[required,ajax[ServiceCheck]]" id="name" name="name">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Công ty<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line select">
+                        <select class="selectpicker validate[required]" id="idCompany" name="idCompany">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Channel<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line select">
+                        <select class="selectpicker validate[required,ajax[ServiceCheck]]" id="idChannel" name="idChannel">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Chiến lược route chat<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line select">
+                        <select class="selectpicker validate[required]" id="routeChat" name="routeChat">
+                            <option value='' disabled selected>---- Chọn ----</option>
+                            <option value="1" <%- (_equal(currentService.routeChat.toString(),'1') ? 'selected' : ''); %>>Skill Priority</option>
+                            <option value="2" <%- (_equal(currentService.routeChat.toString(),'2') ? 'selected' : ''); %>>Agent Perfomance</option>
+                            <option value="3" <%- (_equal(currentService.routeChat.toString(),'3') ? 'selected' : ''); %>>Random</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Cảnh báo ngưỡng vàng<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="number" class="form-control validate[required,custom[DurLowCheck,min[1]]]" id="lowAlert" name="lowAlert" placeholder="VD: 5" value="<%- currentService.lowAlert %>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Cảnh báo ngưỡng đỏ<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="number" class="form-control validate[required,min[0]]" id="highAlert" name="highAlert" placeholder="VD: 10" value="<%- currentService.highAlert %>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Công thức SLA<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="number" class="form-control validate[required,min[1]]" id="SLA" name="SLA" placeholder="VD: 100" value="<%- currentService.SLA %>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Yêu cầu kỹ năng<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line select">
+                        <select class="selectpicker validate[required]" id="idSkill" name="idSkill">
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Trạng thái</label>
+                <div class="col-sm-6">
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" value="1" id="status" name="status" <%- (currentService.status ? 'checked' : ''); %>>
+                            <i class="input-helper"></i>
+                            <span class="p-l-10" data-text-on="Không kích hoạt" data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a type="button" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect" href="/services-chat"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

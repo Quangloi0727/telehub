@@ -1,0 +1,10 @@
+.formError.questionTypeformError{
+    top: inherit !important;
+    left: inherit !important;
+    right: 0 !important;
+}
+.formError.answerTypeformError{
+    top: inherit !important;
+    left: inherit !important;
+    right: 0 !important;
+}

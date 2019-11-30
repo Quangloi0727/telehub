@@ -1,0 +1,21 @@
+.warning {
+    background-color: red;
+    -webkit-animation-name: example; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
+    animation-name: example;
+    animation-iteration-count: infinite;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes example {
+    0%   {background-color:red;}
+    50%  {background-color:white;}
+    100% {background-color:red;}
+}
+
+/* Standard syntax */
+@keyframes example {
+    0%   {background-color:white;}
+    50%  {background-color:red;}
+    100% {background-color:white;}
+}

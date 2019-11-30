@@ -1,0 +1,157 @@
+<div class="card">
+    <div class="lv-header-alt clearfix m-b-5">
+        <h2 class="lvh-label hidden-xs"><%- title %></h2>
+        <ul class="lv-actions actions">
+            <li><a data-toggle="tooltip" data-placement="top" data-original-title="Tải file báo cáo" id="download-excel"><i
+                            class="zmdi zmdi-cloud-download"></i></a></li>
+            <li><a data-toggle="tooltip" data-placement="top" data-original-title="Refresh"><i
+                            class="zmdi zmdi-refresh"></i></a></li>
+            <li data-toggle="tooltip" data-placement="top" data-original-title="Cột hiển thị" class="dropdown">
+                <a role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                    <i class="zmdi zmdi-view-column"></i>
+                </a>
+                <ul class="dropdown-menu pull-right p-t-0" id="showHideFields"></ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="panel panel-default">
+        <div>
+            <div class="panel-body p-0 c-overflow">
+                <div class="tab-content">
+                    <div role="tabpanel" style="height: 100%" class="tab-pane animated active" id="tab-not-process-ticket">
+                        <form role="form" id="frm-report-outbound-survey">
+                            <table class="table table-bordered table-fix" id="tbl-ticket">
+                                <thead>
+                                <tr class="f-10">
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_COMPANY"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_CAMPAIGN_NAME"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_AGENT"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_PHONE_NUMBER"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_STATUS"></span>
+                                    </th>
+                                    <th data-sort="none" sortName="updated" role="button" class="bgm-orange c-white text-center sort">
+                                        <i data-toggle="tooltip" data-original-title="Sắp xếp theo thứ tự tăng dần" class="zmdi zmdi-sort-asc f-14"></i>
+                                        <i data-toggle="tooltip" data-original-title="Sắp xếp theo thứ tự giảm dần" class="zmdi zmdi-sort-desc f-14"></i>
+                                        <span class="TXT_UPDATED"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_NOTE"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_UPDATED_BY"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center w-100">
+                                        <span class="TXT_ACTION"></span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="filter" id="search-input">
+                                    <td>
+                                        <div>
+                                            <select class="tag-select searchColumn" disabled>
+                                                <option selected value="">- Chọn -</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <select class="tag-select searchColumn" name="idCampain">
+                                                <option selected value="">- Chọn -</option>
+                                                <% if (companies) { %>
+                                                <% companies.forEach(function(el){ %>
+                                                <% if (el.campains) { %>
+                                                <% el.campains.forEach(function(el2){ %>
+                                                <option value="<%- el2._id %>"><%- el2.name %></option>
+                                                <% })} %>
+                                                <% })} %>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <select class="tag-select searchColumn" name="idAgent">
+                                                <option selected value="">- Chọn -</option>
+                                                <% if (agents) { %>
+                                                <% agents.forEach(function(el){ %>
+                                                <option value="<%- el._id %>"><%- el.displayName %> - <%- el.name %></option>
+                                                <% })} %>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="text"
+                                               class="form-control input-sm searchColumn"
+                                               name="field_so_dien_thoai"
+                                               placeholder="VD: 09xxxxxxxx">
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <select class="tag-select searchColumn" name="status">
+                                                <option selected value="">- Chọn -</option>
+                                                <option value="0">Chờ xử lý</option>
+                                                <option value="1">Đang xử lý</option>
+                                                <option value="2">Hoàn thành</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control pull-right multi-date-picker searchColumn"
+                                                   id="updated" name="updated"
+                                                   placeholder="VD: 01/19/2016">
+                                            <span class="input-group-addon p-l-10 bgm-gray c-white">
+                                                <i role="button" class="zmdi zmdi-calendar"></i></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="text"
+                                               class="form-control input-sm searchColumn"
+                                               name="note"
+                                               placeholder="VD: CNTT">
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <select class="tag-select searchColumn" name="updateBy">
+                                                <option selected value="">- Chọn -</option>
+                                                <% if (users) { %>
+                                                <% users.forEach(function(el){ %>
+                                                <option value="<%- el._id %>"><%- el.displayName %> - <%- el.name %></option>
+                                                <% })} %>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-block waves-effect" id="btn-search" name="btn-search">
+                                            <i class="zmdi zmdi-filter-list m-r-5"></i> Lọc
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tbody id="ticket-body">
+                                </tbody>
+                                </tbody>
+                            </table>
+                            <div class="text-center" id="ticket-total">
+                                <!--<b>-->
+                                <!--<span class="TXT_TOTAL"></span>:-->
+                                <!--<span class="bold c-red" id="ticket-total">100</span>-->
+                                <!--</b>-->
+                            </div>
+                            <div class="text-center" id="ticket-paging"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

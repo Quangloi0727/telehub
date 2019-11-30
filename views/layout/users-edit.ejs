@@ -1,0 +1,197 @@
+<%-breadcrumb%>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted f-12">( Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập. )</small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="edit-user">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label" id="text_user_name"></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text"
+                               class="form-control validate[required,minSize[3],funcCall[checkSpaceInString],ajax[UserNameCheck]]"
+                               id="name"
+                               name="name"
+                               placeholder="vd: admin"
+                               maxlength="60"
+                               value="<%- myUser.name %>"
+                               disabled>
+                        <small class="text-muted f-12" id="txt_user_name_desc"></small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label" id="text_pass_word"></label>
+                <div class="col-sm-6">
+                    <div class="input-group fg-line">
+                        <input type="password"
+                               class="form-control validate[required,minSize[3],funcCall[checkSpaceInString]]]"
+                               id="password"
+                               name="password" placeholder="******" value="<%- myUser.password %>"
+                               data-prompt-position="topRight:40" tabindex="2">
+                        <span class="input-group-btn showPwd">
+                            <button class="btn btn-default reveal" type="button" title="Hiển thị password"><i
+                                        class="glyphicon glyphicon-eye-open"></i></button>
+                        </span>
+                    </div>
+                    <small class="text-muted f-12" id="txt_pass_word_desc"></small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label" id="text_re_pass_word"></label>
+                <div class="col-sm-6">
+                    <div class="input-group fg-line">
+                        <input type="password"
+                               class="form-control validate[required, equals[password]],minSize[3],funcCall[checkSpaceInString]]"
+                               id="re-password"
+                               name="re-password" placeholder="******" value="<%- myUser.password %>"
+                               data-prompt-position="topRight:40" tabindex="3">
+                        <span class="input-group-btn showPwd">
+                            <button class="btn btn-default reveal" type="button" title="Hiển thị password"><i
+                                        class="glyphicon glyphicon-eye-open"></i></button>
+                        </span>
+                    </div>
+                    <small class="text-muted f-12" id="txt_re_pass_word_desc"></small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label" id="text_display_name"></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" class="form-control validate[required, minSize[3]]" id="displayName"
+                               name="displayName" placeholder="vd: Trần Văn A" maxlength="60"
+                               value="<%- myUser.displayName %>" tabindex="4">
+                        <small class="text-muted f-12" id="text_display_name_desc"></small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label" id="text_email"></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" class="form-control validate[required,custom[email]]"
+                               id="email" name="email" placeholder="vd: john@bbc.com" maxlength="60"
+                               value="<%- myUser.email %>" tabindex="5">
+                        <small class="text-muted f-12" id="text_email_desc"></small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="role" class="col-sm-3 control-label" id="text_role"></label>
+
+                <div class="col-sm-6 card-body">
+                    <table class="table table-hover table-fix" id="role-table">
+                        <thead>
+                        <tr>
+                            <th class="p-0"></th>
+                            <th class="p-0"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="company">
+                            <td><span class="text-muted m-t-20"><b><i><%- _config.app.name %></i></b></span></td>
+                            <td>
+                                <select class="tag-select role-select" name="pmRole"
+                                        id="pmRole"
+                                        data-placeholder=" ">
+                                    <option value=""></option>
+                                    <% role.forEach(function(item){ %>
+                                    <% if (item._id == 1 || item._id == 2 || item._id == 6 || item._id == 7){ %>
+                                    <optgroup label="<%- item.name %>">
+                                        <% item.role.forEach(function(el){ %>
+                                        <option value="<%- el.roleId + '-' + _config.app._id %>" <%- (_equal(myUser.ternalLeaders, el.roleId) || _equal(myUser.qaLeaders, el.roleId) || (myUser.qaMembers.length > 0 && myUser.qaMembers[0].ternal != undefined && _equal(myUser.qaMembers[0].ternal.toString(), _config.app._id) && _equal(myUser.qaMembers[0].role, el.roleId))) ? 'selected' : '' %> ><%- el.name %></option>
+                                        <% }) %>
+                                    </optgroup>
+                                    <% }}) %>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <% for(var i = 0; i < myCompany.length; i++){ %>
+                        <tr style="background-color: rgba(220,220,220,0.2)" class="company"
+                            data-id="<%- myCompany[i]._id %>" show='0'>
+                            <td class="p-l-10 vertial-td">
+                                <div class="indentation m-r-10
+                                    tree-child<%- _equal(i, myCompany.length - 1) ? '-last' : '' %>">
+                                    &nbsp;
+                                </div>
+                                <span class="text-muted p-r-5 company-leader">Công ty : <b><%- myCompany[i].name %></b></span>
+                            </td>
+                            <td>
+                                <select class="tag-select role-select companyRole" name="clRole[]"
+                                        data-placeholder=" ">
+                                    <option value=""></option>
+                                    <% role.forEach(function(item){ %>
+                                    <% if(item._id == 3 || item._id == 7){ %>
+                                    <% item.role.forEach(function(el){ %>
+                                    <option value="<%- el.roleId + "-" + myCompany[i]._id %>"<%- _equal(myCompany[i].role, el.roleId) ? 'selected' : '' %>><%- el.name %></option>
+                                    <% }) %>
+                                    <% }}) %>
+                                </select>
+                            </td>
+                        </tr>
+                        <% for (var j = 0; j < myCompany[i].ag.length; j++){ %>
+                        <tr class="agentGroup <%- 'companyId' + j %>">
+                            <td class="p-l-10 vertial-td">
+                                <div class="indentation tree-child-left <%- _equal(i, myCompany.length - 1) ? 'nobg' : '' %>"></div>
+                                <div class="indentation w-40 m-l-20 m-r-10 tree-child<%- _equal(j, myCompany[i].ag.length - 1) ? '-last' : '' %>">
+                                    &nbsp;</div>
+                                <span class="text-muted p-r-5">Nhóm :</span> <%- myCompany[i].ag[j].name %>
+                            </td>
+                            <td>
+                                <select class="tag-select role-select" name="agRole[]"
+                                        data-placeholder=" ">
+                                    <% role.forEach(function(item){ %>
+                                    <option value=""></option>
+                                    <% if(item._id == 4 || item._id == 5){ %>
+                                    <optgroup label="<%- item.name %>">
+                                        <% item.role.forEach(function(el){ %>
+                                        <option value="<%- el.roleId + '-' + myCompany[i].ag[j]._id + '-' + item._id %>"<%- _equal(myCompany[i].ag[j].role, el.roleId) ? 'selected' : '' %>><%- el.name %></option>
+                                        <% }) %>
+                                        <% }}) %>
+                                    </optgroup>
+                                </select>
+                            </td>
+                        </tr>
+                        <% } %>
+                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label" id="text_status"></label>
+                <div class="col-sm-6">
+                    <div class="checkbox m-t-3 m-b-15">
+                        <label>
+                            <input type="checkbox" value="1" id="status" name="status"
+                                    <%- myUser.status ? 'checked' : '' %>>
+                            <i class="input-helper"></i>
+                            <span class="p-l-5 text-capitalize-f" data-text-on="Không kích hoạt"
+                                  data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a href="/#users" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect"><i
+                                class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i
+                                class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

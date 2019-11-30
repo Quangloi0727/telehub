@@ -1,0 +1,47 @@
+table.table-fix > thead tr > th::-moz-selection {
+    background: transparent;
+}
+
+table.table-fix > thead tr > th::selection {
+    background: transparent;
+}
+
+table.table-fix > thead tr > th i.zmdi {
+    display: none;
+    font-size: 22px;
+    position: relative;
+    margin-right: 10px;
+    top: 3px;
+    line-height: 10px;
+}
+
+table.table-fix > thead tr > th[data-sort="asc"] i.zmdi-sort-asc {
+    display: initial;
+}
+
+table.table-fix > thead tr > th[data-sort="desc"] i.zmdi-sort-desc {
+    display: initial;
+}
+
+.inline-edit-button {
+    display: none;
+}
+
+.inlineEditButton:hover .inline-edit-button  {
+    display: block;
+}
+
+.chosen-drop {
+    min-width: 200px;
+}
+
+.chosen-container {
+    display: inline-block;
+    font-size: 12px;
+    position: relative;
+    vertical-align: middle;
+}
+
+input.form-control.searchColumn {
+    height: 35px;
+}

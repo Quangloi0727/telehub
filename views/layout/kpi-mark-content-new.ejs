@@ -1,0 +1,146 @@
+<%-breadcrumb%>
+<script> var kpi = JSON.parse('<%- JSON.stringify(kpi) %>') </script>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted f-12">( Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập. )</small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="add-new-fields">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label"><span class="KPI_NAME"></span> <span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="text" class="form-control validate[required,ajax[FieldCheck]]"
+                               id="name"
+                               name="name"
+                               placeholder="vd: Địa chỉ nhà">
+                        <small class="text-muted f-12">Tên trường là duy nhất trong cơ sở dữ liệu, không phân biệt chữ hoa và chữ thường.</small>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="fieldType" class="col-sm-3 control-label KPI_TYPE"></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <select class="selectpicker" id="fieldType" name="fieldType">
+                            <option value="0" selected class="KPI_TYPE_NUMBER"></option>
+                            <option value="1" class="KPI_TYPE_LIST"></option>
+                            <option value="2" class="KPI_TYPE_FUNCTION"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group switchType" id="minValue" data-type="0">
+                <label for="minValue" class="col-sm-3 control-label">Min Value</label>
+                <div class="col-sm-6 p-relative">
+                    <input type="number" class="form-control"
+                           id="__minValue"
+                           name="minValue:number"
+                           value="0">
+                </div>
+            </div>
+
+            <div class="form-group switchType" id="maxValue" data-type="0">
+                <label for="maxValue" class="col-sm-3 control-label">Max Value</label>
+                <div class="col-sm-6 p-relative">
+                    <input type="number" class="form-control"
+                           id="__maxValue"
+                           name="maxValue:number"
+                           value="10">
+                </div>
+            </div>
+
+            <div class="form-group hidden switchType" id="field-settings" data-type="1">
+                <label for="name" class="col-sm-3 control-label">Cấu hình</label>
+                <div class="col-sm-6 p-relative">
+                    <div class="fg-line">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="fieldValue[]" placeholder="...">
+                            <span class="input-group-addon p-l-10 bgm-gray c-white">
+                                <i role="button" class="zmdi zmdi-plus"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group hidden switchType" id="calc" data-type="2">
+                <label for="fnTextArea" class="col-sm-3 control-label">Công thức</label>
+                <div class="col-sm-6">
+
+                    <textarea class="form-control" rows="5" id="fnTextArea" name="fnTextArea">
+function(a,b){
+    return a+b;
+}</textarea>
+                </div>
+            </div>
+
+
+            <div class="form-group hidden switchType" data-type="2">
+                <label for="name" class="col-sm-3 control-label"></label>
+                <div class="col-sm-6">
+                    <% kpi.forEach(function(el){
+
+                    var btnClass = 'btn-default';
+                    if (el.type == 1){
+                        btnClass = 'btn-info';
+                    }else if (el.type == 2){
+                        btnClass = 'btn-danger';
+                    }
+                    %>
+                    <button type="button" class="btn f-17 m-r-5 m-b-5 <%- btnClass %> appendTo" data-name="<%- el.name %>">
+                        <%- el.name %>
+                    </button>
+                    <% }) %>
+                </div>
+            </div>
+
+            <div class="form-group hidden switchType" data-type="2">
+                <label class="col-sm-3 control-label"></label>
+                <div class="col-sm-6">
+                    <label class="control-label f-17">Note : Trường dữ liệu là tham số đầu vào của công thức</label>
+                    <br>
+                    <br>
+                    <div class="form-group m-l-0">
+                        <button type="button" class="btn f-17 btn-default"><span class="KPI_TYPE_NUMBER"></span></button>
+                        <span> </span>
+                        <label class="control-label">Dữ liệu kiểu số</label>
+                    </div>
+
+                    <div class="form-group m-l-0">
+                        <button type="button" class="btn f-17 btn-info"><span class="KPI_TYPE_LIST"></span></button>
+                        <span> </span>
+                        <label class="control-label ">Dạng danh sách</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Trạng thái</label>
+                <div class="col-sm-6">
+                    <div class="checkbox m-t-3 m-b-15">
+                        <label>
+                            <input type="checkbox" value="1" id="status" name="status" checked>
+                            <i class="input-helper"></i>
+                            <span class="p-l-5 text-capitalize-f" data-text-on="Không kích hoạt" data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect" id="kpi-mark-conten-back">
+                        <i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác
+                        nhận
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

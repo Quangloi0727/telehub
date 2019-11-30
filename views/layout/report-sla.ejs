@@ -1,0 +1,115 @@
+<div class="card">
+    <div class="portlet-title">
+        <div class="lv-header-alt clearfix">
+            <h2 class="lvh-label hidden-xs">Báo cáo cấp độ dịch vụ</h2>
+            <ul class="lv-actions actions">
+                <li><a href="/#report-sla" data-toggle="tooltip" data-placement="top" data-original-title="Refresh"><i class="zmdi zmdi-refresh"></i></a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <form class="form-horizontal" role="form" id="report-productivity-agent">
+            <div class="form-body">
+                <div class="row m-0 m-t-20">
+                    <div class="col-md-3 m-b-20">
+                        <label for="startDate" class="control-label f-13"><span>Ngày bắt đầu</span></label>
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control pull-right search-field date-picker filter-campain input"
+                                   id="startDate" name="startDate"
+                                   placeholder="Ngày bắt đầu, VD: 01/01/2016">
+                            <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button" class="zmdi zmdi-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <label for="endDate" class="control-label f-13"><span>Ngày kết thúc</span></label>
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control pull-right search-field date-picker filter-campain input"
+                                   id="endDate" name="endDate"
+                                   placeholder="Ngày kết thúc, VD: 31/12/2016">
+                            <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button" class="zmdi zmdi-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <label for="idCompany" class="control-label f-13"><span>Công ty</span></label>
+                        <select name="idCompany" id = "idCompany" class="selectpicker input validate[required]" title="Chọn công ty">
+                            <%company.forEach(function (loop,i) {%>
+                            <option value="<%- loop._id %>"><%- loop.name %></option>
+                            <%})%>
+                        </select>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <label for="serviceId" class="control-label f-13"><span>Dịch vụ</span></label>
+                        <select name="serviceId" class="selectpicker input" title="Chọn dịch vụ" multiple>
+                            <%service.forEach(function (loop,i) {%>
+                            <option value="<%- loop._id %>"><%- loop.name %></option>
+                            <%})%>
+                        </select>
+                    </div>
+                </div>
+                <div class="row m-0">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6 m-b-20">
+                        <div class="btn-group btn-group btn-group-justified">
+                            <a type="submit" class="btn bgm-blue uppercase c-white" style="width:auto"><i class="fa fa-search m-r-10"></i><strong>Tìm kiếm</strong></a>
+                            <div class="col-md-2"></div>
+                            <a id="exportexcel" class="btn bgm-blue default c-white" style="width:auto"><i class="fa fa-file-excel-o m-r-10"></i>Xuất Excel</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-body table-responsive" style=" min-height:200px">
+        <table class="table table-hover table-condensed table-bordered table-fix" style="table-layout: fixed;" id="exceldata">
+            <thead>
+            <tr>
+                <th class="bgm-orange c-white text-center">Tên công ty</th>
+                <th class="bgm-orange c-white text-center">Tổng số cuộc gọi gặp Agent</th>
+                <th class="bgm-orange c-white text-center">Tổng số cuộc gọi vào hệ thống</th>
+                <th class="bgm-orange c-white text-center">Tổng số cuộc gọi rớt</th>
+                <th class="bgm-orange c-white text-center">Kết quả</th>
+                <th class="bgm-orange c-white text-center">Tên dịch vụ</th>
+                <th class="bgm-orange c-white text-center">Tổng số cuộc gọi gặp Agent</th>
+                <th class="bgm-orange c-white text-center">Tổng số cuộc gọi vào hệ thống</th>
+                <th class="bgm-orange c-white text-center">Tổng số cuộc gọi rớt</th>
+                <th class="bgm-orange c-white text-center">Kết quả</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% if(endResultCompany.length > 0) {%>
+            <script> var isAlertSearch = false;</script>
+                <% for(var i = 0; i < endResultService.length; i++){ %>
+                <tr>
+                    <td class=""><%- endResultCompany[i].nameCompany %></td>
+                    <td class="text-right"><%- endResultCompany[i].totalCallAgentCompany %></td>
+                    <td class="text-right"><%- endResultCompany[i].totalCallCompany %></td>
+                    <td class="text-right"><%- endResultCompany[i].totalCallFallCompany %></td>
+                    <td class="text-right"><%- endResultCompany[i].recipeSLACompany %></td>
+                    <td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <%}%>
+                <% for(var i = 0; i < endResultService.length; i++){ %>
+                <tr>
+                    <td></td><td></td><td></td><td></td><td></td>
+                    <td class=""><%- endResultService[i].nameService %></td>
+                    <td class="text-right"><%- endResultService[i].totalCallAgentService %></td>
+                    <td class="text-right"><%- endResultService[i].totalCallService %></td>
+                    <td class="text-right"><%- endResultService[i].totalCallFallService %></td>
+                    <td class="text-right"><%- endResultService[i].recipeSLAService %></td>
+                </tr>
+                <%}%>
+            <%} else {%>
+            <script> var isAlertSearch = true;</script>
+                <% if(check == true) {%>
+                    <tr>
+                        <td colspan="10">Không có kết quả tìm kiếm, hãy chọn Công Ty trước khi tìm kiếm</td>
+                    </tr>
+                <%}%>
+            <%}%>
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>

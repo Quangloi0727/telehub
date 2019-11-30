@@ -1,0 +1,104 @@
+<%- breadcrumb %>
+<div class="card">
+    <div class="portlet-title">
+        <div class="lv-header-alt clearfix">
+            <h2 class="lvh-label hidden-xs"><%= title%></h2>
+            <ul class="lv-actions actions">
+                <li><a  data-toggle="tooltip" data-placement="top"
+                       data-original-title="Refresh"><i
+                                class="zmdi zmdi-refresh"></i></a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <form class="form-horizontal" role="form">
+            <div class="form-body">
+                <div class="row m-0 m-t-20">
+                    <div class="col-md-3 m-b-20">
+                        <label for="startDate"
+                               class="control-label f-13"><span>Ngày bắt đầu</span></label>
+
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control pull-right search-field date-picker filter-campain input"
+                                   id="startDate" name="startDate"
+                                   placeholder="VD: 01/01/2016">
+                            <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button"
+                                                                                       class="zmdi zmdi-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <label for="endDate"
+                               class="control-label f-13"><span>Ngày kết thúc</span></label>
+
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control pull-right search-field date-picker filter-campain input"
+                                   id="endDate" name="endDate"
+                                   placeholder="VD: 31/12/2016">
+                            <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button"
+                                                                                       class="zmdi zmdi-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <label for="idCompany"
+                               class="control-label f-13"><span>Công ty</span></label>
+                        <select name="idCompany" class="selectpicker input" title="Chọn công ty">
+                            <% for(var i = 0;i < company.length;i++){ %>
+                            <option value=<%- company[i]._id %>><%- company[i].name %></option>
+                            <% } %>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 m-b-20">
+                        <label for="channelId"
+                               class="control-label f-13"><span>Kênh</span></label>
+                        <select name="channelId" class="selectpicker input" title="Chọn kênh" multiple>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="row m-0">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6 m-b-20">
+                        <div class="btn-group btn-group btn-group-justified">
+                            <a type="submit" class="btn bgm-blue uppercase c-white" style="width:auto"><i
+                                        class="fa fa-search m-r-10"></i><strong>Tìm
+                                    kiếm</strong></a>
+
+                            <div class="col-md-2"></div>
+                            <a id="exportexcel" class="btn bgm-blue default c-white" style="width:auto"><i
+                                        class="fa fa-file-excel-o m-r-10"></i>Xuất Excel</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+    <div class="card-body table-responsive" style=" min-height:200px">
+        <table class="table table-hover table-condensed table-bordered table-responsive" style="table-layout: fixed;"
+               id="exceldata">
+            <thead>
+            <tr>
+                <th class="bgm-orange c-white text-center"><span class="TXT_DAY"></span></th>
+                <th class="bgm-orange c-white text-center"><span class="TXT_CHAT_RECV"></span></th>
+                <th class="bgm-orange c-white text-center"><span class="TXT_CHAT_RESP"></span></th>
+                <th class="bgm-orange c-white text-center"><span class="TXT_CHAT_MISS"></span></th>
+                <th class="bgm-orange c-white text-center"><span class="TXT_SERVED"></span></th>
+                <th class="bgm-orange c-white text-center"><span class="TXT_WAITING"></span></th>
+                <th class="bgm-orange c-white text-center"><span class="TXT_PROGRESSING"></span></th>
+                <th class="bgm-orange c-white text-center"><span class="TXT_FINISH"></span></th>
+            </tr>
+            </thead>
+            <tbody id="tbBody">
+            </tbody>
+        </table>
+        <div id="container">
+        </div>
+        <div id="container2">
+        </div>
+    </div>
+</div>

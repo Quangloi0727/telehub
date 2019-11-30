@@ -1,0 +1,43 @@
+<%-breadcrumb%>
+<div class="card">
+    <script>
+        var tickets= JSON.parse('<%-JSON.stringify(tickets)%>');
+        var criteria= JSON.parse('<%-JSON.stringify(contents)%>');
+    </script>
+    <div class="lv-header-alt clearfix">
+        <h2 class="lvh-label hidden-xs"><%- title %></h2>
+
+        <ul class="lv-actions actions">
+
+            <li>
+                <a
+                   data-toggle="tooltip"
+                   data-placement="top"
+                   data-original-title="Làm mới danh sách">
+                    <i class="zmdi zmdi-refresh"></i>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="card-body" style="min-height: 200px">
+        <table class="table table-hover table-condensed table-bordered table-responsive">
+            <thead>
+                <tr id="headrow"></tr>
+            </thead>
+
+
+            <tbody>
+
+
+
+            </tbody>
+        </table>
+
+        <% if(typeof paging !== 'undefined' && paging.pageCount > 1){ %>
+        <% include ../paging.ejs %>
+        <% } %>
+    </div>
+</div>
+

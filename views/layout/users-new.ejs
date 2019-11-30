@@ -1,0 +1,132 @@
+<%-breadcrumb%>
+<div class="card">
+    <div class="lv-header-alt clearfix">
+        <h2 class="lvh-label hidden-xs"><%- title %></h2>
+
+        <div class="lvh-search">
+            <input type="text" placeholder="Start typing..." class="lvhs-input" id="company-search-bar">
+
+            <i class="lvh-search-close">×</i>
+        </div>
+
+        <ul class="lv-actions actions">
+            <li>
+                <a href="#users" data-toggle="tooltip" data-placement="top"
+                   data-original-title="Làm mới danh sách">
+                    <i class="zmdi zmdi-refresh"></i>
+                </a>
+            </li>
+            <li class="hidden" id="li-hidden">
+                <a role="button" data-toggle="tooltip" data-placement="top" data-original-title="Xóa các mục đánh dấu" id="btn-addSelection">
+                    <i class="zmdi zmdi-delete zmdi-hc-fw"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-body table-responsive" style=" min-height:200px">
+        <!--<form id="userForm">-->
+        <table class="table table-hover table-condensed table-bordered table-fix" style="table-layout: fixed;">
+            <thead>
+            <tr>
+                <th class="w-50 bgm-orange c-white"></th>
+                <th data-sort="none" sortName="name" role="button" class="text-center bgm-orange c-white filter"
+                    data-original-title="Click để sắp xếp dữ liệu tăng dần/giảm dần" data-container="body"
+                    data-toggle="tooltip" data-placement="top">
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp tăng dần"
+                       class="zmdi zmdi-sort-asc"></i>
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp giảm dần"
+                       class="zmdi zmdi-sort-desc"></i>
+                    <span id="text_user_name"></span>
+                </th>
+                <th data-sort="none" sortName="displayName" role="button" class="text-center bgm-orange c-white filter"
+                    data-original-title="Click để sắp xếp dữ liệu tăng dần/giảm dần" data-container="body"
+                    data-toggle="tooltip" data-placement="top">
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp tăng dần"
+                       class="zmdi zmdi-sort-asc"></i>
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp giảm dần"
+                       class="zmdi zmdi-sort-desc"></i>
+                    <span id="text_display_name"></span>
+                </th>
+                <th data-sort="none" sortName="email" role="button" class="text-center bgm-orange c-white filter"
+                    data-original-title="Click để sắp xếp dữ liệu tăng dần/giảm dần" data-container="body"
+                    data-toggle="tooltip" data-placement="top">
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp tăng dần"
+                       class="zmdi zmdi-sort-asc"></i>
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp giảm dần"
+                       class="zmdi zmdi-sort-desc"></i>
+                    <span id="text_email"></span>
+                </th>
+                <th data-sort="none" sortName="accountCode" role="button" class="text-center bgm-orange c-white filter"
+                    data-original-title="Click để sắp xếp dữ liệu tăng dần/giảm dần" data-container="body"
+                    data-toggle="tooltip" data-placement="top">
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp tăng dần"
+                       class="zmdi zmdi-sort-asc"></i>
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp giảm dần"
+                       class="zmdi zmdi-sort-desc"></i>
+                    <span id="text_accountcode"></span>
+                </th>
+                <th class="text-center bgm-orange c-white w-80" id="text_actions"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr id="searchForm">
+                <td class="text-center select-cell">
+                    <div class="checkbox m-0">
+                        <label>
+                            <input name="select" type="checkbox" class="select-box select-box-all c-white" value="all"
+                                   id="deleteAll">
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+                <td><input class="form-control searchColumn" type="text" id="search_name" name="name"
+                           placeholder="vd: lamlv"></td>
+                <td><input class="form-control searchColumn" type="text" id="search_displayName"
+                           name="displayName"
+                           placeholder="vd: Trần Văn"></td>
+                <td><input class="form-control searchColumn" type="text" id="search_email" name="email"
+                           placeholder="vd: john@bbc.com"></td>
+                <td><input class="form-control searchColumn" type="text" id="search_accountCode" name="accountCode"
+                           placeholder="vd: 123456"></td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-block waves-effect" id="btn-search" name="btn-search">
+                        <i class="zmdi zmdi-search"></i></button>
+                </td>
+            </tr>
+
+            <% if(myUser.length == 0){ %>
+            <script> var isNullUser = true;</script>
+            <% } else{ %>
+            <script> var isNullUser = false;</script>
+            <% myUser.forEach(function(element, index) { %>
+            <tr>
+                <td class="select-cell text-center">
+                    <div class="checkbox m-0">
+                        <label>
+                            <input data-id="<%- element._id %>" name="select" type="checkbox"
+                                   class="select-box select-box-cell" value="all">
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+                <td><%- element.name %></td>
+                <td><%- element.displayName %></td>
+                <td><%- element.email %></td>
+                <td><%- element.accountCode %></td>
+                <td class="text-center">
+                    <a class="p-t-3 btn-flat-bg add-user" data-id="<%- element._id %>" data-toggle="tooltip"
+                       data-placement="top" data-original-title="Thêm người dùng vào dự án"><i class="zmdi zmdi-account-add zmdi-hc-fw green f-17"></i></a>
+                </td>
+            </tr>
+            <% })} %>
+
+            </tbody>
+        </table>
+        <!--</form>-->
+        <% if(paging && paging.pageCount > 1){ %>
+        <% include ../paging.ejs %>
+        <% } %>
+    </div>
+</div>

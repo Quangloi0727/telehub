@@ -1,0 +1,279 @@
+
+<form role="form" class="form-horizontal" id="add-new-service" enctype="multipart/form-data">
+    <input type="hidden" id="current_name" value="<%=service.name%>">
+    <input type="hidden" id="current_send_user" value="<%=service.send_user%>">
+    <input type="hidden" id="current_receive_user" value="<%=service.receive_user%>">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="m-b-5 f-20"><%- title %></h2>
+            <small class="text-muted"><i>Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập.</i></small>
+        </div>
+
+        <div class="card-body card-padding">
+            <input type="hidden" id="socketId" name="socketId" value="">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label" id="txt_service_name">Tên service <span class="c-red">*</span></label>
+
+                <div class="col-sm-7">
+                    <div class="fg-line">
+                        <input type="hidden"  id="_id" name="_id"
+                               value="<%=service._id%>">
+                        <input type="text" class="form-control validate[required, ajax[validateServiceName]]" id="name"
+                               maxlength="60"
+                               name="name" placeholder="VD: Hỗ trợ kỹ thuật"
+                                value="<%=service.name%>">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label" id="txt_company_status"></label>
+
+                <div class="col-sm-6">
+                    <div class="checkbox m-t-3 m-b-15">
+                        <label>
+                            <input type="checkbox" value="<%=service.status%>" id="status" name="status" <%=(service.status==1)?'checked':''%>>
+                            <i class="input-helper"></i>
+                            <span class="p-l-5 text-capitalize-f" data-text-on="Không kích hoạt"
+                                  data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h2 class="m-b-5 f-20">Thiết lập gửi</h2>
+
+        </div>
+
+        <div class="card-body card-padding">
+
+            <div class="form-group">
+
+                <label for="send_host" class="col-sm-3 control-label" id="txt_service_send_host">Host <span class="c-red">*</span></label>
+
+                <div class="col-sm-7">
+                    <div class="fg-line">
+                        <input type="text" class="form-control validate[required]" id="send_host"
+                               maxlength="60"
+                               name="send_host" placeholder="VD: smtp.gmail.com"
+                                value="<%= service.send_host%>">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label" id="txt_service_send_port">Cổng <span class="c-red">*</span></label>
+
+                <div class="col-sm-7">
+                    <div class="fg-line">
+                        <input type="number" class="form-control validate[required]" id="send_port"
+                               maxlength="60"
+                               name="send_port" placeholder="VD: 465"
+                                value="<%= service.send_port%>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label" id="txt_service_send_user">Tên đăng nhập <span class="c-red">*</span></label>
+
+                <div class="col-sm-7">
+                    <div class="fg-line">
+                        <input type="text" class="form-control validate[required,ajax[validateSendUser]]" id="send_user"
+                               maxlength="60"
+                               name="send_user" placeholder="VD: support@gmail.com"
+                                value="<%=service.send_user%>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label" id="txt_service_send_pass">Mật khẩu <span class="c-red">*</span></label>
+
+                <div class="col-sm-7">
+                    <div class="fg-line">
+                        <input type="password" class="form-control validate[required]" id="send_pass"
+                               maxlength="60"
+                               name="send_pass" placeholder=""
+                                value="<%= service.send_pass%>">
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label" id="txt_service_sercure">Bảo mật <span class="c-red">*</span></label>
+
+                <div class="col-sm-7">
+                    <div class="p-relative">
+                        <select class="selectpicker validate[required]" name="send_sercure"
+                                id="send_sercure">
+                            <option value="0"> -- Chọn --</option>
+                            <% sercure.forEach(function(element, index){ %>
+                            <option <%=(index==service.send_sercure-1)?'selected':''%> value=<%- index+1 %>>  <%- element %> </option>
+                            <% }); %>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label" id="txt_service_protocol">Giao thức <span class="c-red">*</span></label>
+
+                <div class="col-sm-7">
+                    <div class="p-relative">
+                        <select class="selectpicker validate[required]" name="send_protocol"
+                                id="send_protocol">
+                            <option disabled value="0"> -- Chọn --</option>
+                            <% sendProtocol.forEach(function(element, index){ %>
+                            <option <%=(index==service.send_protocol-1)?'selected':''%> value=<%- index+1 %>>  <%- element %> </option>
+                            <% }); %>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <label for="send_limit" class="col-sm-3 control-label" id="txt_service_send_limit">Số lượng gửi tối đa <span class="c-red">*</span></label>
+
+                <div class="col-sm-7">
+                    <div class="fg-line">
+                        <input type="number" class="form-control validate[required]" id="send_limit"
+                               maxlength="60"
+                               name="send_limit" placeholder="VD: 500"
+                                value="<%= service.send_limit%>">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h2 class="m-b-5 f-20">Thiết lập nhận</h2>
+
+        </div>
+
+        <div class="card-body card-padding">
+
+            <div class="form-group">
+
+                <label for="receive_host" class="col-sm-3 control-label" id="txt_service_receive_host">Host <span class="c-red">*</span></label>
+
+                <div class="col-sm-7">
+                    <div class="fg-line">
+                        <input type="text" class="form-control validate[required]" id="receive_host"
+                               maxlength="60"
+                               name="receive_host" placeholder="VD: pop.gmail.com"
+                                value="<%= service.receive_host%>">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="receive_port" class="col-sm-3 control-label" id="txt_service_receive_port">Cổng <span class="c-red">*</span></label>
+
+                <div class="col-sm-7">
+                    <div class="fg-line">
+                        <input type="number" class="form-control validate[required]" id="receive_port"
+                               maxlength="60"
+                               name="receive_port" placeholder="VD: 995"
+                                value="<%= service.receive_port%>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="receive_user" class="col-sm-3 control-label" id="txt_service_receive_user">Tên đăng nhập <span class="c-red">*</span></label>
+
+                <div class="col-sm-7">
+                    <div class="fg-line">
+                        <input type="text" class="form-control validate[required,ajax[validateReceiveUser]]" id="receive_user"
+                               maxlength="60"
+                               name="receive_user" placeholder="VD: support@gmail.com"
+                                value="<%= service.receive_user%>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="receive_pass" class="col-sm-3 control-label" id="txt_service_receive_pass">Mật khẩu <span class="c-red">*</span></label>
+
+                <div class="col-sm-7">
+                    <div class="fg-line">
+                        <input type="password" class="form-control validate[required]" id="receive_pass"
+                               maxlength="60"
+                               name="receive_pass" placeholder=""
+                               value="<%= service.receive_pass%>">
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="receive_sercure" class="col-sm-3 control-label" id="txt_service_receive_sercure">Bảo mật <span class="c-red">*</span></label>
+
+                <div class="col-sm-7">
+                    <div class="p-relative">
+                        <select class="selectpicker validate[required]" name="receive_sercure"
+                                id="receive_sercure">
+                            <option disabled selected value="0"> -- Chọn --</option>
+                            <% sercure.forEach(function(element, index){ %>
+                            <option <%=(index==service.receive_sercure-1)?'selected':''%> value=<%- index+1 %>>  <%- element %> </option>
+                            <% }); %>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="receive_protocol" class="col-sm-3 control-label" id="txt_service_receive_protocol">Giao thức <span class="c-red">*</span></label>
+
+                <div class="col-sm-7">
+                    <div class="p-relative">
+                        <select class="selectpicker validate[required]" name="receive_protocol"
+                                id="receive_protocol">
+                            <option disabled selected value="0"> -- Chọn --</option>
+                            <% receiveProtocol.forEach(function(element, index){ %>
+                            <option <%=(index==service.receive_protocol-1)?'selected':''%> value=<%- index+1 %>>  <%- element %> </option>
+                            <% }); %>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <label for="receive_delay" class="col-sm-3 control-label" id="txt_service_receive_delay">Thời gian nhận mail <span class="c-red">*</span></label>
+
+                <div class="col-sm-7">
+                    <div class="fg-line">
+                        <input type="number" class="form-control validate[required, min[60000]]" id="receive_delay"
+                               maxlength="60"
+                               name="receive_delay" placeholder="VD: 60000 (milisecond)"
+                                value="<%=service.receive_delay%>">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group m-b-0 ">
+        <div class="col-sm-offset-3 col-sm-7">
+            <button type="reset" class="btn btn-default waves-effect" id="cancelInput"
+                    name="cancelInput">
+                <i class="zmdi zmdi-arrow-left zmdi-hc-fw"></i>
+                Quay lại
+            </button>
+            <button type="button" class="btn btn-default btn-icon-text waves-effect" id="testConnection">
+                <i class="m-r-5 zmdi zmdi-input-antenna"></i>
+                Kiểm tra kết nối
+            </button>
+            <button id="submit" type="button" class="btn btn-primary btn-icon-text waves-effect">
+                <i class="m-r-5 zmdi zmdi-check"></i>
+
+                Xác nhận
+            </button>
+        </div>
+    </div>
+</form>

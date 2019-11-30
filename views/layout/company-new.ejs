@@ -1,0 +1,136 @@
+<!-- Created by luongvanlam on 1/13/16. -->
+<%-breadcrumb%>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5 f-20"><%- title %></h2>
+        <small class="text-muted"><i>Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập.</i></small>
+    </div>
+
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="add-new-company" enctype="multipart/form-data">
+            <input type="hidden" name="socketId" id="socketId">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label" id="txt_company_name"></label>
+
+                <div class="col-sm-7">
+                    <div class="fg-line">
+                        <input type="text" class="form-control validate[required,ajax[CompanyNameCheck]]" id="name"
+                               maxlength="60"
+                               name="name" placeholder="VD: Mobifone">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label" id="txt_company_profile"></label>
+                <div class="col-sm-7">
+                    <div class="p-relative">
+                    <select class="tag-select validate[required]" name="companyProfileId"
+                            id="companyProfileId">
+                        <option disabled selected value=""> -- Chọn -- </option>
+                        <% companyProfile.forEach(function(element, index){%>
+                        <option value=<%- element._id %>>  <%- element.name %> </option>
+                        <% }); %>
+                    </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label" id="txt_recipe_SLA"></label>
+                <div class="col-sm-7">
+                    <div class="fg-line">
+                        <input type="number" class="form-control" id="recipeSLA"
+                               name="recipeSLA" placeholder="Nhập số giây" min="0">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label" id="txt_recipe_SLA_Chat"></label>
+                <div class="col-sm-7">
+                    <div class="fg-line">
+                        <input type="number" class="form-control" id="recipeSLAChat"
+                               name="recipeSLAChat" placeholder="Nhập số giây" min="0">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label" id="txt_company_leader"></label>
+
+                <div class="col-sm-7">
+                    <select class="validate[required]" data-prompt-position="inline:0,10"
+                            multiple="multiple" size="10"
+                            name="managerId[]"
+                            id="mangerId">
+                        <% users.forEach(function(element, index){ %>
+                        <option class="duallist-option" value='<%- element._id %>'>
+                            <%- element.displayName + " (" +  element.name + ")" %> </option>
+                        <% }) %>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label" id="txt_company_agent"></label>
+
+                <div class="col-sm-7">
+                    <select data-prompt-position="inline:0,10" multiple="multiple" size="10"
+                            name="agentId[]"
+                            id="agentId">
+                        <% agentGroup.forEach(function(element, index){ %>
+                        <option class="duallist-option" value='<%- element._id %>'>  <%- element.name %> </option>
+                        <% }) %>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label" id="txt_company_trunk"></label>
+
+                <div class="col-sm-7">
+                    <select class="validate[required]" data-prompt-position="inline:0,10" multiple="multiple" size="10"
+                            name="trunks[]"
+                            id="trunks">
+                        <% trunks.forEach(function(element, index){ %>
+                        <option class="duallist-option" value='<%- element._id %>'>  <%- element.name %> </option>
+                        <% }) %>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label" id="txt_company_status"></label>
+                <div class="col-sm-6">
+                    <div class="checkbox m-t-3 m-b-15">
+                        <label>
+                            <input type="checkbox" value="1" id="status" name="status" checked>
+                            <i class="input-helper"></i>
+                            <span class="p-l-5 text-capitalize-f" data-text-on="Không kích hoạt"
+                                  data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group m-b-0 ">
+                <div class="col-sm-offset-3 col-sm-7">
+                    <button type="reset" class="btn btn-default waves-effect" id="cancelInput"
+                            name="cancelInput">
+                        <i class="zmdi zmdi-arrow-left zmdi-hc-fw"></i>
+                        Quay lại
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-icon-text waves-effect">
+                        <i class="m-r-5 zmdi zmdi-check"></i>
+                        Xác nhận
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

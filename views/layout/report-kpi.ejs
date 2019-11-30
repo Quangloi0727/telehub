@@ -1,0 +1,119 @@
+<%-breadcrumb%>
+<div class="card">
+    <div class="portlet-title">
+        <div class="lv-header-alt clearfix">
+            <h2 class="lvh-label hidden-xs"><%= title %></h2>
+            <ul class="lv-actions actions">
+                <li><a data-toggle="tooltip" data-placement="top" data-original-title="Tải file báo cáo" id="download-excel"><i
+                                class="zmdi zmdi-cloud-download"></i></a></li>
+                <li><a data-toggle="tooltip" data-placement="top" data-original-title="Refresh"><i
+                                class="zmdi zmdi-refresh"></i></a></li>
+                <li data-toggle="tooltip" data-placement="top" data-original-title="Cột hiển thị" class="dropdown">
+                    <a role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                        <i class="zmdi zmdi-view-column"></i>
+                    </a>
+                    <ul class="dropdown-menu pull-right p-t-0" id="showHideFields"></ul>
+                </li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <form class="form-horizontal filter" role="form" id="search-input">
+            <div class="form-body">
+                <div class="row m-0 m-t-20">
+                    <div class="col-md-4 col-md-offset-2 m-b-20" >
+                        <label for="markData"
+                               class="control-label f-13"><span>Bộ dữ liệu</span></label>
+                        <select class="tag-select searchColumn" id="markData" name="markData">
+                            <option disabled value="">- Chọn -</option>
+                            <% markData.forEach(function(dt, i){ %>
+                            <option value="<%- dt._id %>" selected><%- dt.name %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div class="col-md-4 m-b-20" >
+                        <label for="agent"
+                               class="control-label f-13"><span>Điện thoại viên</span></label>
+                        <input type="text" class="form-control searchColumn" name="agent">
+                    </div>
+                </div>
+                <div class="row m-0">
+                    <div class="col-md-2 col-md-offset-5 m-b-20">
+                        <div class="btn-group btn-group btn-group-justified">
+                            <a type="button" class="btn bgm-blue uppercase c-white" style="width:auto" id="btn-search" name="btn-search"><i
+                                        class="fa fa-search m-r-10"></i><strong>Tìm
+                                    kiếm</strong></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="panel panel-default">
+        <div>
+            <div class="panel-body p-0 c-overflow">
+                <div class="tab-content">
+                    <div role="tabpanel" style="height: 100%" class="tab-pane animated active">
+                        <form role="form" id="frm-report-kpi">
+                            <table class="table table-bordered table-fix" id="exceldata">
+                                <thead>
+                                <tr>
+                                    <th class="bgm-orange c-white text-center col-lg-1">
+                                        <span class="TXT_MARK_DATA"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center col-lg-2">
+                                        <span class="TXT_AGENT"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_TOTAL_TICKET"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_MARKED_TICKET"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_LEFT_TICKET"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_OK"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_NG"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_GOOD"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_DISTINCTION"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_EXCELLENT"></span>
+                                    </th>
+                                    <th class="bgm-orange c-white text-center">
+                                        <span class="TXT_GOOD_PERCENT"></span>
+                                    </th>
+                                    <th data-sort="none" sortName="sum" role="button" class="bgm-orange c-white text-center sort">
+                                        <i data-toggle="tooltip" data-original-title="Sắp xếp theo thứ tự tăng dần" class="zmdi zmdi-sort-asc f-14"></i>
+                                        <i data-toggle="tooltip" data-original-title="Sắp xếp theo thứ tự giảm dần" class="zmdi zmdi-sort-desc f-14"></i>
+                                        <span class="TXT_TOTAL_SCORE"></span>
+                                    </th>
+                                    <th data-sort="none" sortName="evaluation" role="button" class="bgm-orange c-white text-center sort">
+                                        <i data-toggle="tooltip" data-original-title="Sắp xếp theo thứ tự tăng dần" class="zmdi zmdi-sort-asc f-14"></i>
+                                        <i data-toggle="tooltip" data-original-title="Sắp xếp theo thứ tự giảm dần" class="zmdi zmdi-sort-desc f-14"></i>
+                                        <span class="TXT_RESULT"></span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tbody id="ticket-body">
+                                </tbody>
+                                </tbody>
+                            </table>
+                            <div class="text-center" id="ticket-total">
+                            </div>
+                            <div class="text-center" id="ticket-paging"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

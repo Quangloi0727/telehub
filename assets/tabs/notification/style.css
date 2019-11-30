@@ -1,0 +1,102 @@
+.media-body-msg{
+    zoom: 1;
+    display: block;
+    width: auto;
+}
+
+.media, .media-body-msg {
+    zoom: 1;
+    overflow: hidden;
+}
+
+.lv-header {
+    text-align: center;
+    padding: 15px 10px 13px;
+    line-height: 100%;
+    text-transform: uppercase;
+    border-bottom: 1px solid #F0F0F0;
+    font-weight: 500;
+    color: #4C4C4C;
+    margin-bottom: 10px;
+}
+
+.top-menu > li .dropdown-menu-lg .lv-body {
+    min-height: 295px;
+    overflow-x: hidden;
+}
+
+.listview:not(.lv-lg):not(.lv-message) .lv-item {
+    padding: 10px 20px;
+}
+
+.listview .lv-item {
+    position: relative;
+    display: block;
+    -webkit-transition: background-color;
+    -o-transition: background-color;
+    transition: background-color;
+    -webkit-transition-duration: 300ms;
+    transition-duration: 300ms;
+}
+
+.listview:not(.lv-message) .lv-title {
+    color: #000;
+}
+
+.listview .lv-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+
+.listview .lv-item .lv-small {
+    font-size: 12px;
+    color: #A9A9A9;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    width: 100%;
+}
+
+.listview [class*="lv-img"] {
+    border-radius: 50%;
+}
+
+.listview .lv-img-sm {
+    width: 35px;
+    height: 35px;
+}
+
+.lv-footer {
+    display: block;
+    text-align: center;
+    padding: 7px 10px 8px;
+    border-top: 1px solid #F0F0F0;
+    line-height: 100%;
+    font-size: 11px;
+    margin-top: 20px;
+}
+
+.top-menu > li > a > .tmn-counts {
+    position: absolute;
+    font-style: normal;
+    background: #f44336;
+    padding: 1px 5px;
+    border-radius: 2px;
+    right: 20px;
+    top: -10px;
+    font-size: 10px;
+    line-height: 15px;
+}
+
+li.dropdown.b-10 {
+    vertical-align: middle;
+}
+
+a.zmdi.zmdi-globe{
+    padding-top: 4px;
+    padding-left: 18px;
+    font-size: 22px;
+}

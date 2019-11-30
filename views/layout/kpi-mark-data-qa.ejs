@@ -1,0 +1,122 @@
+<%-breadcrumb%>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5 f-16">THÔNG TIN DỮ LIỆU CHẤM ĐIỂM</h2>
+    </div>
+    <div class="p-l-20 p-b-20">
+        <label>TÊN DỮ LIỆU:</label>
+        <label class="c-blue p-l-10" id="dataName">0</label>
+    </div>
+    <div class="row p-l-20 p-b-20">
+        <div class="col-sm-3">
+            <label>Số lượng ticket sử dụng:</label>
+            <label class="c-blue p-l-10" id="ticketCount"> 0</label>
+        </div>
+        <div class="col-sm-3">
+            <label>Số lượng ticket còn lại:</label>
+            <label class="c-blue p-l-10" id="ticketLeft"> 0</label>
+        </div>
+        <div class="col-sm-3">
+            <label>Ngày bắt đầu:</label>
+            <label class="c-blue p-l-10" id="startDate"> 0</label>
+        </div>
+        <div class="col-sm-3">
+            <label>Ngày kết thúc:</label>
+            <label class="c-blue p-l-10" id="endDate"> 0</label>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="m-b-5 f-16">CHỌN NGƯỜI CHẤM</h2>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="table-responsive group-group">
+                        <table class="table table-hover table-condensed table-bordered" id="tbl-choose-qa">
+                            <thead>
+                            <tr class="f-11">
+                                <th class="bgm-orange c-white text-center w-40">#</th>
+                                <th class="bgm-orange c-white text-center">Tên</th>
+                                <th class="bgm-orange c-white text-center">Công ty</th>
+                                <th class="bgm-orange c-white text-center">Lọc</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="row-filter filter">
+                                <td class="text-center p-0">
+                                    <div class="checkbox m-0 m-l-3" data-toggle="tooltip" data-placement="top" data-original-title="Chọn tất cả">
+                                        <label>
+                                            <input name="select" type="checkbox" class="select-box select-box-all" value="all">
+                                            <i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="fg-line select ">
+                                        <input class="form-control mark-qa-filter" type="text" id="name" name="name">
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-primary btn-block" id="btn-filter"><i class="zmdi zmdi-filter-list m-r-5"></i> Lọc</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center add-paging"><ul class="pagination"></ul></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-1" style="height: 300px; padding-top:150px">
+        <div class="text-center">
+            <button type="reset" class="btn btn-default waves-effect waves-effect" id="add-btn" name="add-btn" data-toggle="tooltip" data-placement="top" data-original-title="Thêm">
+                <i class="zmdi zmdi-arrow-right zmdi-hc-fw"></i>
+            </button>
+        </div>
+        <div class="text-center">
+            <button type="reset" class="btn btn-default waves-effect waves-effect " id="remove-btn" name="remove-btn" data-toggle="tooltip" data-placement="top" data-original-title="Loại">
+                <i class="zmdi zmdi-arrow-left zmdi-hc-fw"></i>
+            </button>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="m-b-5 f-16">NGƯỜI CHẤM ĐÃ CHỌN</h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive added-group">
+                    <label class="p-l-10" id="added-count">Tổng: 0</label>
+                    <table class="table table-hover table-condensed table-bordered" id="form-added-qa">
+                        <thead>
+                        <tr class="f-11">
+                            <th class="bgm-orange c-white text-center p-0">
+                                <div class="checkbox m-0">
+                                    <label>
+                                        <input type="checkbox" value="" id="select_all_added" name="select_all_added">
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </th>
+                            <th class="bgm-orange c-white text-center w-150">Họ tên</th>
+                            <th class="bgm-orange c-white text-center w-100">Số lượng chấm</th>
+                            <th class="bgm-orange c-white text-center w-50">Tối đa</th>
+                            <th class="bgm-orange c-white text-center w-50">Tác vụ</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center added-paging"><ul class="pagination"></ul></div>
+            </div>
+        </div>
+    </div>
+</div>
+<a type="button" href="/#kpi-mark-data" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect btn-back"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>

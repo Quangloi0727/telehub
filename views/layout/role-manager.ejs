@@ -1,0 +1,25 @@
+<%-breadcrumb%>
+<div class="card">
+    <div class="lv-header-alt clearfix m-b-5">
+        <h2 class="lvh-label hidden-xs"><%- title %></h2>
+        <ul class="lv-actions actions">
+            <li><a href="/#role-manager" data-toggle="tooltip" data-placement="top" data-original-title="Refresh"><i class="zmdi zmdi-refresh"></i></a></li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <form id="tbl-menu">
+            <table id="my-table" class="table table-bordered table-fixed-header table-hover m-b-30">
+                <thead class="header">
+                <tr>
+                    <th class="c-white p-l-30" ></th>
+                    <% for(var i = 0; i < roles.length; i++){ %>
+                    <th class="bgm-orange c-white w-60 f-10 p-5 text-center" ><%- roles[i].name %></th>
+                    <% } %>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </form>
+    </div>
+</div>
+<script>var _roles = JSON.parse('<%- JSON.stringify(roles); %>');</script>

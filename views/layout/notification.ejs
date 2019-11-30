@@ -1,0 +1,25 @@
+﻿<%-breadcrumb%>
+<div class="block-header">
+</div>
+
+<div class="card" style="width: 75%">
+    <div class="listview lv-bordered lv-lg">
+        <div class="lv-header-alt clearfix">
+            <h2 class="lvh-label hidden-xs"><%- title %></h2>
+        </div>
+        <div class="lv-body">
+            <% notification.forEach(function(noti, i){ %>
+                <div role="button" class="lv-item notifi-a" style="background-color: <% if (i % 2 == 0){ %> #DDDDDD <%}%>" data-url="<%- noti.url %>">
+                    <div class="media-body p-t-10">
+                        <small class="lv-smail p-l-20 p-t-10"><%- noti.msg %></small>
+                        <div class="lv-smail p-l-20 p-b-5 p-t-10"><i class="zmdi zmdi-time"></i> <%- _moment(noti.created).format('DD/MM/YYYY HH:mm:ss') %></div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+
+    <ul class="pagination lv-pagination">
+        <% include ../paging.ejs %>
+    </ul>
+</div>

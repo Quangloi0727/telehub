@@ -1,0 +1,143 @@
+<%-breadcrumb%>
+<script>
+    var searchData = JSON.parse('<%- JSON.stringify(searchData)%>');
+    var categories = JSON.parse('<%- JSON.stringify(categories)%>');
+</script>
+<div class="lv-header-alt clearfix">
+    <h2 class="lvh-label hidden-xs"><%- title %></h2>
+    <ul class="lv-actions actions">
+        <li>
+            <a href="/#services-mail/new" data-toggle="tooltip" data-placement="left" data-original-title="Tạo mới">
+                <i class="zmdi zmdi-plus"></i>
+            </a>
+        </li>
+        <li>
+            <a data-toggle="tooltip" data-placement="left" data-original-title="Làm mới danh sách">
+                <i class="zmdi zmdi-refresh"></i>
+            </a>
+        </li>
+        <li class="hidden" id="li-hidden">
+            <a role="button" data-toggle="tooltip" data-placement="top" data-original-title="Xóa các mục đánh dấu" id="btn-delSelection">
+                <i class="zmdi zmdi-delete"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="card">
+    <div class="card-body table-responsive">
+        <form id="service">
+            <table class="table table-hover table-fix table-bordered">
+                <thead>
+                <tr class="">
+                    <th class="bgm-orange c-white w-40 text-center">#</th>
+                    <th data-sort="none" class="bgm-orange c-white w-180 text-center" role="button" data-field="name">
+                        <i data-toggle="tooltip" data-original-title="Sắp xếp theo thứ tự tăng dần" class="zmdi zmdi-sort-asc"></i>
+                        <i data-toggle="tooltip" data-original-title="Sắp xếp theo thứ tự giảm dần" class="zmdi zmdi-sort-desc"></i>
+                        Tên chiến dịch
+                    </th>
+                    <th class="bgm-orange c-white w-80 text-center">
+                        Công ty
+                    </th>
+                    <th class="bgm-orange c-white w-60 text-center">
+                        Route mail
+                    </th>
+                    <th class="bgm-orange c-white w-60 text-center">
+                        Kỹ năng
+                    </th>
+                    <th class="bgm-orange c-white w-60 text-center">
+                        Kích hoạt</th>
+                    <th class="bgm-orange c-white w-60 text-center">
+                        Người tạo
+                    </th>
+                    <th class="bgm-orange c-white w-60 text-center" role="button">
+                        Ngày tạo
+                    </th>
+                    <th class="bgm-orange c-white w-60 text-center">Tác vụ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="row-filter filter">
+                    <td class="text-center">
+                        <div class="checkbox">
+                            <label>
+                                <input id="select_all" type="checkbox" class="select-box" value="all">
+                                <i class="input-helper"></i>
+                            </label>
+                        </div>
+                    </td>
+                    <td><input class="form-control" type="text" id="filter_name" name="filter_name" value="<%- searchData.name%>"></td>
+                    <td>
+                        <select class="selectpicker" id="filter_idCompany">
+                            <option value='' selected class="text-center">Tất cả</option>
+                            <% orgs.forEach(function(el, i) {%>
+                            <option value="<%- el._id%>" <%- (_equal(el._id.toString(),searchData.idCompany ? searchData.idCompany.toString() : '') ? 'selected' : ''); %>><%- el.name%></option>
+                            <%})%>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="selectpicker" id="filter_routeMail" name="filter_routeMail">
+                            <option value='' selected class="text-center">Tất cả</option>
+                            <option value="1" <%- (_equal('1',searchData.routeMail ? searchData.routeMail.toString() : '') ? 'selected' : ''); %>>Round Robin</option>
+                            <option value="2" <%- (_equal('2',searchData.routeMail ? searchData.routeMail.toString() : '') ? 'selected' : ''); %>>Top Down</option>
+                            <option value="3" <%- (_equal('3',searchData.routeMail ? searchData.routeMail.toString() : '') ? 'selected' : ''); %>>Agent Perfomance</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="selectpicker" id="filter_idSkill" name="filter_idSkill">
+                            <option value='' selected class="text-center">Tất cả</option>
+                            <% skills.forEach(function(el, i) {%>
+                            <option value="<%- el._id%>" <%- (_equal(el._id.toString(),searchData.idSkill ? searchData.idSkill.toString() : '') ? 'selected' : ''); %>><%- el.skillName%></option>
+                            <%})%>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="selectpicker" id="filter_status" name="filter_status">
+                            <option value='' selected class="text-center">Tất cả</option>
+                            <option value="1" <%- (_equal('1',searchData.status ? searchData.status.toString() : '') ? 'selected' : ''); %>>Kích hoạt</option>
+                            <option value="0" <%- (_equal('0',searchData.status ? searchData.status.toString() : '') ? 'selected' : ''); %>>Vô hiệu hóa</option>
+                        </select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td><button type="button" class="btn btn-primary btn-block waves-effect btn-filter"><i class="zmdi zmdi-filter-list m-r-5"></i> Lọc</button></td>
+                </tr>
+                <% categories.forEach(function(el, i) { %>
+                <tr>
+                    <td class="select-cell text-center">
+                        <div class="checkbox m-0">
+                            <label>
+                                <input type="checkbox"  class="select-box selection" value="<%- el._id %>">
+                                <i class="input-helper"></i>
+                            </label>
+                        </div>
+                    </td>
+                    <td><%- el.name %></td>
+                    <td class="text-center"><%- el.idCompany.name %></td>
+                    <td class="text-center">
+                        <%- _equal(el.routeMail.toString(),'1')? 'Round Robin':'' %>
+                        <%- _equal(el.routeMail.toString(),'2')? 'Top Down':'' %>
+                        <%- _equal(el.routeMail.toString(),'3')? 'Agent Perfomance':'' %>
+                    </td>
+                    <td class="text-center"><%- (el.idSkill ?  el.idSkill.skillName : '')%></td>
+                    <td class="text-center">
+                        <div class="checkbox" style="margin: 0 auto">
+                            <label>
+                                <input disabled type="checkbox" class="select-box" <%- (el.status ? 'checked' : ''); %> />
+                                <i class="input-helper"></i>
+                            </label>
+                        </div>
+                    </td>
+                    <td class="text-center"><%- (el.createBy ? el.createBy.name : '') %></td>
+                    <td class="text-center f-12"><%- (el.created ? _moment(el.created).format("hh:mm DD/MM/YYYY") : '') %></td>
+                    <td class="text-center">
+                        <a href="/#services-mail/<%- el._id %>/edit" class="p-t-3 btn-flat-bg"><i class="zmdi zmdi-edit green f-17"></i></a>
+                        <a role="button" type="click" class="btn-remove btn-flat-bg" data-id="<%- el._id %>"><i class="zmdi zmdi-close red f-23"></i></a>
+                    </td>
+                </tr>
+                <% }); %>
+                </tbody>
+            </table>
+            <% include ../paging.ejs %>
+        </form>
+    </div>
+</div>

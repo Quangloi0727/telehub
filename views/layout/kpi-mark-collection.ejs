@@ -1,0 +1,251 @@
+<!-- Created by luongvanlam on 1/13/16. -->
+<%-breadcrumb%>
+<script>var coreKPI = JSON.parse('<%- JSON.stringify(coreKPI) %>');</script>
+<div class="card">
+    <div class="lv-header-alt clearfix">
+        <h2 class="lvh-label hidden-xs"><%- title %></h2>
+
+        <ul class="lv-actions actions">
+            <li>
+                <a id="add-new-kpi-collection"
+                   data-toggle="tooltip"
+                   data-placement="top"
+                   data-original-title="Tạo mới bộ tiêu chí">
+                    <i class="zmdi zmdi-plus"></i>
+                </a>
+            </li>
+            <li>
+                <a
+                   data-toggle="tooltip"
+                   data-placement="top"
+                   data-original-title="Làm mới danh sách">
+                    <i class="zmdi zmdi-refresh"></i>
+                </a>
+            </li>
+            <li class="hidden" id="li-hidden">
+                <a role="button" data-toggle="tooltip" data-placement="top" data-original-title="Xóa các mục đánh dấu"
+                   id="btn-delSelection">
+                    <i class="zmdi zmdi-delete"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-body" style="min-height: 200px">
+        <table class="table table-hover table-bordered table-fix table-condensed ">
+            <thead>
+            <tr>
+                <th class="w-50 bgm-orange c-white">
+                </th>
+                <th data-sort="none" sortName="name" role="button" class="text-left bgm-orange c-white filter"
+                    data-original-title="Click để sắp xếp dữ liệu tăng dần/giảm dần" data-container="body"
+                    data-toggle="tooltip" data-placement="top">
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp tăng dần"
+                       class="zmdi zmdi-sort-asc"></i>
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp giảm dần"
+                       class="zmdi zmdi-sort-desc"></i>
+                    <span class="KPI_COLLECTION_NAME"></span>
+                </th>
+
+                <th data-sort="none" sortName="type" role="button" class="text-center bgm-orange c-white filter w-180"
+                    data-original-title="Click để sắp xếp dữ liệu tăng dần/giảm dần" data-container="body"
+                    data-toggle="tooltip" data-placement="top">
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp tăng dần"
+                       class="zmdi zmdi-sort-asc"></i>
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp giảm dần"
+                       class="zmdi zmdi-sort-desc"></i>
+                    <span class="KPI_TYPE"></span>
+                </th>
+
+                <th data-sort="none" sortName="status" role="button" class="text-center bgm-orange c-white filter w-180"
+                    data-original-title="Click để sắp xếp dữ liệu tăng dần/giảm dần" data-container="body"
+                    data-toggle="tooltip" data-placement="top">
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp tăng dần"
+                       class="zmdi zmdi-sort-asc"></i>
+                    <i data-toggle="tooltip" data-placement="top" data-original-title="Sắp xếp giảm dần"
+                       class="zmdi zmdi-sort-desc"></i>
+                    <span class="KPI_STATUS"></span>
+                </th>
+
+                <th class="w-120 text-center bgm-orange c-white KPI_ACTION"></th>
+            </tr>
+            </thead>
+
+
+            <tbody>
+            <tr id="searchForm" class="filter">
+                <td class="text-center select-cell">
+                    <div class="checkbox m-0">
+                            <label>
+                            <input name="select" type="checkbox" class="select-box select-box-all c-white" value="all"
+                                   id="deleteAll">
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+                <td><input class="form-control searchColumn" type="text" id="search_name"
+                           name="name"></td>
+
+                <td>
+                    <select class="selectpicker searchColumn" name="type" id="search_type">
+                        <option value="" selected>-- Chọn --</option>
+                        <option value="0">VOICE</option>
+                        <option value="1">CHAT</option>
+                        <option value="2">EMAIL</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="selectpicker searchColumn" name="status" id="search_status">
+                        <option value="" selected>-- Chọn --</option>
+                        <option value="0">Không kích hoạt</option>
+                        <option value="1">Kích hoạt</option>
+                    </select>
+                </td>
+                <td>
+                    <button class="btn btn-primary btn-block waves-effect" id="btn-search" name="btn-search"><i
+                                class="zmdi zmdi-search"></i></button>
+                </td>
+            </tr>
+
+            <% if(kpi.length == 0){ %>
+            <script> var kpi = true;</script>
+            <% } else{ %>
+            <script> var kpi = false;</script>
+            <% kpi.forEach(function(element, index) { %>
+            <tr>
+                <td class="select-cell text-center">
+                    <div class="checkbox m-0">
+                        <label>
+                            <input data-id="<%- element._id %>" name="select" type="checkbox"
+                                   class="select-box select-box-cell" value="all">
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+
+                <td class="truncate"><%- element.name %></td>
+                <td>
+                    <% var arr = ['VOICE', 'CHAT', 'EMAIL']; %>
+                    <%- arr[element.type]; %>
+                </td>
+                <td>
+                    <div class="checkbox text-center" style="margin: 0 auto">
+                        <label>
+                            <input id="cpIndex" disabled name="cpIndex" type="checkbox"
+                                   class="select-box" <%- (element.status ? 'checked' : ''); %> />
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+
+                <td class="text-center">
+                    <a class="p-t-3 btn-flat-bg"
+                       href="/#kpi-mark-content?collection=<%- element._id %>"
+                       data-toggle="tooltip"
+                       data-placement="top"
+                       data-original-title="Tạo mới tiêu chí">
+                        <i class="zmdi zmdi-plus green f-17"></i>
+                    </a>
+                    <a class="p-t-3 btn-flat-bg" data-toggle="tooltip"
+                       data-id="<%- element._id %>"
+                       data-status="<%- element.status %>"
+                       data-name="<%- element.name %>"
+                       data-type="<%- element.type %>"
+                       data-placement="top" data-original-title="Sửa" id="edit-collection">
+                        <i class="zmdi zmdi-edit green f-17"></i>
+                    </a>
+                    <a class="btn-remove btn-flat-bg" data-toggle="tooltip" role="button" data-placement="top"
+                       data-original-title="Xoá" data-id="<%- element._id %>" name="<%- element.name %>">
+                        <i class="zmdi zmdi-close red f-23 "></i>
+                    </a>
+                </td>
+            </tr>
+            <% }); %>
+            <% } %>
+            </tbody>
+        </table>
+
+        <% if(typeof paging !== 'undefined' && paging.pageCount > 1){ %>
+        <% include ../paging.ejs %>
+        <% } %>
+    </div>
+</div>
+
+<div class="modal fade" id="frm-kpi" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+    <form class="form-horizontal m-t-30" role="form">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title KPI_COLLECTION_NEW"></h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">
+                                <span class="KPI_COLLECTION_NAME"></span>
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <div class="fg-line">
+                                    <input type="text"
+                                           class="form-control input-sm validate[required,ajax[KPINewCheck]]"
+                                           id="name"
+                                           name="name"
+                                           placeholder="vd : Lập trình">
+                                    <input type="hidden"
+                                           id="cId"
+                                           name="_id"
+                                           placeholder="vd : Lập trình">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label KPI_TYPE">
+                            </label>
+                            <div class="col-sm-8">
+                                <select class="selectpicker" name="type" id="kpitype">
+                                    <option value="0">VOICE</option>
+                                    <option value="1">CHAT</option>
+                                    <option value="2">EMAIL</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group corekpi">
+                            <label for="inputEmail3" class="col-sm-3 control-label">
+                                <span class="KPI_IMPORT_FROM_CORE"></span>
+                            </label>
+                            <div class="col-sm-8">
+                                <select class="tag-select form-control" name="corekpi" id="corekpi">
+                                    <option value="" selected>--- Chọn ---</option>
+                                    <% coreKPI.forEach(function(el){ %>
+                                    <% if (el.type == 0){ %>
+                                        <option value="<%- el._id %>"><%- el.name %></option>
+                                    <% }}) %>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-8">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="1" name="status" id="status" checked>
+                                        <i class="input-helper"></i>
+                                        <span class="p-l-5 text-capitalize-f" data-text-on="Không kích hoạt" data-text-off="Kích hoạt"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary waves-effect">Xác nhận</button>
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Bỏ qua</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,130 @@
+<%-breadcrumb%>
+<script>
+    var companies = JSON.parse('<%- JSON.stringify(orgs)%>');
+    var currentService = JSON.parse('<%- JSON.stringify(currentService)%>');
+    var ticketCount = ticketCount;
+</script>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted"><i>Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập.</i></small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="update-service">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Tên chiến dịch<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input type="hidden" id="updateId" name="updateId" value="<%- currentService._id %>">
+                        <input type="text" value="<%- currentService.name%>" class="form-control validate[required,ajax[ServiceCheck]]" id="name" name="name">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Đầu số<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line select">
+                        <select <%- (canEdit ? '' : 'disabled')%> class="selectpicker validate[required]" id="queueNumber" name="queueNumber:string" current="<%- currentService.queueNumber%>">
+                            <option value='' disabled selected>---- Chọn ----</option>
+                            <option value='<%- currentService.queueNumber%>' selected><%- currentService.queueNumber%></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Công ty<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line select">
+                        <select <%- (canEdit ? '' : 'disabled')%> class="selectpicker validate[required,ajax[ServiceCheck]]" id="idCompany" name="idCompany">
+                            <option value='' disabled selected>---- Chọn ----</option>
+                            <% orgs.forEach(function(el, i) {%>
+                            <option value="<%- el._id%>" <%- (_equal(el._id.toString(),currentService.idCompany.toString()) ? 'selected' : ''); %>><%- el.name%></option>
+                            <%})%>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Yêu cầu kỹ năng<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line select">
+                        <select <%- (canEdit ? '' : 'disabled')%> class="selectpicker validate[required]" id="idSkill" name="idSkill">
+                            <option value='' disabled selected>---- Chọn ----</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label">Chiến lược route call<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line select">
+                        <select class="selectpicker validate[required]" id="routeCall" name="routeCall">
+                            <option value='' disabled selected>---- Chọn ----</option>
+                            <option value="1" <%- (_equal(currentService.routeCall.toString(),'1') ? 'selected' : ''); %>>Round Robin</option>
+                            <option value="2" <%- (_equal(currentService.routeCall.toString(),'2') ? 'selected' : ''); %>>Top Down</option>
+                            <option value="3" <%- (_equal(currentService.routeCall.toString(),'3') ? 'selected' : ''); %>>Agent Perfomance</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Luật<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <select <%- (canEdit ? '' : 'disabled')%> class="selectpicker validate[required]" id="rule" name="rule">
+                        <option value='' disabled selected>---- Chọn ----</option>
+                        <option value="1" <%- (currentService.rule && _equal("1",currentService.rule.toString()) ? 'selected' : ''); %>>Luật 1</option>
+                        <option value="2" <%- (currentService.rule && _equal("2",currentService.rule.toString()) ? 'selected' : ''); %>>Luật 2</option>
+                        <option value="3" <%- (currentService.rule && _equal("3",currentService.rule.toString()) ? 'selected' : ''); %>>Luật 3</option>
+                        <option value="4" <%- (currentService.rule && _equal("4",currentService.rule.toString()) ? 'selected' : ''); %>>Luật 4</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Thời gian chờ tối đa (Giây)<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <input <%- (canEdit ? '' : 'disabled')%> type="number" value="<%- currentService.maxWaitTime%>" class="form-control validate[required]" id="maxWaitTime" name="maxWaitTime" min="0">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Thời gian ngừng phục vụ (Giây)<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <input <%- (canEdit ? '' : 'disabled')%> type="number" value="<%- currentService.waitTimeCancel%>" class="form-control validate[required]" id="waitTimeCancel" name="waitTimeCancel" min="0">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Loại<span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <select <%- (canEdit ? '' : 'disabled')%> class="selectpicker validate[required]" id="serviceType" name="serviceType">
+                        <option value='' disabled selected>---- Chọn ----</option>
+                        <option value="1" <%- (currentService.serviceType && _equal("1",currentService.serviceType.toString()) ? 'selected' : ''); %>>IVR</option>
+                        <option value="2" <%- (currentService.serviceType && _equal("2",currentService.serviceType.toString()) ? 'selected' : ''); %>>Queue</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Công thức SLA Voice(Giây)</label>
+                <div class="col-sm-6">
+                    <input type="number" class="form-control" id="recipeSLA" name="recipeSLA" value="<%- currentService.recipeSLA %>" min="0">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Trạng thái</label>
+                <div class="col-sm-6">
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" value="1" id="status" name="status" <%- (currentService.status ? 'checked' : ''); %>>
+                            <i class="input-helper"></i>
+                            <span class="p-l-10" data-text-on="Không kích hoạt" data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a type="button" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect" href="/#services"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

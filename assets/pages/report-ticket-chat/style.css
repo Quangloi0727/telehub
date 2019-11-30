@@ -1,0 +1,100 @@
+table.table-fix > thead tr > th::-moz-selection {
+    background: transparent;
+}
+
+table.table-fix > thead tr > th::selection {
+    background: transparent;
+}
+
+table.table-fix > thead tr > th i.zmdi {
+    display: none;
+    font-size: 22px;
+    position: relative;
+    margin-right: 10px;
+    top: 3px;
+    line-height: 10px;
+}
+
+table.table-fix > thead tr > th[data-sort="asc"] i.zmdi-sort-asc {
+    display: initial;
+}
+
+table.table-fix > thead tr > th[data-sort="desc"] i.zmdi-sort-desc {
+    display: initial;
+}
+
+.inline-edit-button {
+    display: none;
+}
+
+.inlineEditButton:hover .inline-edit-button  {
+    display: block;
+}
+
+.ticket-history-view {
+    position: absolute;
+    width: 600px;
+    height: 446px;
+    top: 35px;
+    right: 14px;
+    background-color: #FFF;
+    z-index: 1;
+    display: none;
+    border: 1px solid #c6c6c6;
+    border-radius: 0 0 4px 4px;
+    word-wrap: break-word;
+}
+
+.ticket-transcript .chat-message {
+    position: relative;
+    font-size: 0;
+    margin-bottom: 20px;
+}
+
+.ticket-transcript .chat-message.chat-message-self {
+    text-align: right;
+    word-wrap: break-word;
+}
+
+.ticket-transcript .chat-message {
+    position: relative;
+    font-size: 0;
+    margin-bottom: 20px;
+    padding-left: 5px;
+}
+
+.ticket-transcript .chat-message .chat-message-bubble {
+    display: inline-block;
+    font-size: 14px;
+    max-width: 80%;
+    background: #fff;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    border: solid 1px gainsboro;
+    min-width: 0;
+    word-wrap: break-word;
+}
+
+.ticket-transcript .chat-message.chat-message-self .chat-message-bubble {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 0;
+    background: rgba(102, 175, 233, 0.31);
+    color: #fff;
+    text-align: left;
+    border: none;
+}
+
+.ticket-transcript .chat-message .chat-message-bubble .msg-time {
+    position: absolute;
+    top: -11px;
+    left: 5px;
+    font-size: 10px;
+    color: black;
+    word-wrap: break-word;
+}
+
+.ticket-transcript .chat-message.chat-message-self .chat-message-bubble .msg-time {
+    left: inherit;
+    right: 0;
+}

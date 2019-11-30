@@ -1,0 +1,73 @@
+<%-breadcrumb%>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted"><i>Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập.</i></small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="add-category">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label" id="label_name">Tên <span class="c-red">*</span></label>
+
+                <div class="col-sm-7">
+                    <div class="fg-line">
+                        <input type="text" class="form-control validate[required]" id="name"
+                               maxlength="60"
+                               name="name" placeholder="" value="<%= category.name%>">
+                        <input type="hidden" id="current_name" name="current_name" value="<%= category.name%>">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="companyId" class="col-sm-3 control-label"><span
+                            id="label_company"> Công ty</span> <span class="c-red">*</span></label>
+
+                <div class="col-sm-6">
+                    <div class="p-relative">
+                        <select class="selectpicker validate[required]" id="companyId"
+                                name="companyId">
+                            <option disabled selected>---- Chọn ----</option>
+                            <% companies.forEach(function(c, i){ %>
+                            <option  <%= (_.isEqual(c._id, category.companyId)?'selected':'')%> value="<%= c._id %>"> <%= c.name %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label" id="label_status">Trạng thái <span class="c-red">*</span></label>
+
+                <div class="col-sm-6">
+                    <div class="checkbox m-t-3 m-b-15">
+                        <label>
+                            <input type="checkbox"  value="<%=category.status%>" id="status" name="status" <%= (category.status==1)?'checked':''%>>
+                            <i class="input-helper"></i>
+                            <span class="p-l-5 text-capitalize-f" data-text-on="Không kích hoạt"
+                                  data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <button type="button"
+                            class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect waves-effect"
+                            id="btn-back" name="btn-back"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay
+                        lại
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"
+                            id="btn-submit"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+
+    </div>
+</div>
+
+

@@ -1,0 +1,90 @@
+<%- breadcrumb %>
+<div class="card">
+    <div class="lv-header-alt clearfix m-b-5">
+        <h2 class="lvh-label hidden-xs">Danh sách các danh mục</h2>
+        <ul class="lv-actions actions">
+            <li><a href="/#articles-category/new" data-toggle="tooltip" data-placement="top" data-original-title="Tạo mới"><i class="zmdi zmdi-plus"></i></a></li>
+            <li><a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" data-original-title="Refresh"><i class="zmdi zmdi-refresh"></i></a></li>
+            <li class="hidden" id="li-hidden">
+                <a role="button" data-toggle="tooltip" data-placement="top" data-original-title="Xóa các mục đánh dấu" id="btn-delSelection">
+                    <i class="zmdi zmdi-delete"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive" style="min-height: 500px">
+            <table class="table table-bordered table-fix" id="table-categorys">
+                <thead>
+                <tr>
+                    <th class="bgm-orange c-white text-center w-60">#</th>
+                    <th class="bgm-orange c-white text-center w-200"><span class="TXT_ARTICLE_CATEGORY"></span></th>
+                    <th class="w-120 bgm-orange c-white text-center"><span class="TXT_ARTICLE_GROUP"></span></th>
+                    <th class="w-120 bgm-orange c-white text-center"><span class="TXT_ARTICLE_POSTS"></span></th>
+                    <th class="w-120 bgm-orange c-white text-center"><span class="TXT_ARTICLE_STATUS"></span></th>
+                    <th class="w-90 bgm-orange c-white text-center"><span class="TXT_ARTICLE_TASK"></span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="searchForm" class="filter">
+                    <td class="text-center">
+                        <div class="checkbox m-0">
+                            <label>
+                                <input name="select" type="checkbox" class="select-box select-box-all" value="all">
+                                <i class="input-helper"></i>
+                            </label>
+                        </div>
+                    </td>
+                    <td class="text-center"><input class="form-control filter" type="text" id="name" name="name"></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <div>
+                            <select class="selectpicker filter" id="status" name="status">
+                                <option selected value="-1">- Tât cả -</option>
+                                <option value="1">Kích hoạt</option>
+                                <option value="0">Không kích hoạt</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td><button class="btn btn-primary btn-block waves-effect" id="btn-search" name="btn-search"><i class="zmdi zmdi-filter-list m-r-5"></i> Lọc</button></td>
+                </tr>
+                <script> var isZeroList = false; </script>
+                <% if (categories.length == 0){ %>
+                <script> isZeroList   = true; </script>
+                <%}else{ %>
+                    <% categories.forEach(function(el, i) { %>
+                    <tr>
+                        <td class="select-cell text-center">
+                            <div class="checkbox m-0">
+                                <label>
+                                    <input name="select" type="checkbox" class="select-box-cell" value="<%- el._id %>" data-id="<%- el._id %>">
+                                    <i class="input-helper"></i>
+                                </label>
+                            </div>
+                        </td>
+                        <td><%- el.name %></td>
+                        <td class="text-center text-capitalize"><%- el.group %></td>
+                        <td class="text-center"><%- el.articleCount %></td>
+                        <td class="text-center">
+                            <div class="checkbox" style="margin: 0 auto">
+                                <label>
+                                    <input name="select" type="checkbox" class="select-box" disabled value="<%- el._id %>" <%- (el.status ? 'checked' : ''); %> />
+                                    <i class="input-helper"></i>
+                                </label>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <a class="p-t-3 btn-flat-bg edit-category" href="/#articles-category/<%- el._id %>/edit" data-id="<%- el._id %>" data-status="<%- el.status %>" data-name="<%- el.name %>" data-toggle="tooltip" data-placement="top" data-original-title="Sửa"><i class="zmdi zmdi-edit green f-17"></i></a>
+                            <a role="button" class="btn-remove btn-flat-bg" data-toggle="tooltip" data-placement="top" data-original-title="Xoá" data-id="<%- el._id %>"><i class="zmdi zmdi-close red f-23 "></i></a>
+                        </td>
+                    </tr>
+                    <% }); %>
+                <%}%>
+                </tbody>
+            </table>
+        </div>
+
+        <% include ../paging.ejs %>
+    </div>
+</div>

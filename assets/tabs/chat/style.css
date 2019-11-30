@@ -1,0 +1,208 @@
+.history-view {
+    position: absolute;
+    width: 600px;
+    height: 446px;
+    top: 35px;
+    right: 14px;
+    background-color: #FFF;
+    z-index: 1;
+    display: none;
+    border: 1px solid #c6c6c6;
+    border-radius: 0 0 4px 4px;
+    word-wrap: break-word;
+}
+
+.frm-export-history {
+    position: absolute;
+    width: 450px;
+    height: 300px;
+    top: 135px;
+    right: 500px;
+    background-color: #FFF;
+    z-index: 1;
+    display: none;
+    border: 1px solid #c6c6c6;
+    border-radius: 0 0 4px 4px;
+    word-wrap: break-word;
+}
+
+#tabs ul {
+    width: 70%;
+}
+
+.popup-top #tabs ul {
+    width: 100%;
+}
+
+#tabs ul, .viewhistory-top {
+    position: relative;
+    float: left;
+}
+
+#tabs ul, .popup-top {
+    position: relative;
+    float: left;
+}
+
+
+#tabs ul li.ui-tabs-active {
+    background: #FFF;
+    border-bottom: 5px #da4a38 solid;
+    margin-top: 0;
+}
+
+#tabs ul li a {
+    padding: 0 24px;
+    border-right: 1px #c6c6c6 solid;
+    line-height: 37px;
+}
+
+#tabs ul li a, .table td a.his {
+    color: #4a4a4a;
+}
+
+.content-tab {
+    position: relative;
+    float: left;
+    width: 100%;
+}
+
+/*.content-info {*/
+    /*padding-top: 50px;*/
+/*}*/
+
+.content-ticket.right-side.ticket-panel {
+    height: calc(100% - 23px);
+}
+
+.msg-preview img {
+    max-height: 200px;
+    max-width: 300px;
+}
+
+.transcript .chat-message {
+    position: relative;
+    font-size: 0;
+    margin-bottom: 20px;
+}
+
+.transcript .chat-message.chat-message-self {
+    text-align: right;
+    word-wrap: break-word;
+}
+
+.transcript .chat-message {
+    position: relative;
+    font-size: 0;
+    margin-bottom: 20px;
+    padding-left: 5px;
+}
+
+.transcript .chat-message .chat-message-bubble {
+    display: inline-block;
+    font-size: 14px;
+    max-width: 80%;
+    background: #fff;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    border: solid 1px gainsboro;
+    min-width: 0;
+    word-wrap: break-word;
+}
+
+.transcript .chat-message.chat-message-self .chat-message-bubble {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 0;
+    background: rgba(102, 175, 233, 0.31);
+    color: #fff;
+    text-align: left;
+    border: none;
+}
+
+.transcript .chat-message .chat-message-bubble .msg-time {
+    position: absolute;
+    top: -11px;
+    left: 5px;
+    font-size: 10px;
+    color: black;
+    word-wrap: break-word;
+}
+
+.transcript .chat-message.chat-message-self .chat-message-bubble .msg-time {
+    left: inherit;
+    right: 0;
+}
+
+.chat-dialog .content {
+    background-color: beige;
+}
+
+.chat-dialog .content .right-side .chat-msg-container .chat-message.chat-message-self .chat-message-bubble {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 0;
+    background: #32a8e6;
+    color: #fff;
+    text-align: left;
+    border: none;
+    word-wrap: break-word;
+}
+
+.chat-dialog .content .right-side .chat-msg-container .chat-message .chat-message-bubble {
+    display: inline-block;
+    font-size: 14px;
+    max-width: 80%;
+    background: #fff;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    border: solid 1px gainsboro;
+    min-width: 0;
+    word-wrap: break-word;
+}
+
+.table-search-history tr td:first-child {
+    color: #000000;
+}
+
+#tab-chat>#chat-bars-container li>i.icon-tab.i-online-new{
+    top: 11px;
+    background: url("/assets/images/i-online.png") no-repeat;
+    animation: blink 1s;
+    animation-iteration-count: infinite;
+}
+
+#tab-chat>#chat-bars-container li>i.icon-tab.i-lowAlert{
+    top: 11px;
+    background: url("/assets/images/i-away.png") no-repeat;
+}
+
+#tab-chat>#chat-bars-container li>i.icon-tab.i-highAlert{
+    top: 11px;
+    background: url("/assets/images/i-red.png") no-repeat;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.chat-message-bubble{
+    text-align: center;
+}
+
+.chat-dialog.ui-widget-content{
+	float: left;
+	box-shadow: 0 2px 25px rgba(0,0,0,.2);
+}
+
+.chat-dialog .content .left-side .note-txt {
+    margin: auto;
+}

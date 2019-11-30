@@ -1,0 +1,191 @@
+<%- breadcrumb %>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted"><i>Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập.</i></small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="edit-reason">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label"><span class="TXT_REASON_NAME"></span><span
+                            class="required">*</span></label>
+                <div class="col-sm-8">
+                    <div class="fg-line">
+                        <input type="text" maxlength="60"
+                               class="form-control input-sm validate[required,ajax[ReasonEditCheck]]"
+                               id="validate-reason-for-name" name="name" value="<%- currentReason.name%>">
+                        <input type="hidden" value="<%- currentReason.name %>" id="validate-reason-for-x-name">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label"><span class="TXT_REASON_CATEGORY"></span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <label for="name" class="col-sm-3 m-b-0 p-t-7"><%- currentReason.idCategory.name%></label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="group" class="col-sm-3 control-label"><span class="TXT_PRIORITY"></span></label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <input id="validate-reason-for-priority" type="number" value="<%- currentReason.priority%>" class="form-control input-sm validate[required,ajax[ReasonPriorityCheck]]" name="priority" placeholder="vd : 1, 2, 3...">
+                        <input type="hidden" value="<%- currentReason.priority %>" id="validate-reason-for-x-priority">
+                        <input id="idCategory" type="hidden" value="<%- currentReason.idCategory._id%>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label"><span class="TXT_STATUS"></span></label>
+                <div class="col-sm-6">
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" id="status" name="status"
+                                    <% if (currentReason.status){ %>
+                                   checked
+                                    <% } %>
+                                    >
+                            <i class="input-helper"></i>
+                            <span class="p-l-10" data-text-on="Không kích hoạt" data-text-off="Kích hoạt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label"><span class="TXT_REASON_CURRENT_SUBREASON"></span></label>
+                <div class="col-sm-6">
+                    <a class="btn btn-icon-text m-r-10 waves-effect waves-effect btn-primary" id="new-subreason"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i> Thêm lí do</a>
+                    <table class="table table-hover table-bordered table-fix" id="ticket-subreason">
+                        <thead>
+                        <tr>
+                            <th class="col-sm-3 select-cell bgm-orange c-white text-center"><span class="TXT_SUBREASON_NAME"></span></th>
+                            <th class="col-sm-3 select-cell bgm-orange c-white text-center"><span class="TXT_PRIORITY"></span></th>
+                            <th class="col-sm-3 select-cell bgm-orange c-white text-center"><span class="TXT_STATUS"></span></th>
+                            <th class="col-sm-3 select-cell bgm-orange c-white text-center"><span class="TXT_TASK"></span></th>
+                        </tr>
+                        </thead>
+                        <tbody class="ui-sortable">
+                        <%for(var i = 0; i < subreason.length;i++){%>
+                        <tr>
+                            <td class="p-l-40"><%- subreason[i].name %></td>
+                            <td class="select-cell text-center w-60 index" data-weight="<%- subreason[i]._id %>"><%- subreason[i].priority %></td>
+                            <td class="text-center">
+                                <div class="checkbox m-0">
+                                    <label>
+                                        <input id="subreasonStatus" name="status" type="checkbox" data-id="<%- subreason[i]._id %>" class="select-box" <%- (subreason[i].status ? 'checked' : ''); %> />
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <a role="button" class="btn-flat-bg btn-edit" data-toggle="tooltip" data-placement="top" data-original-title="Sửa" data-id="<%- subreason[i]._id %>" data-url="/ticket-subreason" data-name="<%- subreason[i].name%>"><i class="zmdi zmdi-edit green f-23 "></i></a>
+                                <a role="button" class="btn-remove btn-flat-bg" data-toggle="tooltip" data-placement="top" data-original-title="Xoá" data-id="<%- subreason[i]._id %>" data-url="/ticket-subreason"><i class="zmdi zmdi-close red f-23 "></i></a>
+                            </td>
+                        </tr>
+                        <%}%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect waves-effect" id="btn-back"
+                       name="btn-back"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"
+                            value="<%- currentReason._id %>"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade" id="form-subreason" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <form class="form-horizontal m-t-30" role="form" id="create-subreason">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tạo lí do</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-3 control-label"><span class="TXT_SUBREASON_NAME"></span><span
+                                        class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <div class="fg-line">
+                                    <input type="text" value=""
+                                           class="form-control input-sm validate[required,ajax[SubreasonCheck]]"
+                                           id="validate-subreason-for-name" name="name"
+                                           placeholder="vd : Công nghệ thông tin">
+                                    <input id="idReason" type="hidden" value="<%- currentReason._id%>" name="idReason">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="note" class="col-sm-3 control-label"><span class="TXT_PRIORITY"></span><span
+                                        class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <div class="fg-line">
+                                    <input id="validate-subreason-for-priority" type="number" value="" class="form-control input-sm validate[required,ajax[SubreasonPriorityCheck]]" name="priority" placeholder="vd : 1, 2, 3...">
+                                    <input id="validate-subreason-for-idReason" type="hidden" value="<%- currentReason._id%>" name="idReason">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="status" class="col-sm-3 control-label"><span class="TXT_STATUS"></span></label>
+                            <div class="col-sm-6">
+                                <div class="checkbox m-b-15">
+                                    <label>
+                                        <input type="checkbox" checked id="status" name="status">
+                                        <i class="input-helper"></i>
+                                        <span class="p-l-10" data-text-on="Không kích hoạt" data-text-off="Kích hoạt"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary waves-effect create">Xác nhận</button>
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Bỏ qua</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal fade" id="form-edit-subreason" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <form class="form-horizontal m-t-30" role="form" id="edit-subreason">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Sửa lí do</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-3 control-label"><span class="TXT_SUBREASON_NAME"></span><span
+                                        class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <div class="fg-line">
+                                    <input type="text" value=""
+                                           class="form-control input-sm validate[required,ajax[SubreasonEditCheck]]"
+                                           id="validate-subreason2-for-name" name="name"
+                                           placeholder="vd : Công nghệ thông tin">
+                                    <input type="hidden" value="" id="validate-subreason2-for-x-name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary waves-effect create">Xác nhận</button>
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Bỏ qua</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

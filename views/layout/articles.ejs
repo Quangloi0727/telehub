@@ -1,0 +1,87 @@
+<%- breadcrumb %>
+<div class="card">
+    <div class="lv-header-alt clearfix">
+        <h2 class="lvh-label hidden-xs"><%- title %></h2>
+        <ul class="lv-actions actions">
+            <li>
+                <a href="/#articles/new" data-toggle="tooltip" data-placement="top" data-original-title="Tạo mới">
+                    <i class="zmdi zmdi-plus"></i>
+                </a>
+            </li>
+            <li>
+                <a id="refresh" data-toggle="tooltip" data-placement="top" data-original-title="Làm mới">
+                    <i class="zmdi zmdi-refresh"></i>
+                </a>
+            </li>
+            <li class="hidden" id="li-hidden">
+                <a role="button" data-toggle="tooltip" data-placement="top" data-original-title="Xóa các mục đánh dấu" id="btn-delSelection">
+                    <i class="zmdi zmdi-delete"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <form id="form-articles">
+            <table class="table table-bordered" id="tbl-articles">
+                <thead>
+                    <tr>
+                        <th class="bgm-orange c-white w-30 text-center">#</th>
+                        <th role="button" class="bgm-orange c-white text-center sort" id="sortByTitle" name="sortByTitle" data-sort="none" data-field="title" value="title"><i class="zmdi zmdi-hc-fw p-r-10 c-white" data-toggle="tooltip" data-placement="top"></i><span class="TXT_ARTICLE_TITLE"></span></th>
+                        <th role="button" class="bgm-orange c-white text-center sort" id="sortByBody" name="sortByBody" data-sort="none" data-field="body" value="title"><i class="zmdi zmdi-hc-fw p-r-10 c-white" data-toggle="tooltip" data-placement="top"></i><span class="TXT_ARTICLE_CONTENT"></span></th>
+                        <th role="button" class="bgm-orange c-white text-center sort" id="sortByGroup" name="sortByGroup" data-sort="none" data-field="group" value="title"><i class="zmdi zmdi-hc-fw p-r-10 c-white" data-toggle="tooltip" data-placement="top"></i><span class="TXT_ARTICLE_GROUP"></span></th>
+                        <th role="button" class="bgm-orange c-white text-center sort" id="sortByCategory" name="sortByCategory" data-sort="none" data-field="category" value="title"><i class="zmdi zmdi-hc-fw p-r-10 c-white" data-toggle="tooltip" data-placement="top"></i><span class="TXT_ARTICLE_CATEGORY"></span></th>
+                        <th role="button" class="bgm-orange c-white text-center sort" id="sortByAuthor" name="sortByAuthor" data-sort="none" data-field="author" value="title"><i class="zmdi zmdi-hc-fw p-r-10 c-white" data-toggle="tooltip" data-placement="top"></i><span class="TXT_ARTICLE_AUTHOR"></span></th>
+                        <th role="button" class="bgm-orange c-white text-center sort" id="sortByUpdater" name="sortByUpdater" data-sort="none" data-field="updater" value="title"><i class="zmdi zmdi-hc-fw p-r-10 c-white" data-toggle="tooltip" data-placement="top"></i><span class="TXT_ARTICLE_UPDATED_BY"></span></th>
+                        <th role="button" class="bgm-orange c-white text-center sort" id="sortByCreated" name="sortByCreated" data-sort="none" data-field="created" value="created"><i class="zmdi zmdi-hc-fw p-r-10 c-white" data-toggle="tooltip" data-placement="top"></i><span class="TXT_ARTICLE_DATE"></span></th>
+                        <th class="w-100 bgm-orange c-white text-center"><span class="TXT_ARTICLE_TASK"></span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="filter">
+                        <td class="text-center">
+                            <div class="checkbox m-0">
+                                <label>
+                                    <input name="select" type="checkbox" class="select-box select-box-all" value="all">
+                                    <i class="input-helper"></i>
+                                </label>
+                            </div>
+                        </td>
+                        <td class="text-center"><input class="form-control filter" type="text" id="title" name="title"></td>
+                        <td class="text-center"><input class="form-control filter" type="text" id="raw" name="raw"></td>
+                        <td class="text-center" id="group-select">
+                            <div>
+                                <select class="selectpicker filter" id="group" name="group">
+                                    <option value="0">Tất cả</option>
+                                    <option value="quy trình">Quy trình</option>
+                                    <option value="faq">FAQ</option>
+                                    <option value="kiến thức">Kiến thức</option>
+                                    <option value="khuyến mãi">Khuyến mãi</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td class="text-center" id="category-select">
+                            <div>
+                                <select class="selectpicker filter" id="category" name="category">
+                                    <option value="0">Tất cả</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <input class="form-control filter" type="text" id="author" name="author">
+                        </td>
+                        <td class="text-center">
+                            <input class="form-control filter" type="text" id="updater" name="updater">
+                        </td>
+                        <td class="text-center">
+                            <div class="input-group">
+                                <input class="form-control date-picker filter" type="text" id="created" name="created"><span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button" class="zmdi zmdi-calendar"></i></span>
+                            </div>
+                        </td>
+                        <td><button class="btn btn-primary btn-block waves-effect" id="btn-search" name="btn-search"><i class="zmdi zmdi-filter-list m-r-5"></i> Lọc</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center" ><div id="paging"></div></div>
+        </form>
+    </div>
+</div>

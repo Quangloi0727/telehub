@@ -1,0 +1,148 @@
+<%- breadcrumb %>
+<div class="card">
+    <div class="portlet-title">
+        <div class="lv-header-alt clearfix">
+            <h2 class="lvh-label hidden-xs"><%- title %></h2>
+            <ul class="lv-actions actions">
+                <li><a href="/#report-chat-by-time" data-toggle="tooltip" data-placement="top"
+                       data-original-title="Refresh"><i
+                                class="zmdi zmdi-refresh"></i></a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <form class="form-horizontal" role="form">
+            <div class="form-body">
+                <div class="row m-0 m-t-20">
+                    <div class="col-md-3 m-b-20">
+                        <label for="startDate"
+                               class="control-label f-13"><span>Ngày bắt đầu</span></label>
+
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control pull-right search-field date-picker filter-campain input"
+                                   id="startDate" name="startDate"
+                                   placeholder="VD: 01/01/2016">
+                            <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button"
+                                                                                       class="zmdi zmdi-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <label for="endDate"
+                               class="control-label f-13"><span>Ngày kết thúc</span></label>
+
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control pull-right search-field date-picker filter-campain input"
+                                   id="endDate" name="endDate"
+                                   placeholder="VD: 31/12/2016">
+                            <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button"
+                                                                                       class="zmdi zmdi-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <label for="idCompany"
+                               class="control-label f-13"><span>Công ty</span></label>
+                        <select name="idCompany" class="selectpicker input" id="idCompany" title="Chọn công ty">
+                            <% for(var i = 0; i < company.length;i++){ %>
+                            <option value="<%- company[i]._id %>"><%- company[i].name %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <label for="agentId"
+                               class="control-label f-13"><span>Điện thoại viên</span></label>
+                        <select name="agentId" class="selectpicker input" id="agentId" title="Chọn ĐTV" multiple>
+                            <% _.each(agents, function(o){ %>
+                            <option value="<%- o._id %>"><%- o.displayName %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                </div>
+                <div class="row m-0">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6 m-b-20">
+                        <div class="btn-group btn-group btn-group-justified">
+                            <a type="submit" class="btn bgm-blue uppercase c-white" style="width:auto"><i
+                                        class="fa fa-search m-r-10"></i><strong>Tìm
+                                    kiếm</strong></a>
+
+                            <div class="col-md-2"></div>
+                            <a id="exportexcel" class="btn bgm-blue default c-white" style="width:auto"><i
+                                        class="fa fa-file-excel-o m-r-10"></i>Xuất Excel</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-body table-responsive" style=" min-height:200px">
+        <div style="overflow: auto">
+            <table class="table table-hover table-condensed table-bordered table-responsive"
+                   id="exceldata">
+                <thead>
+                <tr>
+                    <th class="bgm-orange c-white text-center w-200" rowspan="3"><span
+                                class="dtv"></span></th>
+                    <th class="bgm-orange c-white text-center w-200" colspan="5"><span>8H-9H</span></th>
+                    <th class="bgm-orange c-white text-center w-200" colspan="5"><span>9H-10H</span></th>
+                    <th class="bgm-orange c-white text-center w-200" colspan="5"><span>10H-11H</span></th>
+                    <th class="bgm-orange c-white text-center w-200" colspan="5"><span>11H-12H</span></th>
+                    <th class="bgm-orange c-white text-center w-200" colspan="5"><span>12H-13H</span></th>
+                    <th class="bgm-orange c-white text-center w-200" colspan="5"><span>13H-14H</span></th>
+                    <th class="bgm-orange c-white text-center w-200" colspan="5"><span>14H-15H</span></th>
+                    <th class="bgm-orange c-white text-center w-200" colspan="5"><span>15H-16H</span></th>
+                    <th class="bgm-orange c-white text-center w-200" colspan="5"><span>16H-17H</span></th>
+                    <th class="bgm-orange c-white text-center w-200" colspan="5"><span>17H-18H</span></th>
+                </tr>
+                <tr>
+                    <% for(var i = 0;i < 10;i++){ %>
+                    <th class="bgm-orange c-white text-center w-100" rowspan="2"><span class="total"></span></th>
+                    <th class="bgm-orange c-white text-center w-100" colspan="2"><span class="connected"></span>
+                    </th>
+                    <th class="bgm-orange c-white text-center w-100" colspan="2"><span class="missed"></span></th>
+                    <% } %>
+                </tr>
+                <tr>
+                    <% for(var i = 0;i < 20;i++){ %>
+                    <th class="bgm-orange c-white text-center"><span class="amount"></span></th>
+                    <th class="bgm-orange c-white text-center"><span class="percent"></span></th>
+                    <% } %>
+                </tr>
+                </thead>
+                <tbody>
+                <% if(data.length == 0){ %>
+                <script> var isAlertSearch = true;</script>
+                <% } else{ %>
+                <script> var isAlertSearch = false;</script>
+                <% _.each(data, function(o){ %>
+                <tr>
+                    <td><%- o._id %></td>
+                    <% for (var j = 8; j < 18; j++) {
+                        var total = 0;
+                        var accept = 0;
+                        var missed = 0
+                        _.each(o.hours, function (a) {
+                            if (a.block == j) {
+                                total = a.total;
+                                accept = a.accept;
+                                missed = a.missed;
+                            }
+                        })%>
+                    <td><%- total%></td>
+                    <td><%- accept%></td>
+                    <td><%- total ? (accept*100/total).toFixed(2): 0%>%</td>
+                    <td><%- missed%></td>
+                    <td><%- total ?  (missed*100/total).toFixed(2): 0%>%</td>
+                    <%}%>
+                </tr>
+                <% })} %>
+                </tbody>
+            </table>
+        </div>
+        <div id="container">
+        </div>
+        <div id="container2">
+        </div>
+    </div>
+</div>

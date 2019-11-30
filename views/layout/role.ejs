@@ -1,0 +1,148 @@
+<%-breadcrumb%>
+<div class="card">
+    <div class="lv-header-alt clearfix">
+        <h2 class="lvh-label hidden-xs"><%- title %></h2>
+        <ul class="lv-actions actions">
+            <li>
+                <a href="/#role/new" data-toggle="tooltip" data-placement="top" data-original-title="Tạo mới">
+                    <i class="zmdi zmdi-plus"></i>
+                </a>
+            </li>
+            <li>
+                <a data-toggle="tooltip" data-placement="top" data-original-title="Làm mới">
+                    <i class="zmdi zmdi-refresh"></i>
+                </a>
+            </li>
+            <li class="hidden" id="li-hidden">
+                <a role="button" data-toggle="tooltip" data-placement="top" data-original-title="Xóa các mục đánh dấu"
+                   id="btn-delSelection">
+                    <i class="zmdi zmdi-delete"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body table-responsive">
+        <table class="table table-hover table-condensed table-bordered" id="tbl-fields">
+            <thead>
+            <tr class="listHead">
+                <th class="text-center w-50 bgm-orange c-white">#</th>
+                <th data-sort="none" class="bgm-orange c-white" role="button" data-field="name">
+                    Tên quyền hạn
+                </th>
+                <!--<th class="bgm-orange c-white TEXT_ROLE_NAME" name="sortByName"></th>-->
+                <th class="bgm-orange c-white">
+                    <span class="TEXT_DESC"></span>
+                    <i data-toggle="tooltip" class="zmdi zmdi-hc-fw c-white"></i>
+                </th>
+                <th class="bgm-orange c-white TEXT_ROLE_GROUP"></th>
+                <th class="w-120 bgm-orange c-white text-center TEXT_STATUS"></th>
+                <th class="w-100 bgm-orange c-white text-center TEXT_ACTION"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <script> var isZeroList = false; </script>
+            <% if (roleList.length == 0){ %>
+            <script> isZeroList = true; </script>
+            <% }else{ %>
+            <% roleList.forEach(function(r, i) { %>
+            <tr>
+                <td class="select-cell text-center w-60 index" data-weight="<%- roleList[i]._id %>"><%- i + 1 %>.</td>
+                <td class="text-capitalize"><%- r.name %></td>
+                <td><%- r.description %></td>
+                <td class="text-capitalize"><%- r.modify !== 0 ? rg[parseInt(r.roleGroup) - 1].name : ''; %></td>
+                <td class="text-center">
+                    <div class="checkbox m-0">
+                        <label>
+                            <input disabled name="select" type="checkbox"
+                                   class="select-box" <%- (r.status ? 'checked' : ''); %> />
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                </td>
+                <% if (r.modify == 0){ %>
+                <td></td>
+                <% } else{ %>
+                <td class="text-center">
+                    <a class="p-t-3 btn-flat-bg btn-edit" role="button" data-id="<%- r._id %>" data-name="<%- r.name %>"
+                       data-description="<%- r.description %>" data-status="<%- r.status %>" data-toggle="tooltip"
+                       data-role-group="<%- r.roleGroup %>"
+                       data-placement="top" data-original-title="Sửa"><i class="zmdi zmdi-edit green f-17"></i></a>
+                    <a role="button" class="btn-remove btn-flat-bg" data-toggle="tooltip" data-placement="top"
+                       data-original-title="Xoá" data-id="<%- r._id %>"><i class="zmdi zmdi-close red f-23 "></i></a>
+                </td>
+                <% } %>
+            </tr>
+            <% }); } %>
+            </tbody>
+        </table>
+        <% include ../paging.ejs %>
+    </div>
+</div>
+
+<div class="modal fade" id="frm-item" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <form class="form-horizontal m-t-30" role="form" id="edit-role">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center TEXT_ROLE_EDIT_TITLE"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-3 control-label">
+                                <span class="TEXT_ROLE_NAME"></span>
+                                <span class="required">*</span></label>
+                            <div class="col-sm-6">
+                                <div class="fg-line">
+                                    <input type="text" maxlength="60"
+                                           class="form-control validate[required,ajax[RoleCheck]]" id="edit-name"
+                                           name="edit-name" placeholder="VD: Quản lý" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="col-sm-3 control-label TEXT_DESC"></label>
+                            <div class="col-sm-6">
+                                <div class="fg-line">
+                                    <input type="text" maxlength="60" class="form-control" id="edit-description"
+                                           name="edit-description" placeholder="VD: Quản lý" value="">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="name" class="col-sm-3 control-label TEXT_ROLE_GROUP"></label>
+                            <div class="col-sm-6">
+                                <select class="selectpicker searchColumn" name="roleGroup" id="edit-role-group">
+                                    <% rg.forEach(function(item){ %>
+                                    <option value="<%- item.roleGroup %>"><%- item.name %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="status" class="col-sm-3 control-label TEXT_STATUS"></label>
+                            <div class="col-sm-6">
+                                <div class="checkbox m-b-15">
+                                    <label>
+                                        <input type="checkbox" id="edit-status" name="edit-status">
+                                        <i class="input-helper"></i>
+                                        <span class="p-l-10" data-text-on="Kích hoạt"
+                                              data-text-off="Không kích hoạt"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary waves-effect create">Xác nhận</button>
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Bỏ qua</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

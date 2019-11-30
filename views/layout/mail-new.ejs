@@ -1,0 +1,51 @@
+﻿<%-breadcrumb%>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+        <small class="text-muted f-12">( Những trường có dấu <span class="c-red">*</span> là bắt buộc nhập. )</small>
+    </div>
+    <div class="card-body card-padding">
+        <form role="form" class="form-horizontal" id="new-mail">
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Chiến dịch <span class="required">*</span></label>
+
+                <div class="col-sm-6">
+                    <select class="selectpicker validate[required]" id="from" name="from:string" title="------------------- Chọn ---------------------" multiple data-max-options="1">
+                        <% for(var i = 0; i < services.length; i++){ %>
+                        <option value="<%- services[i].send_user %>" data-company="<%- services[i].idCompany %>"><%- services[i].name %></option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Tiêu đề <span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control validate[required]" id="subject" name="subject" placeholder="...">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Người nhận <span class="required">*</span></label>
+                <div class="col-sm-6">
+                    <input type="text" class="validate[required]" id="to" name="to" placeholder="...">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Nội dung <span class="required">*</span></label>
+                <div class="col-sm-6 ">
+                    <textarea class="form-control validate[required]" id="body_raw" name="body_raw" placeholder="..."></textarea>
+                </div>
+                <div class="col-sm-3">
+                    <div class="panel-group" role="tablist" id="new-mail-template-list">
+                        <div class="panel panel-default" ></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-b-0">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a href="/mail" class="btn btn-default btn-icon-text m-t-10 m-r-10 waves-effect"><i class="m-r-5 zmdi zmdi-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-primary btn-icon-text m-t-10 waves-effect"><i class="m-r-5 zmdi zmdi-plus-circle-o"></i>Xác nhận</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

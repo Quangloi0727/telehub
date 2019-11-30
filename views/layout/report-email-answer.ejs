@@ -1,0 +1,94 @@
+<%- breadcrumb %>
+<script>
+    var companies = JSON.parse('<%- JSON.stringify(company)%>');
+</script>
+<div class="card">
+    <div class="portlet-title">
+        <div class="lv-header-alt clearfix">
+            <h2 class="lvh-label hidden-xs"><%= title %></h2>
+            <ul class="lv-actions actions">
+                <li><a href="/#report-email-answer" data-toggle="tooltip" data-placement="top"
+                       data-original-title="Refresh"><i
+                                class="zmdi zmdi-refresh"></i></a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <form class="form-horizontal" role="form" id="filter-data">
+            <div class="form-body">
+                <div class="row m-0 m-t-20">
+                    <div class="col-md-3 m-b-20">
+                        <label for="startDate" class="control-label f-13"><span>Ngày bắt đầu</span></label>
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control pull-right search-field date-picker filter-campain input"
+                                   id="startDate" name="startDate"
+                                   placeholder="Ngày bắt đầu, VD: 01/01/2016">
+                            <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button" class="zmdi zmdi-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 m-b-20">
+                        <label for="endDate" class="control-label f-13"><span>Ngày kết thúc</span></label>
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control pull-right search-field date-picker filter-campain input"
+                                   id="endDate" name="endDate"
+                                   placeholder="Ngày kết thúc, VD: 31/12/2016">
+                            <span class="input-group-addon p-l-10 bgm-gray c-white"><i role="button" class="zmdi zmdi-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 m-b-20" >
+                        <label for="idCompany"
+                               class="control-label f-13"><span>Công ty</span></label>
+                        <select name="idCompany" id="idCompany" class="selectpicker input" title="Chọn công ty"  >
+                            <% for(var i = 0;i < company.length;i++){ %>
+                            <option value=<%- company[i]._id %>><%-company[i].name%></option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="col-md-3 m-b-20" >
+                        <label class="control-label f-13">
+                            <span>Dịch vụ</span>
+                        </label>
+                        <select name="idService" id="idService" class="selectpicker input" title="Chọn dịch vụ"  >
+                        </select>
+                    </div>
+                </div>
+                <div class="row m-0">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6 m-b-20">
+                        <div class="btn-group btn-group btn-group-justified">
+                            <a id="searchBtn" class="btn bgm-blue uppercase c-white" style="width:auto">
+                                <i class="fa fa-search m-r-10"></i>
+                                Tìm kiếm
+                            </a>
+                            <div class="col-md-2"></div>
+                            <a id="exportexcel" class="btn bgm-blue default c-white" style="width:auto">
+                                <i class="fa fa-file-excel-o m-r-10"></i>
+                                Xuất Excel
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="card-body table-responsive" style=" min-height:200px">
+        <table id="table" class="table table-hover table-condensed table-bordered table-fix" style="table-layout: fixed;"
+               id="exceldata">
+            <thead>
+            <tr>
+                <th class="bgm-orange c-white text-center"><span>Dịch vụ</span></th>
+                <th class="bgm-orange c-white text-center"><span>Công ty</span></th>
+                <th class="bgm-orange c-white text-center"><span>Tổng</span></th>
+                <th class="bgm-orange c-white text-center"><span>Trung bình</span></th>
+                <th class="bgm-orange c-white text-center"><span>Số lượng</span></th>
+            </tr>
+            </thead>
+            <tbody >
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center paging"><ul class="pagination"></ul></div>
+</div>

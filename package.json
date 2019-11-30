@@ -29,7 +29,7 @@
     "mkdirp": "^0.3.5",
     "moment": "^2.11.1",
     "mongodb": "^2.1.4",
-    "mongoose": "^4.0.0",
+    "mongoose": "^5.7.13",
     "mongoose-aggregate-paginate": "^1.0.1",
     "mongoose-pagination": "^1.0.0",
     "morgan": "~1.6.1",

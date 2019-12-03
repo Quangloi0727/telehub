@@ -1,0 +1,42 @@
+<%- breadcrumb %>
+    <div class="card">
+        <div class="lv-header-alt clearfix">
+            <h2 class="lvh-label hidden-xs"><%- title %></h2>
+            <ul class="lv-actions actions">
+                <li class="hidden" id="li-hidden">
+                    <a role="button" data-toggle="tooltip" data-placement="top" data-original-title="Xóa các mục đánh dấu" id="btn-delSelection">
+                        <i class="zmdi zmdi-delete"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+            <div class="row">
+                    <div id="myCarousel" class="carousel slide col-sm-4" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                <%
+                                    for(let i=0;i<product.images.length;i++){%>
+                                        <li data-target="#myCarousel" data-slide-to="<%= i %>" class="<%= i==0?'active':'' %>"></li>
+                                    <%}
+                                %>
+                            </ol>
+                            
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner">
+                                <%
+                                    for(let i=0;i<product.images.length;i++){%>
+                                        <div class="item <%= i==0?'active':'' %>">
+                                            <img src="/assets/images/product/<%= product.images[i] %>" style="width: 100%;height: 250px;">
+                                        </div>
+                                    <%}
+                                %>
+                            </div>
+                    </div>
+                    <h2>Tên sản phẩm :<%= product.name %></h2>
+                    <h4>Giá :<%= product.price %></h4>
+                    <h4>Mô tả :<%= product.description %></h4>
+                    <a href="/#product"><button type="button" class="btn btn-primary">Back</button></a> 
+            </div>
+        </div>
+    </div>

@@ -6,7 +6,7 @@
     "name": "crm"
   },
   "database": {
-    "name": "crmdb",
+    "name": "bvphusan-hanoi2",
     "ip": "localhost",
     "port": 27017,
     "user": "",

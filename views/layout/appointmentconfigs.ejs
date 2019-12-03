@@ -1,0 +1,40 @@
+<%- breadcrumb %>
+<div class="card">
+    <div class="card-header">
+        <h2 class="m-b-5"><%- title %></h2>
+    </div>
+    <table class="table table-striped table-inverse table-responsive">
+        <tbody>
+            <tr>
+                <td class="text-center">Số thứ tự</td>
+                <td class="text-center">Số lượng đặt chỗ cho phép</td>
+                <td class="text-center">Khung giờ khám</td>
+                <td class="text-center">Tác vụ</td>
+            </tr>
+            <%
+                for(let i=0;i<appointmentconfigs.length;i++){%>
+                    <tr>
+                        <td class="text-center"><%= i+1 %></td>
+                        <%
+                            appointmentconfigs[i].maxAllowed.forEach(function(result){%>
+                                <td class="text-center"><%= result.fieldValue %></td>
+                            <%})
+                        %>
+                        <td class="text-center">
+                            <select>
+                                <%
+                                    appointmentconfigs[i].timeFrame.forEach(function(result){%>
+                                        <%result.fieldValue.forEach(function(value){%>
+                                            <option><%= value %></option>
+                                        <%})%>
+                                    <%})
+                                %>
+                            </select>
+                        </td>
+                        <td class="text-center"><a href="/appointmentconfigs/<%= appointmentconfigs[i]._id %>/edit"><i class="fa fa-edit" style="font-size: 20px;"></i></a></td>
+                    </tr>
+                <%}
+            %>
+        </tbody>
+    </table>
+</div>

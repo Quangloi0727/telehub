@@ -28,7 +28,7 @@
     "methods": "^1.1.1",
     "mkdirp": "^0.3.5",
     "moment": "^2.11.1",
-    "mongodb": "^2.1.4",
+    "mongodb": "^3.6.1",
     "mongoose": "^4.0.0",
     "mongoose-aggregate-paginate": "^1.0.1",
     "mongoose-pagination": "^1.0.0",
